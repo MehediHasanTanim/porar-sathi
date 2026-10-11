@@ -946,4 +946,183 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestionExamDate => 'Change the exam date';
+
+  @override
+  String get todayTarget => 'Today\'s target';
+
+  @override
+  String tasksDone(int done, int total) {
+    return '$done of $total tasks done';
+  }
+
+  @override
+  String syllabusProgress(int percent) {
+    return 'Syllabus $percent%';
+  }
+
+  @override
+  String revisionDueCount(int count) {
+    return '$count revisions due';
+  }
+
+  @override
+  String get actionReview => 'Review';
+
+  @override
+  String backlogBehind(String duration) {
+    return '$duration behind schedule';
+  }
+
+  @override
+  String get actionViewBacklog => 'View backlog';
+
+  @override
+  String get actionQuickStudy => 'Quick Study';
+
+  @override
+  String get todayAllDone => 'Today\'s study is done.';
+
+  @override
+  String get tomorrowReady => 'Tomorrow\'s plan is ready.';
+
+  @override
+  String get actionViewTomorrow => 'View tomorrow';
+
+  @override
+  String get actionStart => 'Start';
+
+  @override
+  String get actionStartTimer => 'Start Timer';
+
+  @override
+  String get actionStudyWithoutTimer => 'Study Without Timer';
+
+  @override
+  String get actionComplete => 'Mark Complete';
+
+  @override
+  String get actionPartial => 'Partial';
+
+  @override
+  String get actionMove => 'Move';
+
+  @override
+  String get actionPause => 'Pause';
+
+  @override
+  String get actionResume => 'Resume';
+
+  @override
+  String get actionFinish => 'Finish';
+
+  @override
+  String get actionFinishNow => 'Finish Now';
+
+  @override
+  String get sessionPaused => 'Session paused';
+
+  @override
+  String plannedLabel(String duration) {
+    return 'Planned: $duration';
+  }
+
+  @override
+  String get finishTitle => 'How did this session go?';
+
+  @override
+  String get resultFully => 'Fully completed';
+
+  @override
+  String get resultMostly => 'Mostly completed';
+
+  @override
+  String get resultPartial => 'Partially completed';
+
+  @override
+  String get resultCouldNot => 'Could not study';
+
+  @override
+  String get actualTime => 'Actual time';
+
+  @override
+  String get confidenceNow => 'How confident do you feel now?';
+
+  @override
+  String get wantRevision => 'I want to revise this later';
+
+  @override
+  String get actionSaveSession => 'Save Session';
+
+  @override
+  String get partialTitle => 'How much did you finish?';
+
+  @override
+  String aboutRemain(String duration) {
+    return 'About $duration remain.';
+  }
+
+  @override
+  String get actionSaveReplan => 'Save & Replan Remaining';
+
+  @override
+  String get actionSaveWithoutReplan => 'Save Without Replanning';
+
+  @override
+  String get skipTitle => 'Skip this task?';
+
+  @override
+  String get skipToday => 'Skip only today';
+
+  @override
+  String get skipRemove => 'Remove from plan';
+
+  @override
+  String get skipReschedule => 'Reschedule automatically';
+
+  @override
+  String get moveTitle => 'Move study task';
+
+  @override
+  String capacityFree(String duration) {
+    return '$duration free';
+  }
+
+  @override
+  String get capacityTight => 'This day is shorter than the task.';
+
+  @override
+  String get highPriority => 'High priority';
+
+  @override
+  String get confidenceLowReason => 'Confidence is low';
+
+  @override
+  String get highPriorityChapter => 'High-priority chapter';
+
+  @override
+  String get quickStudyTitle => 'Quick Study';
+
+  @override
+  String get actionLogCompleted => 'Log Completed Study';
+
+  @override
+  String get resumeSession => 'Resume study';
+
+  @override
+  String get taskPlanned => 'Planned';
+
+  @override
+  String get taskMissed => 'Missed';
+
+  @override
+  String get taskNewStudy => 'New study';
+
+  @override
+  String get taskContinue => 'Continue';
+
+  @override
+  String get taskRevision => 'Revision';
+
+  @override
+  String get taskPractice => 'Practice';
 }

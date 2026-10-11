@@ -44,6 +44,27 @@ final class DriftRevisionRepository implements RevisionRepository {
   }
 
   @override
+  Future<List<RevisionSchedule>> listDue(
+    String studyPlanId,
+    DateTime onOrBefore,
+  ) async {
+    final query = _database.select(_database.revisionSchedules)
+      ..where(
+        (schedule) =>
+            schedule.studyPlanId.equals(studyPlanId) &
+            schedule.dueDate.isSmallerOrEqualValue(calendarDate(onOrBefore)) &
+            schedule.status.isIn([
+              RevisionStatus.pending.code,
+              RevisionStatus.scheduled.code,
+              RevisionStatus.overdue.code,
+            ]),
+      )
+      ..orderBy([(schedule) => OrderingTerm.asc(schedule.dueDate)]);
+    final rows = await query.get();
+    return [for (final row in rows) row.toDomain()];
+  }
+
+  @override
   Stream<List<RevisionSchedule>> watchByChapter(String chapterId) {
     final query = _database.select(_database.revisionSchedules)
       ..where((schedule) => schedule.chapterId.equals(chapterId))

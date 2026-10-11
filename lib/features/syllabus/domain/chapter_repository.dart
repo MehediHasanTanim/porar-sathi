@@ -6,6 +6,8 @@ abstract interface class ChapterRepository implements Repository {
 
   Stream<List<Chapter>> watchBySubject(String subjectId);
 
+  Future<List<Chapter>> listByPlan(String studyPlanId);
+
   Future<Chapter> save(Chapter chapter);
 
   Future<List<Chapter>> saveAll(List<Chapter> chapters);

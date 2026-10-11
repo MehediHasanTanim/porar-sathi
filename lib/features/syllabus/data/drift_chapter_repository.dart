@@ -22,6 +22,18 @@ final class DriftChapterRepository implements ChapterRepository {
   }
 
   @override
+  Future<List<Chapter>> listByPlan(String studyPlanId) async {
+    final rows = await (_database.select(_database.chapters).join([
+          innerJoin(
+            _database.subjects,
+            _database.subjects.id.equalsExp(_database.chapters.subjectId),
+          ),
+        ])..where(_database.subjects.studyPlanId.equals(studyPlanId)))
+        .get();
+    return [for (final row in rows) row.readTable(_database.chapters).toDomain()];
+  }
+
+  @override
   Stream<List<Chapter>> watchBySubject(String subjectId) {
     final query = _database.select(_database.chapters)
       ..where((chapter) => chapter.subjectId.equals(subjectId))

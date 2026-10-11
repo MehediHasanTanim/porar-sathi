@@ -21,6 +21,8 @@ abstract interface class StudyTaskRepository implements Repository {
 
   Future<List<StudyTask>> listByPlan(String studyPlanId);
 
+  Future<List<StudyTask>> listBacklog(String studyPlanId, DateTime today);
+
   /// Replaces unlocked generated tasks and stores the run in one transaction.
   ///
   /// A failure leaves the previous tasks and runs unchanged.

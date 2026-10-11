@@ -938,4 +938,183 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get suggestionExamDate => 'পরীক্ষার তারিখ বদলান';
+
+  @override
+  String get todayTarget => 'আজকের লক্ষ্য';
+
+  @override
+  String tasksDone(int done, int total) {
+    return '$totalটির মধ্যে $doneটি কাজ শেষ';
+  }
+
+  @override
+  String syllabusProgress(int percent) {
+    return 'সিলেবাস $percent%';
+  }
+
+  @override
+  String revisionDueCount(int count) {
+    return '$countটি পুনরাবৃত্তি বাকি';
+  }
+
+  @override
+  String get actionReview => 'দেখুন';
+
+  @override
+  String backlogBehind(String duration) {
+    return '$duration পিছিয়ে';
+  }
+
+  @override
+  String get actionViewBacklog => 'বাকি কাজ দেখুন';
+
+  @override
+  String get actionQuickStudy => 'দ্রুত পড়া';
+
+  @override
+  String get todayAllDone => 'আজকের সব পড়া শেষ।';
+
+  @override
+  String get tomorrowReady => 'কালকের পরিকল্পনা তৈরি।';
+
+  @override
+  String get actionViewTomorrow => 'কালকের পড়া দেখুন';
+
+  @override
+  String get actionStart => 'শুরু';
+
+  @override
+  String get actionStartTimer => 'টাইমার চালু করুন';
+
+  @override
+  String get actionStudyWithoutTimer => 'টাইমার ছাড়া পড়ুন';
+
+  @override
+  String get actionComplete => 'সম্পন্ন';
+
+  @override
+  String get actionPartial => 'আংশিক';
+
+  @override
+  String get actionMove => 'সরিয়ে নিন';
+
+  @override
+  String get actionPause => 'থামান';
+
+  @override
+  String get actionResume => 'আবার শুরু';
+
+  @override
+  String get actionFinish => 'শেষ';
+
+  @override
+  String get actionFinishNow => 'এখনই শেষ';
+
+  @override
+  String get sessionPaused => 'সেশন থেমে আছে';
+
+  @override
+  String plannedLabel(String duration) {
+    return 'পরিকল্পনা: $duration';
+  }
+
+  @override
+  String get finishTitle => 'এই সেশন কেমন হলো?';
+
+  @override
+  String get resultFully => 'পুরো শেষ';
+
+  @override
+  String get resultMostly => 'প্রায় শেষ';
+
+  @override
+  String get resultPartial => 'কিছুটা শেষ';
+
+  @override
+  String get resultCouldNot => 'পড়তে পারিনি';
+
+  @override
+  String get actualTime => 'আসল সময়';
+
+  @override
+  String get confidenceNow => 'এখন কতটা আত্মবিশ্বাস?';
+
+  @override
+  String get wantRevision => 'পরে আবার পড়তে চাই';
+
+  @override
+  String get actionSaveSession => 'সেশন সংরক্ষণ';
+
+  @override
+  String get partialTitle => 'কতটুকু শেষ হলো?';
+
+  @override
+  String aboutRemain(String duration) {
+    return 'আর প্রায় $duration বাকি।';
+  }
+
+  @override
+  String get actionSaveReplan => 'বাকিটা আবার সাজান';
+
+  @override
+  String get actionSaveWithoutReplan => 'আবার না সাজিয়ে সংরক্ষণ';
+
+  @override
+  String get skipTitle => 'এই কাজ বাদ দেবেন?';
+
+  @override
+  String get skipToday => 'শুধু আজ বাদ';
+
+  @override
+  String get skipRemove => 'পরিকল্পনা থেকে সরান';
+
+  @override
+  String get skipReschedule => 'নিজে থেকে অন্য দিনে';
+
+  @override
+  String get moveTitle => 'পড়ার কাজ সরিয়ে নিন';
+
+  @override
+  String capacityFree(String duration) {
+    return '$duration ফাঁকা';
+  }
+
+  @override
+  String get capacityTight => 'এই দিনে কাজের চেয়ে কম সময় আছে।';
+
+  @override
+  String get highPriority => 'বেশি অগ্রাধিকার';
+
+  @override
+  String get confidenceLowReason => 'আত্মবিশ্বাস কম';
+
+  @override
+  String get highPriorityChapter => 'অগ্রাধিকার বেশি অধ্যায়';
+
+  @override
+  String get quickStudyTitle => 'দ্রুত পড়া';
+
+  @override
+  String get actionLogCompleted => 'শেষ করা পড়া লিখুন';
+
+  @override
+  String get resumeSession => 'পড়া চালিয়ে যান';
+
+  @override
+  String get taskPlanned => 'পরিকল্পিত';
+
+  @override
+  String get taskMissed => 'বাদ পড়েছে';
+
+  @override
+  String get taskNewStudy => 'নতুন পড়া';
+
+  @override
+  String get taskContinue => 'চালিয়ে যান';
+
+  @override
+  String get taskRevision => 'পুনরাবৃত্তি';
+
+  @override
+  String get taskPractice => 'অনুশীলন';
 }

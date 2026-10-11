@@ -15,6 +15,7 @@ import 'package:porar_sathi/features/planner/presentation/plan_screen.dart';
 import 'package:porar_sathi/features/subjects/presentation/subject_screens.dart';
 import 'package:porar_sathi/features/syllabus/presentation/chapter_screens.dart';
 import 'package:porar_sathi/features/progress/presentation/progress_screen.dart';
+import 'package:porar_sathi/features/sessions/presentation/study_flow_screens.dart';
 import 'package:porar_sathi/features/sessions/presentation/today_screen.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
 import 'package:porar_sathi/features/settings/presentation/appearance_screen.dart';
@@ -238,6 +239,42 @@ GoRouter appRouter(Ref ref) {
         path: AppRoutes.language,
         builder: (context, state) =>
             const LanguageSelectionScreen(showContinue: false),
+      ),
+      GoRoute(
+        path: AppRoutes.session,
+        builder: (context, state) => const StudySessionScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.finishSession,
+        builder: (context, state) => const FinishSessionScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.quickStudy,
+        builder: (context, state) => const QuickStudyScreen(),
+      ),
+      GoRoute(
+        path: '/tasks/:taskId/complete',
+        builder: (context, state) => FinishSessionScreen(
+          taskId: state.pathParameters['taskId'],
+        ),
+      ),
+      GoRoute(
+        path: '/tasks/:taskId/partial',
+        builder: (context, state) => PartialCompletionScreen(
+          taskId: state.pathParameters['taskId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/tasks/:taskId/move',
+        builder: (context, state) => MoveTaskScreen(
+          taskId: state.pathParameters['taskId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/tasks/:taskId',
+        builder: (context, state) => TaskDetailScreen(
+          taskId: state.pathParameters['taskId']!,
+        ),
       ),
     ],
   );

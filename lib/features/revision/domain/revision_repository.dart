@@ -12,6 +12,8 @@ abstract interface class RevisionRepository implements Repository {
 
   Stream<List<RevisionSchedule>> watchByChapter(String chapterId);
 
+  Future<List<RevisionSchedule>> listDue(String studyPlanId, DateTime onOrBefore);
+
   Future<RevisionSchedule> save(RevisionSchedule schedule);
 
   Future<List<RevisionSchedule>> saveAll(List<RevisionSchedule> schedules);

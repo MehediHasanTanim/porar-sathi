@@ -383,5 +383,96 @@
   "suggestionReduceBuffer": "Reduce the revision buffer",
   "suggestionPrioritize": "Mark lower-priority chapters optional",
   "suggestionEstimates": "Change estimated duration",
-  "suggestionExamDate": "Change the exam date"
+  "suggestionExamDate": "Change the exam date",
+  "todayTarget": "Today's target",
+  "tasksDone": "{done} of {total} tasks done",
+  "@tasksDone": {
+    "placeholders": {
+      "done": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "syllabusProgress": "Syllabus {percent}%",
+  "@syllabusProgress": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "revisionDueCount": "{count} revisions due",
+  "@revisionDueCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "actionReview": "Review",
+  "backlogBehind": "{duration} behind schedule",
+  "@backlogBehind": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "actionViewBacklog": "View backlog",
+  "actionQuickStudy": "Quick Study",
+  "todayAllDone": "Today's study is done.",
+  "tomorrowReady": "Tomorrow's plan is ready.",
+  "actionViewTomorrow": "View tomorrow",
+  "actionStart": "Start",
+  "actionStartTimer": "Start Timer",
+  "actionStudyWithoutTimer": "Study Without Timer",
+  "actionComplete": "Mark Complete",
+  "actionPartial": "Partial",
+  "actionMove": "Move",
+  "actionPause": "Pause",
+  "actionResume": "Resume",
+  "actionFinish": "Finish",
+  "actionFinishNow": "Finish Now",
+  "sessionPaused": "Session paused",
+  "plannedLabel": "Planned: {duration}",
+  "@plannedLabel": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "finishTitle": "How did this session go?",
+  "resultFully": "Fully completed",
+  "resultMostly": "Mostly completed",
+  "resultPartial": "Partially completed",
+  "resultCouldNot": "Could not study",
+  "actualTime": "Actual time",
+  "confidenceNow": "How confident do you feel now?",
+  "wantRevision": "I want to revise this later",
+  "actionSaveSession": "Save Session",
+  "partialTitle": "How much did you finish?",
+  "aboutRemain": "About {duration} remain.",
+  "@aboutRemain": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "actionSaveReplan": "Save & Replan Remaining",
+  "actionSaveWithoutReplan": "Save Without Replanning",
+  "skipTitle": "Skip this task?",
+  "skipToday": "Skip only today",
+  "skipRemove": "Remove from plan",
+  "skipReschedule": "Reschedule automatically",
+  "moveTitle": "Move study task",
+  "capacityFree": "{duration} free",
+  "@capacityFree": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "capacityTight": "This day is shorter than the task.",
+  "highPriority": "High priority",
+  "confidenceLowReason": "Confidence is low",
+  "highPriorityChapter": "High-priority chapter",
+  "quickStudyTitle": "Quick Study",
+  "actionLogCompleted": "Log Completed Study",
+  "resumeSession": "Resume study",
+  "taskPlanned": "Planned",
+  "taskMissed": "Missed",
+  "taskNewStudy": "New study",
+  "taskContinue": "Continue",
+  "taskRevision": "Revision",
+  "taskPractice": "Practice"
 }

@@ -1847,6 +1847,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change the exam date'**
   String get suggestionExamDate;
+
+  /// No description provided for @todayTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s target'**
+  String get todayTarget;
+
+  /// No description provided for @tasksDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} tasks done'**
+  String tasksDone(int done, int total);
+
+  /// No description provided for @syllabusProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Syllabus {percent}%'**
+  String syllabusProgress(int percent);
+
+  /// No description provided for @revisionDueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} revisions due'**
+  String revisionDueCount(int count);
+
+  /// No description provided for @actionReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get actionReview;
+
+  /// No description provided for @backlogBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} behind schedule'**
+  String backlogBehind(String duration);
+
+  /// No description provided for @actionViewBacklog.
+  ///
+  /// In en, this message translates to:
+  /// **'View backlog'**
+  String get actionViewBacklog;
+
+  /// No description provided for @actionQuickStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Study'**
+  String get actionQuickStudy;
+
+  /// No description provided for @todayAllDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s study is done.'**
+  String get todayAllDone;
+
+  /// No description provided for @tomorrowReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow\'s plan is ready.'**
+  String get tomorrowReady;
+
+  /// No description provided for @actionViewTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'View tomorrow'**
+  String get actionViewTomorrow;
+
+  /// No description provided for @actionStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get actionStart;
+
+  /// No description provided for @actionStartTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Timer'**
+  String get actionStartTimer;
+
+  /// No description provided for @actionStudyWithoutTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Study Without Timer'**
+  String get actionStudyWithoutTimer;
+
+  /// No description provided for @actionComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Complete'**
+  String get actionComplete;
+
+  /// No description provided for @actionPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get actionPartial;
+
+  /// No description provided for @actionMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get actionMove;
+
+  /// No description provided for @actionPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get actionPause;
+
+  /// No description provided for @actionResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get actionResume;
+
+  /// No description provided for @actionFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get actionFinish;
+
+  /// No description provided for @actionFinishNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish Now'**
+  String get actionFinishNow;
+
+  /// No description provided for @sessionPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Session paused'**
+  String get sessionPaused;
+
+  /// No description provided for @plannedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned: {duration}'**
+  String plannedLabel(String duration);
+
+  /// No description provided for @finishTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How did this session go?'**
+  String get finishTitle;
+
+  /// No description provided for @resultFully.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully completed'**
+  String get resultFully;
+
+  /// No description provided for @resultMostly.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostly completed'**
+  String get resultMostly;
+
+  /// No description provided for @resultPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially completed'**
+  String get resultPartial;
+
+  /// No description provided for @resultCouldNot.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not study'**
+  String get resultCouldNot;
+
+  /// No description provided for @actualTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual time'**
+  String get actualTime;
+
+  /// No description provided for @confidenceNow.
+  ///
+  /// In en, this message translates to:
+  /// **'How confident do you feel now?'**
+  String get confidenceNow;
+
+  /// No description provided for @wantRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'I want to revise this later'**
+  String get wantRevision;
+
+  /// No description provided for @actionSaveSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Session'**
+  String get actionSaveSession;
+
+  /// No description provided for @partialTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How much did you finish?'**
+  String get partialTitle;
+
+  /// No description provided for @aboutRemain.
+  ///
+  /// In en, this message translates to:
+  /// **'About {duration} remain.'**
+  String aboutRemain(String duration);
+
+  /// No description provided for @actionSaveReplan.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & Replan Remaining'**
+  String get actionSaveReplan;
+
+  /// No description provided for @actionSaveWithoutReplan.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Without Replanning'**
+  String get actionSaveWithoutReplan;
+
+  /// No description provided for @skipTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this task?'**
+  String get skipTitle;
+
+  /// No description provided for @skipToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip only today'**
+  String get skipToday;
+
+  /// No description provided for @skipRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from plan'**
+  String get skipRemove;
+
+  /// No description provided for @skipReschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule automatically'**
+  String get skipReschedule;
+
+  /// No description provided for @moveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Move study task'**
+  String get moveTitle;
+
+  /// No description provided for @capacityFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} free'**
+  String capacityFree(String duration);
+
+  /// No description provided for @capacityTight.
+  ///
+  /// In en, this message translates to:
+  /// **'This day is shorter than the task.'**
+  String get capacityTight;
+
+  /// No description provided for @highPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'High priority'**
+  String get highPriority;
+
+  /// No description provided for @confidenceLowReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence is low'**
+  String get confidenceLowReason;
+
+  /// No description provided for @highPriorityChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'High-priority chapter'**
+  String get highPriorityChapter;
+
+  /// No description provided for @quickStudyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Study'**
+  String get quickStudyTitle;
+
+  /// No description provided for @actionLogCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Completed Study'**
+  String get actionLogCompleted;
+
+  /// No description provided for @resumeSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume study'**
+  String get resumeSession;
+
+  /// No description provided for @taskPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get taskPlanned;
+
+  /// No description provided for @taskMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get taskMissed;
+
+  /// No description provided for @taskNewStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'New study'**
+  String get taskNewStudy;
+
+  /// No description provided for @taskContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get taskContinue;
+
+  /// No description provided for @taskRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision'**
+  String get taskRevision;
+
+  /// No description provided for @taskPractice.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice'**
+  String get taskPractice;
 }
 
 class _AppLocalizationsDelegate

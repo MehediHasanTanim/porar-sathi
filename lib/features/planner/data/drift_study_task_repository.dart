@@ -94,6 +94,26 @@ final class DriftStudyTaskRepository implements StudyTaskRepository {
   }
 
   @override
+  Future<List<StudyTask>> listBacklog(String studyPlanId, DateTime today) async {
+    final day = calendarDate(today);
+    final query = _database.select(_database.studyTasks)
+      ..where(
+        (task) =>
+            task.studyPlanId.equals(studyPlanId) &
+            (task.status.equals(TaskStatus.missed.code) |
+                (task.plannedDate.isSmallerThanValue(day) &
+                    task.status.isIn([
+                      TaskStatus.planned.code,
+                      TaskStatus.partiallyCompleted.code,
+                      TaskStatus.inProgress.code,
+                    ]))),
+      )
+      ..orderBy([(task) => OrderingTerm.asc(task.plannedDate)]);
+    final rows = await query.get();
+    return [for (final row in rows) row.toDomain()];
+  }
+
+  @override
   Future<List<StudyTask>> listByPlan(String studyPlanId) async {
     final query = _database.select(_database.studyTasks)
       ..where((task) => task.studyPlanId.equals(studyPlanId))

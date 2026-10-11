@@ -7,7 +7,11 @@ import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/errors/app_exception.dart';
 import 'package:porar_sathi/features/planner/data/drift_study_task_repository.dart';
 import 'package:porar_sathi/features/planner/domain/study_task.dart';
+import 'package:porar_sathi/features/revision/domain/revision_schedule.dart';
+import 'package:porar_sathi/features/sessions/domain/study_completion.dart';
 import 'package:porar_sathi/features/sessions/domain/study_session.dart';
+import 'package:porar_sathi/features/subjects/domain/subject.dart';
+import 'package:porar_sathi/features/syllabus/domain/chapter.dart';
 import 'package:porar_sathi/features/sessions/domain/study_session_repository.dart';
 
 final class DriftStudySessionRepository implements StudySessionRepository {
@@ -70,6 +74,89 @@ final class DriftStudySessionRepository implements StudySessionRepository {
   }
 
   @override
+  Future<StudyCompletionPlan> commitCompletion(StudyCompletionPlan plan) {
+    return runDatabaseTransaction(_database, () async {
+      final session = normalizeStudySession(plan.session);
+      final task = plan.task == null ? null : normalizeStudyTask(plan.task!);
+      final followUp = plan.followUpTask == null
+          ? null
+          : normalizeStudyTask(plan.followUpTask!);
+      final chapter = plan.chapter == null ? null : normalizeChapter(plan.chapter!);
+      final subject = plan.subject == null ? null : normalizeSubject(plan.subject!);
+      final revision = plan.revision == null
+          ? null
+          : normalizeRevisionSchedule(plan.revision!);
+      final checks = ReferenceChecks(_database);
+      await checks.planIdForSubject(session.subjectId);
+      if (session.chapterId != null) {
+        await checks.chapterInSubject(
+          chapterId: session.chapterId!,
+          subjectId: session.subjectId,
+        );
+      }
+      if (task != null) {
+        if (task.id != session.studyTaskId) {
+          throw const DatabaseException(
+            message: 'Study session does not match its task.',
+          );
+        }
+        await _checkReferences(task);
+        await _database
+            .into(_database.studyTasks)
+            .insertOnConflictUpdate(_taskCompanion(task));
+      }
+      if (followUp != null) {
+        await _checkReferences(followUp);
+        await _database
+            .into(_database.studyTasks)
+            .insertOnConflictUpdate(_taskCompanion(followUp));
+      }
+      if (session.studyTaskId != null) {
+        await checks.taskMatchesSession(
+          taskId: session.studyTaskId!,
+          subjectId: session.subjectId,
+          chapterId: session.chapterId,
+        );
+      }
+      await _database
+          .into(_database.studySessions)
+          .insertOnConflictUpdate(session.toCompanion());
+      if (chapter != null) {
+        await _database
+            .into(_database.chapters)
+            .insertOnConflictUpdate(_chapterCompanion(chapter));
+      }
+      if (subject != null) {
+        await _database
+            .into(_database.subjects)
+            .insertOnConflictUpdate(_subjectCompanion(subject));
+      }
+      if (revision != null) {
+        await checks.studyPlanExists(revision.studyPlanId);
+        await _database
+            .into(_database.revisionSchedules)
+            .insertOnConflictUpdate(_revisionCompanion(revision));
+      }
+      return StudyCompletionPlan(
+        session: session,
+        task: task,
+        followUpTask: followUp,
+        chapter: chapter,
+        subject: subject,
+        revision: revision,
+      );
+    });
+  }
+
+  Future<void> _checkReferences(StudyTask task) async {
+    final checks = ReferenceChecks(_database);
+    await checks.subjectInPlan(subjectId: task.subjectId, studyPlanId: task.studyPlanId);
+    if (task.chapterId != null) {
+      await checks.chapterInSubject(chapterId: task.chapterId!, subjectId: task.subjectId);
+    }
+  }
+
+  @override
   Future<void> delete(String id) {
     return runDatabaseTransaction(_database, () async {
       final removed = await (_database.delete(_database.studySessions)
@@ -80,6 +167,88 @@ final class DriftStudySessionRepository implements StudySessionRepository {
       }
     });
   }
+}
+
+StudyTasksCompanion _taskCompanion(StudyTask task) {
+  return StudyTasksCompanion.insert(
+    id: task.id,
+    studyPlanId: task.studyPlanId,
+    subjectId: task.subjectId,
+    chapterId: Value(task.chapterId),
+    topicId: Value(task.topicId),
+    examId: Value(task.examId),
+    taskType: task.taskType.code,
+    title: task.title,
+    plannedDate: task.plannedDate,
+    plannedStartTime: Value(task.plannedStartTime),
+    plannedMinutes: task.plannedMinutes,
+    actualMinutes: Value(task.actualMinutes),
+    priorityScore: task.priorityScore,
+    isLocked: task.isLocked,
+    status: task.status.code,
+    completionPercent: task.completionPercent,
+    source: task.source.code,
+    generationBatchId: Value(task.generationBatchId),
+    createdAt: task.createdAt,
+    updatedAt: task.updatedAt,
+    completedAt: Value(task.completedAt),
+  );
+}
+
+ChaptersCompanion _chapterCompanion(Chapter chapter) {
+  return ChaptersCompanion.insert(
+    id: chapter.id,
+    subjectId: chapter.subjectId,
+    title: chapter.title,
+    chapterNumber: Value(chapter.chapterNumber),
+    estimatedMinutes: chapter.estimatedMinutes,
+    completedMinutes: chapter.completedMinutes,
+    difficulty: chapter.difficulty.code,
+    confidence: chapter.confidence.code,
+    priority: chapter.priority.code,
+    examImportance: chapter.examImportance.code,
+    status: chapter.status.code,
+    notes: Value(chapter.notes),
+    sortOrder: chapter.sortOrder,
+    createdAt: chapter.createdAt,
+    updatedAt: chapter.updatedAt,
+    completedAt: Value(chapter.completedAt),
+  );
+}
+
+SubjectsCompanion _subjectCompanion(Subject subject) {
+  return SubjectsCompanion.insert(
+    id: subject.id,
+    studyPlanId: subject.studyPlanId,
+    name: subject.name,
+    code: Value(subject.code),
+    paperName: Value(subject.paperName),
+    colorToken: subject.colorToken,
+    iconToken: subject.iconToken,
+    priority: subject.priority.code,
+    difficulty: subject.difficulty.code,
+    confidence: subject.confidence.code,
+    status: subject.status.code,
+    sortOrder: subject.sortOrder,
+    createdAt: subject.createdAt,
+    updatedAt: subject.updatedAt,
+  );
+}
+
+RevisionSchedulesCompanion _revisionCompanion(RevisionSchedule schedule) {
+  return RevisionSchedulesCompanion.insert(
+    id: schedule.id,
+    studyPlanId: schedule.studyPlanId,
+    chapterId: schedule.chapterId,
+    topicId: Value(schedule.topicId),
+    sourceStudySessionId: Value(schedule.sourceStudySessionId),
+    revisionNumber: schedule.revisionNumber,
+    dueDate: schedule.dueDate,
+    estimatedMinutes: schedule.estimatedMinutes,
+    status: schedule.status.code,
+    completedAt: Value(schedule.completedAt),
+    createdAt: schedule.createdAt,
+  );
 }
 
 extension on StudySessionRow {

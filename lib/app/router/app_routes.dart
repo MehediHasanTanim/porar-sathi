@@ -15,9 +15,16 @@ abstract final class AppRoutes {
   static const newExam = '/exams/new';
   static const availability = '/availability';
   static const newException = '/exceptions/new';
+  static const session = '/session';
+  static const finishSession = '/session/finish';
+  static const quickStudy = '/quick-study';
 
   static String subject(String id) => '/subjects/$id';
   static String editSubject(String id) => '/subjects/$id/edit';
   static String chapters(String subjectId) => '/subjects/$subjectId/chapters';
   static String exam(String id) => '/exams/$id';
+  static String task(String id) => '/tasks/$id';
+  static String completeTask(String id) => '/tasks/$id/complete';
+  static String partialTask(String id) => '/tasks/$id/partial';
+  static String moveTask(String id) => '/tasks/$id/move';
 }
