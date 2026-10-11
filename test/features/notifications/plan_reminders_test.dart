@@ -164,6 +164,61 @@ void main() {
     );
   });
 
+  test('permission granted schedules the daily reminder', () {
+    final planned = planReminders(
+      now: now,
+      preferences: _enabled(),
+      permitted: true,
+      tasks: [_task(id: 'a', minutes: 45)],
+      revisions: const [],
+      exams: const [],
+      messages: _english(),
+    );
+    final daily = planned.where((item) => item.kind == ReminderKind.dailyPlan);
+    expect(daily.single.when, DateTime(2026, 10, 11, 8));
+    expect(daily.single.body, contains('45 minutes'));
+  });
+
+  test('changing the exam date moves the countdown', () {
+    final thresholds = {30, 14, 7, 3, 1};
+    final near = _exams(
+      now: now,
+      exams: [_exam(start: today.add(const Duration(days: 10)))],
+      thresholds: thresholds,
+    );
+    final later = _exams(
+      now: now,
+      exams: [_exam(start: today.add(const Duration(days: 40)))],
+      thresholds: thresholds,
+    );
+    expect(near.map((item) => item.body).toList(), [
+      'Physics is in 7 days.',
+      'Physics is in 3 days.',
+      'Physics is in 1 days.',
+    ]);
+    expect(later.map((item) => item.when.day).toList(), [21, 6, 13, 17, 19]);
+    expect(later.first.when, DateTime(2026, 10, 21, 8));
+    expect(
+      near.singleWhere((item) => item.body.contains('7 days')).when.day,
+      14,
+    );
+  });
+
+  test('a timezone shift follows the new local clock', () {
+    final tasks = [
+      _task(id: 'today'),
+      _task(id: 'tomorrow', day: today.add(const Duration(days: 1))),
+    ];
+    final atHome = _daily(now: DateTime(2026, 10, 11, 7), tasks: tasks);
+    final afterTheClockMoves = _daily(
+      now: DateTime(2026, 10, 11, 9),
+      tasks: tasks,
+    );
+    expect(atHome.first.when, DateTime(2026, 10, 11, 8));
+    expect(afterTheClockMoves.single.when, DateTime(2026, 10, 12, 8));
+    expect(afterTheClockMoves.single.id, atHome.last.id);
+  });
+
   test('a changed plan replaces the daily reminder without a new id', () {
     final first = _daily(
       now: now,

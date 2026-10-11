@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:cryptography/cryptography.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:porar_sathi/core/database/app_database.dart';
@@ -263,6 +264,41 @@ void main() {
       fileName: 'study.pockettutor',
     );
     expect((checksum as BackupRejected).problem, BackupProblem.checksum);
+  });
+
+  test('a backup missing a required table is rejected', () async {
+    final file = await encodeBackup(
+      payload: emptyBackupPayload(),
+      appVersion: backupAppVersion,
+      createdAt: createdAt,
+      locale: 'en',
+      devicePlatform: 'test',
+    );
+    final archive = ZipDecoder().decodeBytes(file);
+    final data = jsonDecode(
+      utf8.decode(archive.findFile('data.json')!.readBytes()!),
+    ) as Map<String, dynamic>;
+    data.remove('studyPlans');
+    final dataBytes = utf8.encode(jsonEncode(data));
+    final digest = await Sha256().hash(dataBytes);
+    final checksum = digest.bytes
+        .map((byte) => byte.toRadixString(16).padLeft(2, '0'))
+        .join();
+    final manifest = jsonDecode(
+      utf8.decode(archive.findFile('manifest.json')!.readBytes()!),
+    ) as Map<String, dynamic>;
+    manifest['checksum'] = checksum;
+    final rewritten = Archive()
+      ..addFile(ArchiveFile.string('manifest.json', jsonEncode(manifest)))
+      ..addFile(ArchiveFile.bytes('data.json', dataBytes));
+    final inspection = await inspectBackup(
+      bytes: ZipEncoder().encodeBytes(rewritten),
+      fileName: 'study.pockettutor',
+    );
+    expect(
+      (inspection as BackupRejected).problem,
+      BackupProblem.missingSection,
+    );
   });
 
   test('delete all removes study rows', () async {

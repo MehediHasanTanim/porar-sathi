@@ -27,7 +27,8 @@ class SelectionCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: title,
+      excludeSemantics: true,
+      label: subtitle.isEmpty ? title : '$title. $subtitle',
       child: AppCard(
         selected: selected,
         onTap: onTap,
