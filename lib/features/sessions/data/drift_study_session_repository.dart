@@ -36,6 +36,18 @@ final class DriftStudySessionRepository implements StudySessionRepository {
   }
 
   @override
+  Future<List<StudySession>> listBySubjects(List<String> subjectIds) async {
+    if (subjectIds.isEmpty) {
+      return const [];
+    }
+    final query = _database.select(_database.studySessions)
+      ..where((session) => session.subjectId.isIn(subjectIds))
+      ..orderBy([(session) => OrderingTerm.desc(session.startedAt)]);
+    final rows = await query.get();
+    return [for (final row in rows) row.toDomain()];
+  }
+
+  @override
   Future<StudySession> save(StudySession session, {StudyTask? updatedTask}) {
     return runDatabaseTransaction(_database, () async {
       final normalized = normalizeStudySession(session);

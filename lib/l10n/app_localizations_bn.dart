@@ -1246,4 +1246,108 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noBacklog => 'বাদ পড়া কোনো পড়া নেই।';
+
+  @override
+  String get rangeWeek => 'সপ্তাহ';
+
+  @override
+  String get rangeMonth => 'মাস';
+
+  @override
+  String get rangeAll => 'সব সময়';
+
+  @override
+  String get studyTime => 'পড়ার সময়';
+
+  @override
+  String get taskCompletion => 'কাজ শেষ';
+
+  @override
+  String tasksFraction(int done, int total) {
+    return '$done / $total';
+  }
+
+  @override
+  String get revisionCompletion => 'পুনরাবৃত্তি';
+
+  @override
+  String revisionsCompleted(int count) {
+    return '$countটি শেষ';
+  }
+
+  @override
+  String get consistency => 'নিয়মিত পড়া';
+
+  @override
+  String consistencyOf(int studied, int available) {
+    return '$available দিনের মধ্যে $studied দিন';
+  }
+
+  @override
+  String get consistencyNote => 'যেদিন পড়া বন্ধ রাখা আছে, সেদিন ধরা হয় না।';
+
+  @override
+  String get subjectBalance => 'বিষয়ের ভারসাম্য';
+
+  @override
+  String get preparationReadiness => 'প্রস্তুতির অবস্থা';
+
+  @override
+  String get readinessDisclaimer =>
+      'এটি প্রস্তুতির ইঙ্গিত, পরীক্ষার নম্বরের অনুমান নয়।';
+
+  @override
+  String paceBecause(String status) {
+    return '$status, কারণ:';
+  }
+
+  @override
+  String remainingWork(String duration) {
+    return '$duration বাকি';
+  }
+
+  @override
+  String capacityBeforeExam(String duration) {
+    return 'পরীক্ষার আগে $duration সময়';
+  }
+
+  @override
+  String get dailySummary => 'আজকের সারাংশ';
+
+  @override
+  String get weeklySummary => 'সপ্তাহের সারাংশ';
+
+  @override
+  String get mostStudied => 'সবচেয়ে বেশি পড়া';
+
+  @override
+  String get mostImproved => 'সবচেয়ে এগিয়েছে';
+
+  @override
+  String get needsAttention => 'মনোযোগ দরকার';
+
+  @override
+  String get syllabusChange => 'সিলেবাসের পরিবর্তন';
+
+  @override
+  String get targetLabel => 'লক্ষ্য';
+
+  @override
+  String get studiedLabel => 'পড়া হয়েছে';
+
+  @override
+  String chaptersCompleted(int done, int total) {
+    return '$totalটির মধ্যে $doneটি অধ্যায়';
+  }
+
+  @override
+  String pendingTasks(int count) {
+    return '$countটি বাকি';
+  }
+
+  @override
+  String get balancedStudy => 'পড়ার সময় ভারসাম্যে আছে।';
+
+  @override
+  String get noStudyYet => 'এখনো কোনো পড়া লেখা নেই।';
 }

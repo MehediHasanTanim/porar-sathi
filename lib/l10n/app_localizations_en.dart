@@ -1254,4 +1254,109 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noBacklog => 'No missed study is waiting.';
+
+  @override
+  String get rangeWeek => 'Week';
+
+  @override
+  String get rangeMonth => 'Month';
+
+  @override
+  String get rangeAll => 'All Time';
+
+  @override
+  String get studyTime => 'Study time';
+
+  @override
+  String get taskCompletion => 'Task completion';
+
+  @override
+  String tasksFraction(int done, int total) {
+    return '$done / $total';
+  }
+
+  @override
+  String get revisionCompletion => 'Revision';
+
+  @override
+  String revisionsCompleted(int count) {
+    return '$count completed';
+  }
+
+  @override
+  String get consistency => 'Consistency';
+
+  @override
+  String consistencyOf(int studied, int available) {
+    return '$studied of $available days';
+  }
+
+  @override
+  String get consistencyNote =>
+      'Configured no-study days are not counted against you.';
+
+  @override
+  String get subjectBalance => 'Subject balance';
+
+  @override
+  String get preparationReadiness => 'Preparation Readiness';
+
+  @override
+  String get readinessDisclaimer =>
+      'This is a preparation indicator, not an exam-score prediction.';
+
+  @override
+  String paceBecause(String status) {
+    return '$status because:';
+  }
+
+  @override
+  String remainingWork(String duration) {
+    return '$duration remaining';
+  }
+
+  @override
+  String capacityBeforeExam(String duration) {
+    return '$duration capacity before exam';
+  }
+
+  @override
+  String get dailySummary => 'Daily summary';
+
+  @override
+  String get weeklySummary => 'Weekly summary';
+
+  @override
+  String get mostStudied => 'Most studied';
+
+  @override
+  String get mostImproved => 'Most improved';
+
+  @override
+  String get needsAttention => 'Needs attention';
+
+  @override
+  String get syllabusChange => 'Syllabus change';
+
+  @override
+  String get targetLabel => 'Target';
+
+  @override
+  String get studiedLabel => 'Studied';
+
+  @override
+  String chaptersCompleted(int done, int total) {
+    return '$done of $total chapters';
+  }
+
+  @override
+  String pendingTasks(int count) {
+    return '$count pending';
+  }
+
+  @override
+  String get balancedStudy => 'Study time is balanced.';
+
+  @override
+  String get noStudyYet => 'No study recorded yet.';
 }

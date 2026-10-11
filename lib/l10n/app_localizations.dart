@@ -2399,6 +2399,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No missed study is waiting.'**
   String get noBacklog;
+
+  /// No description provided for @rangeWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get rangeWeek;
+
+  /// No description provided for @rangeMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get rangeMonth;
+
+  /// No description provided for @rangeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All Time'**
+  String get rangeAll;
+
+  /// No description provided for @studyTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Study time'**
+  String get studyTime;
+
+  /// No description provided for @taskCompletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Task completion'**
+  String get taskCompletion;
+
+  /// No description provided for @tasksFraction.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} / {total}'**
+  String tasksFraction(int done, int total);
+
+  /// No description provided for @revisionCompletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision'**
+  String get revisionCompletion;
+
+  /// No description provided for @revisionsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} completed'**
+  String revisionsCompleted(int count);
+
+  /// No description provided for @consistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get consistency;
+
+  /// No description provided for @consistencyOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{studied} of {available} days'**
+  String consistencyOf(int studied, int available);
+
+  /// No description provided for @consistencyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured no-study days are not counted against you.'**
+  String get consistencyNote;
+
+  /// No description provided for @subjectBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject balance'**
+  String get subjectBalance;
+
+  /// No description provided for @preparationReadiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparation Readiness'**
+  String get preparationReadiness;
+
+  /// No description provided for @readinessDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a preparation indicator, not an exam-score prediction.'**
+  String get readinessDisclaimer;
+
+  /// No description provided for @paceBecause.
+  ///
+  /// In en, this message translates to:
+  /// **'{status} because:'**
+  String paceBecause(String status);
+
+  /// No description provided for @remainingWork.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} remaining'**
+  String remainingWork(String duration);
+
+  /// No description provided for @capacityBeforeExam.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} capacity before exam'**
+  String capacityBeforeExam(String duration);
+
+  /// No description provided for @dailySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily summary'**
+  String get dailySummary;
+
+  /// No description provided for @weeklySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly summary'**
+  String get weeklySummary;
+
+  /// No description provided for @mostStudied.
+  ///
+  /// In en, this message translates to:
+  /// **'Most studied'**
+  String get mostStudied;
+
+  /// No description provided for @mostImproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Most improved'**
+  String get mostImproved;
+
+  /// No description provided for @needsAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get needsAttention;
+
+  /// No description provided for @syllabusChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Syllabus change'**
+  String get syllabusChange;
+
+  /// No description provided for @targetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Target'**
+  String get targetLabel;
+
+  /// No description provided for @studiedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Studied'**
+  String get studiedLabel;
+
+  /// No description provided for @chaptersCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} chapters'**
+  String chaptersCompleted(int done, int total);
+
+  /// No description provided for @pendingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pending'**
+  String pendingTasks(int count);
+
+  /// No description provided for @balancedStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Study time is balanced.'**
+  String get balancedStudy;
+
+  /// No description provided for @noStudyYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No study recorded yet.'**
+  String get noStudyYet;
 }
 
 class _AppLocalizationsDelegate

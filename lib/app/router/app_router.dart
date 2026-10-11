@@ -17,6 +17,7 @@ import 'package:porar_sathi/features/planner/presentation/replan_preview_screen.
 import 'package:porar_sathi/features/revision/presentation/revision_screens.dart';
 import 'package:porar_sathi/features/subjects/presentation/subject_screens.dart';
 import 'package:porar_sathi/features/syllabus/presentation/chapter_screens.dart';
+import 'package:porar_sathi/features/progress/presentation/progress_detail_screens.dart';
 import 'package:porar_sathi/features/progress/presentation/progress_screen.dart';
 import 'package:porar_sathi/features/sessions/presentation/study_flow_screens.dart';
 import 'package:porar_sathi/features/sessions/presentation/today_screen.dart';
@@ -310,6 +311,28 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.replan,
         builder: (context, state) => const ReplanPreviewScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.progressConsistency,
+        builder: (context, state) => const ConsistencyScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.progressReadiness,
+        builder: (context, state) => const ReadinessScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.progressDaily,
+        builder: (context, state) => const DailySummaryScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.progressWeekly,
+        builder: (context, state) => const WeeklySummaryScreen(),
+      ),
+      GoRoute(
+        path: '/progress/subjects/:subjectId',
+        builder: (context, state) => SubjectProgressScreen(
+          subjectId: state.pathParameters['subjectId']!,
+        ),
       ),
     ],
   );

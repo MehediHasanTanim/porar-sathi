@@ -557,5 +557,77 @@
   },
   "actionStudyNow": "Study Now",
   "actionRemove": "Remove",
-  "noBacklog": "No missed study is waiting."
+  "noBacklog": "No missed study is waiting.",
+  "rangeWeek": "Week",
+  "rangeMonth": "Month",
+  "rangeAll": "All Time",
+  "studyTime": "Study time",
+  "taskCompletion": "Task completion",
+  "tasksFraction": "{done} / {total}",
+  "@tasksFraction": {
+    "placeholders": {
+      "done": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "revisionCompletion": "Revision",
+  "revisionsCompleted": "{count} completed",
+  "@revisionsCompleted": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "consistency": "Consistency",
+  "consistencyOf": "{studied} of {available} days",
+  "@consistencyOf": {
+    "placeholders": {
+      "studied": {"type": "int"},
+      "available": {"type": "int"}
+    }
+  },
+  "consistencyNote": "Configured no-study days are not counted against you.",
+  "subjectBalance": "Subject balance",
+  "preparationReadiness": "Preparation Readiness",
+  "readinessDisclaimer": "This is a preparation indicator, not an exam-score prediction.",
+  "paceBecause": "{status} because:",
+  "@paceBecause": {
+    "placeholders": {
+      "status": {"type": "String"}
+    }
+  },
+  "remainingWork": "{duration} remaining",
+  "@remainingWork": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "capacityBeforeExam": "{duration} capacity before exam",
+  "@capacityBeforeExam": {
+    "placeholders": {
+      "duration": {"type": "String"}
+    }
+  },
+  "dailySummary": "Daily summary",
+  "weeklySummary": "Weekly summary",
+  "mostStudied": "Most studied",
+  "mostImproved": "Most improved",
+  "needsAttention": "Needs attention",
+  "syllabusChange": "Syllabus change",
+  "targetLabel": "Target",
+  "studiedLabel": "Studied",
+  "chaptersCompleted": "{done} of {total} chapters",
+  "@chaptersCompleted": {
+    "placeholders": {
+      "done": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pendingTasks": "{count} pending",
+  "@pendingTasks": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "balancedStudy": "Study time is balanced.",
+  "noStudyYet": "No study recorded yet."
 }

@@ -8,6 +8,8 @@ abstract interface class StudySessionRepository implements Repository {
 
   Stream<List<StudySession>> watchBySubject(String subjectId);
 
+  Future<List<StudySession>> listBySubjects(List<String> subjectIds);
+
   /// Stores the session and, when [updatedTask] is set, the task in one
   /// transaction.
   Future<StudySession> save(StudySession session, {StudyTask? updatedTask});

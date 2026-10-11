@@ -23,6 +23,10 @@ abstract final class AppRoutes {
   static const backlog = '/backlog';
   static const catchUp = '/catch-up';
   static const replan = '/replan';
+  static const progressConsistency = '/progress/consistency';
+  static const progressReadiness = '/progress/readiness';
+  static const progressDaily = '/progress/daily';
+  static const progressWeekly = '/progress/weekly';
 
   static String subject(String id) => '/subjects/$id';
   static String editSubject(String id) => '/subjects/$id/edit';
@@ -34,4 +38,5 @@ abstract final class AppRoutes {
   static String moveTask(String id) => '/tasks/$id/move';
   static String revision(String id) => '/revisions/$id';
   static String backlogTask(String id) => '/backlog/$id';
+  static String subjectProgress(String id) => '/progress/subjects/$id';
 }
