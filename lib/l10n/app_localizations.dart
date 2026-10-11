@@ -1217,7 +1217,7 @@ abstract class AppLocalizations {
   /// No description provided for @actionCreatePlan.
   ///
   /// In en, this message translates to:
-  /// **'Create My Study Plan'**
+  /// **'Generate My Plan'**
   String get actionCreatePlan;
 
   /// No description provided for @summaryTitle.
@@ -1717,6 +1717,136 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved. The planner can schedule {duration} that day.'**
   String exceptionSaved(String duration);
+
+  /// No description provided for @averageDailyStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Average daily study'**
+  String get averageDailyStudy;
+
+  /// No description provided for @tasksGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks'**
+  String tasksGenerated(int count);
+
+  /// No description provided for @paceAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahead'**
+  String get paceAhead;
+
+  /// No description provided for @paceOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On Track'**
+  String get paceOnTrack;
+
+  /// No description provided for @paceSlightlyBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'Slightly Behind'**
+  String get paceSlightlyBehind;
+
+  /// No description provided for @paceBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'Behind'**
+  String get paceBehind;
+
+  /// No description provided for @paceAtRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'At Risk'**
+  String get paceAtRisk;
+
+  /// No description provided for @riskLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk'**
+  String get riskLabel;
+
+  /// No description provided for @riskNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get riskNone;
+
+  /// No description provided for @riskLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get riskLow;
+
+  /// No description provided for @riskMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Tight'**
+  String get riskMedium;
+
+  /// No description provided for @riskHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get riskHigh;
+
+  /// No description provided for @riskImpossible.
+  ///
+  /// In en, this message translates to:
+  /// **'Impossible'**
+  String get riskImpossible;
+
+  /// No description provided for @planShortfall.
+  ///
+  /// In en, this message translates to:
+  /// **'Required {requiredTime}, available {availableTime}, shortfall {shortfallTime}.'**
+  String planShortfall(
+    String requiredTime,
+    String availableTime,
+    String shortfallTime,
+  );
+
+  /// No description provided for @subjectAllocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject allocation'**
+  String get subjectAllocation;
+
+  /// No description provided for @suggestionIncreaseAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Add more study time'**
+  String get suggestionIncreaseAvailability;
+
+  /// No description provided for @suggestionIncreaseIntensity.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase daily intensity'**
+  String get suggestionIncreaseIntensity;
+
+  /// No description provided for @suggestionReduceBuffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce the revision buffer'**
+  String get suggestionReduceBuffer;
+
+  /// No description provided for @suggestionPrioritize.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark lower-priority chapters optional'**
+  String get suggestionPrioritize;
+
+  /// No description provided for @suggestionEstimates.
+  ///
+  /// In en, this message translates to:
+  /// **'Change estimated duration'**
+  String get suggestionEstimates;
+
+  /// No description provided for @suggestionExamDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the exam date'**
+  String get suggestionExamDate;
 }
 
 class _AppLocalizationsDelegate

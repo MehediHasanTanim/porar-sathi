@@ -604,7 +604,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get actionCreatePlan => 'আমার পরিকল্পনা বানান';
+  String get actionCreatePlan => 'পরিকল্পনা তৈরি করুন';
 
   @override
   String get summaryTitle => 'পড়ার পরিকল্পনা তৈরি';
@@ -867,4 +867,75 @@ class AppLocalizationsBn extends AppLocalizations {
   String exceptionSaved(String duration) {
     return 'সংরক্ষিত। সেই দিন $duration পরিকল্পনায় বসানো যাবে।';
   }
+
+  @override
+  String get averageDailyStudy => 'গড় দৈনিক পড়া';
+
+  @override
+  String tasksGenerated(int count) {
+    return '$countটি কাজ';
+  }
+
+  @override
+  String get paceAhead => 'এগিয়ে';
+
+  @override
+  String get paceOnTrack => 'ঠিক পথে';
+
+  @override
+  String get paceSlightlyBehind => 'একটু পিছিয়ে';
+
+  @override
+  String get paceBehind => 'পিছিয়ে';
+
+  @override
+  String get paceAtRisk => 'ঝুঁকিতে';
+
+  @override
+  String get riskLabel => 'ঝুঁকি';
+
+  @override
+  String get riskNone => 'নেই';
+
+  @override
+  String get riskLow => 'কম';
+
+  @override
+  String get riskMedium => 'টাইট';
+
+  @override
+  String get riskHigh => 'বেশি';
+
+  @override
+  String get riskImpossible => 'সম্ভব নয়';
+
+  @override
+  String planShortfall(
+    String requiredTime,
+    String availableTime,
+    String shortfallTime,
+  ) {
+    return 'লাগবে $requiredTime, আছে $availableTime, ঘাটতি $shortfallTime।';
+  }
+
+  @override
+  String get subjectAllocation => 'বিষয়ভিত্তিক সময়';
+
+  @override
+  String get suggestionIncreaseAvailability => 'পড়ার সময় বাড়ান';
+
+  @override
+  String get suggestionIncreaseIntensity => 'দৈনিক তীব্রতা বাড়ান';
+
+  @override
+  String get suggestionReduceBuffer => 'পুনরাবৃত্তির সময় কমান';
+
+  @override
+  String get suggestionPrioritize => 'কম জরুরি অধ্যায় ঐচ্ছিক করুন';
+
+  @override
+  String get suggestionEstimates => 'আনুমানিক সময় বদলান';
+
+  @override
+  String get suggestionExamDate => 'পরীক্ষার তারিখ বদলান';
 }

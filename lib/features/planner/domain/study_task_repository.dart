@@ -1,5 +1,6 @@
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/repository/repository.dart';
+import 'package:porar_sathi/features/planner/domain/planner_run.dart';
 import 'package:porar_sathi/features/planner/domain/study_task.dart';
 
 abstract interface class StudyTaskRepository implements Repository {
@@ -17,6 +18,16 @@ abstract interface class StudyTaskRepository implements Repository {
   Future<StudyTask> save(StudyTask task);
 
   Future<List<StudyTask>> saveAll(List<StudyTask> tasks);
+
+  Future<List<StudyTask>> listByPlan(String studyPlanId);
+
+  /// Replaces unlocked generated tasks and stores the run in one transaction.
+  ///
+  /// A failure leaves the previous tasks and runs unchanged.
+  Future<PlannerRun> replaceGeneratedPlan({
+    required PlannerRun run,
+    required List<StudyTask> tasks,
+  });
 
   Future<void> delete(String id);
 }

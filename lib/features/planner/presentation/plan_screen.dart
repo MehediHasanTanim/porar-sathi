@@ -5,13 +5,17 @@ import 'package:go_router/go_router.dart';
 import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/router/app_routes.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
-import 'package:porar_sathi/app/widgets/app_card.dart';
+import 'package:porar_sathi/app/widgets/app_error.dart';
 import 'package:porar_sathi/app/widgets/empty_state.dart';
 import 'package:porar_sathi/core/database/repository_providers.dart';
+import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
+import 'package:porar_sathi/core/utils/id_generator.dart';
+import 'package:porar_sathi/features/planner/application/load_planning_input.dart';
 import 'package:porar_sathi/features/planner/domain/calendar_exception.dart';
-import 'package:porar_sathi/features/planner/domain/day_capacity.dart';
-import 'package:porar_sathi/features/planner/domain/weekly_availability.dart';
+import 'package:porar_sathi/features/planner/domain/generate_plan.dart';
+import 'package:porar_sathi/features/planner/domain/study_planner.dart';
+import 'package:porar_sathi/features/planner/presentation/plan_preview.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
 import 'package:porar_sathi/l10n/app_localizations.dart';
 
@@ -23,9 +27,8 @@ class PlanScreen extends ConsumerStatefulWidget {
 }
 
 class _PlanScreenState extends ConsumerState<PlanScreen> {
-  List<WeeklyAvailability> _week = [];
   List<CalendarException> _exceptions = [];
-  var _buffer = 15;
+  PlanResult? _result;
   var _loading = true;
   var _hasPlan = false;
 
@@ -44,15 +47,29 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       }
       return;
     }
-    final plan = await ref.read(studyPlanRepositoryProvider).findById(planId);
-    final week = await ref.read(availabilityRepositoryProvider).watchWeek(planId).first;
+    final clock = ref.read(clockProvider);
+    final input = await loadPlanningInput(
+      plans: ref.read(studyPlanRepositoryProvider),
+      subjects: ref.read(subjectRepositoryProvider),
+      chapters: ref.read(chapterRepositoryProvider),
+      exams: ref.read(examRepositoryProvider),
+      availability: ref.read(availabilityRepositoryProvider),
+      tasks: ref.read(studyTaskRepositoryProvider),
+      planId: planId,
+      today: clock.today(),
+    );
+    final result = DeterministicStudyPlanner(clock).generate(
+      input,
+      runId: ref.read(idGeneratorProvider).next(),
+      createdAt: clock.now(),
+      trigger: PlannerTrigger.userRequest,
+    );
     final exceptions = await ref.read(availabilityRepositoryProvider).watchExceptions(planId).first;
     if (mounted) {
       setState(() {
         _hasPlan = true;
-        _week = week;
+        _result = result;
         _exceptions = exceptions;
-        _buffer = plan?.planningBufferPercent ?? settings.planningBuffer;
         _loading = false;
       });
     }
@@ -75,40 +92,43 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       );
     }
     final today = ref.watch(clockProvider).today();
-    final capacity = capacityForDate(
-      date: today,
-      week: _week,
-      exceptions: _exceptions,
-      planningBufferPercent: _buffer,
-    );
+    final result = _result;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.studyPlan)),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          Text(l10n.todayCapacity, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: AppSpacing.sm),
-          AppCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${l10n.weeklyStudyTime}: ${LocaleFormat.formatDuration(capacity.baseMinutes, l10n)}'),
-                Text('${l10n.exceptionMinutes}: ${LocaleFormat.formatDuration(capacity.availableMinutes, l10n)}'),
-                Text('${l10n.capacityBuffer}: ${LocaleFormat.formatDuration(capacity.bufferMinutes, l10n)}'),
-                Text(
-                  '${l10n.schedulableCapacity}: ${LocaleFormat.formatDuration(capacity.schedulableMinutes, l10n)}',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ],
-            ),
-          ),
+          if (result != null) PlanPreviewContent(result: result, today: today),
           const SizedBox(height: AppSpacing.md),
           FilledButton(
+            onPressed: result == null
+                ? null
+                : () async {
+                    try {
+                      await ref.read(studyTaskRepositoryProvider).replaceGeneratedPlan(
+                        run: result.run,
+                        tasks: result.tasks,
+                      );
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.tasksGenerated(result.tasks.length))),
+                        );
+                      }
+                    } on Object catch (error) {
+                      if (context.mounted) {
+                        showAppError(context, error);
+                      }
+                    }
+                  },
+            child: Text(l10n.actionUsePlan),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton(
             onPressed: () async {
               await context.push(AppRoutes.availability);
               await _load();
             },
-            child: Text(l10n.availabilityEdit),
+            child: Text(l10n.actionAdjustAvailability),
           ),
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton(

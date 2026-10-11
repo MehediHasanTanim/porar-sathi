@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/router/app_routes.dart';
@@ -12,6 +11,7 @@ import 'package:porar_sathi/app/widgets/app_error.dart';
 import 'package:porar_sathi/app/widgets/option_chips.dart';
 import 'package:porar_sathi/app/widgets/selection_card.dart';
 import 'package:porar_sathi/core/database/repository_providers.dart';
+import 'package:porar_sathi/core/utils/id_generator.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/errors/app_exception.dart';
 import 'package:porar_sathi/core/notifications/notification_scheduler.dart';
@@ -20,9 +20,11 @@ import 'package:porar_sathi/features/onboarding/application/onboarding_controlle
 import 'package:porar_sathi/features/onboarding/domain/onboarding_draft.dart';
 import 'package:porar_sathi/features/onboarding/domain/onboarding_step.dart';
 import 'package:porar_sathi/features/onboarding/presentation/onboarding_scaffold.dart';
-import 'package:porar_sathi/features/planner/domain/calendar_exception.dart';
-import 'package:porar_sathi/features/planner/domain/day_capacity.dart';
+import 'package:porar_sathi/features/planner/application/load_planning_input.dart';
+import 'package:porar_sathi/features/planner/domain/generate_plan.dart';
+import 'package:porar_sathi/features/planner/domain/study_planner.dart';
 import 'package:porar_sathi/features/planner/domain/weekly_availability.dart';
+import 'package:porar_sathi/features/planner/presentation/plan_preview.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
 import 'package:porar_sathi/l10n/app_localizations.dart';
 
@@ -523,127 +525,99 @@ class _PlanningPreferencesScreenState
   }
 }
 
-class PlanSummaryScreen extends ConsumerWidget {
+class PlanSummaryScreen extends ConsumerStatefulWidget {
   const PlanSummaryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final draft = ref.watch(onboardingControllerProvider).asData?.value;
-    if (draft?.planId == null) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-    return FutureBuilder(
-      future: _load(ref, draft!),
-      builder: (context, snapshot) {
-        final data = snapshot.data;
-        if (data == null) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
-        }
-        final week = weekCapacity(
-          today: data.today,
-          week: data.week,
-          exceptions: data.exceptions,
-          planningBufferPercent: data.buffer,
-        );
-        final average = averageStudyDayMinutes(week);
-        final upcoming = [
-          for (var offset = 0; offset < 3; offset++)
-            capacityForDate(
-              date: data.today.add(Duration(days: offset)),
-              week: data.week,
-              exceptions: data.exceptions,
-              planningBufferPercent: data.buffer,
-            ),
-        ];
-        return OnboardingScaffold(
-          step: OnboardingStep.summary,
-          title: l10n.summaryTitle,
-          body: ListView(
-            children: [
-              AppCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(l10n.summaryFinish, style: Theme.of(context).textTheme.titleSmall),
-                    Text(l10n.summaryFinishPending),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      '${l10n.summaryExam}: ${data.examName ?? l10n.summaryNoExam}',
-                    ),
-                    if (data.examDate != null)
-                      Text(DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(data.examDate!)),
-                    Text('${l10n.summaryRevisionBuffer}: ${l10n.revisionDays(data.revisionDays)}'),
-                    Text('${l10n.onTrack} · ${LocaleFormat.formatDuration(average, l10n)}'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(l10n.firstDays, style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSpacing.xs),
-              Text(l10n.summaryNoTasks),
-              for (final day in upcoming)
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(DateFormat.E(Localizations.localeOf(context).toString()).format(day.date)),
-                  trailing: Text(
-                    day.isNoStudyDay
-                        ? l10n.offDay
-                        : LocaleFormat.formatDuration(day.schedulableMinutes, l10n),
-                  ),
-                ),
-            ],
-          ),
-          primaryLabel: l10n.actionUsePlan,
-          onPrimary: () async {
-            await ref.read(onboardingControllerProvider.notifier).goTo(OnboardingStep.notifications);
-            if (context.mounted) {
-              context.go(OnboardingStep.notifications.route);
-            }
-          },
-          secondaryLabel: l10n.actionAdjustAvailability,
-          onSecondary: () => context.go(OnboardingStep.availability.route),
-        );
-      },
-    );
-  }
-
-  Future<_Summary> _load(WidgetRef ref, OnboardingDraft draft) async {
-    final planId = draft.planId!;
-    final week = await ref.read(availabilityRepositoryProvider).watchWeek(planId).first;
-    final exceptions = await ref.read(availabilityRepositoryProvider).watchExceptions(planId).first;
-    final exams = await ref.read(examRepositoryProvider).watchByPlan(planId).first;
-    final today = ref.read(clockProvider).today();
-    return _Summary(
-      today: today,
-      week: week,
-      exceptions: exceptions,
-      buffer: draft.planningBufferPercent,
-      revisionDays: draft.revisionBufferDays,
-      examName: exams.isEmpty ? null : exams.first.name,
-      examDate: exams.isEmpty ? null : exams.first.startDate,
-    );
-  }
+  ConsumerState<PlanSummaryScreen> createState() => _PlanSummaryScreenState();
 }
 
-class _Summary {
-  const _Summary({
-    required this.today,
-    required this.week,
-    required this.exceptions,
-    required this.buffer,
-    required this.revisionDays,
-    required this.examName,
-    required this.examDate,
-  });
+class _PlanSummaryScreenState extends ConsumerState<PlanSummaryScreen> {
+  PlanResult? _result;
+  Object? _error;
 
-  final DateTime today;
-  final List<WeeklyAvailability> week;
-  final List<CalendarException> exceptions;
-  final int buffer;
-  final int revisionDays;
-  final String? examName;
-  final DateTime? examDate;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  Future<void> _load() async {
+    final draft = await ref.read(onboardingControllerProvider.future);
+    final planId = draft.planId;
+    if (planId == null) {
+      return;
+    }
+    try {
+      final clock = ref.read(clockProvider);
+      final input = await loadPlanningInput(
+        plans: ref.read(studyPlanRepositoryProvider),
+        subjects: ref.read(subjectRepositoryProvider),
+        chapters: ref.read(chapterRepositoryProvider),
+        exams: ref.read(examRepositoryProvider),
+        availability: ref.read(availabilityRepositoryProvider),
+        tasks: ref.read(studyTaskRepositoryProvider),
+        planId: planId,
+        today: clock.today(),
+      );
+      final result = DeterministicStudyPlanner(clock).generate(
+        input,
+        runId: ref.read(idGeneratorProvider).next(),
+        createdAt: clock.now(),
+      );
+      if (mounted) {
+        setState(() {
+          _result = result;
+          _error = null;
+        });
+      }
+    } on Object catch (error) {
+      if (mounted) {
+        setState(() => _error = error);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final result = _result;
+    if (_error != null) {
+      return Scaffold(body: Center(child: Text(l10n.errorGeneric)));
+    }
+    if (result == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    final today = ref.read(clockProvider).today();
+    return OnboardingScaffold(
+      step: OnboardingStep.summary,
+      title: l10n.summaryTitle,
+      body: ListView(
+        children: [
+          PlanPreviewContent(result: result, today: today),
+        ],
+      ),
+      primaryLabel: l10n.actionUsePlan,
+      onPrimary: () async {
+        try {
+          await ref.read(studyTaskRepositoryProvider).replaceGeneratedPlan(
+            run: result.run,
+            tasks: result.tasks,
+          );
+          await ref.read(onboardingControllerProvider.notifier).goTo(OnboardingStep.notifications);
+          if (context.mounted) {
+            context.go(OnboardingStep.notifications.route);
+          }
+        } on Object catch (error) {
+          if (context.mounted) {
+            showAppError(context, error);
+          }
+        }
+      },
+      secondaryLabel: l10n.actionAdjustAvailability,
+      onSecondary: () => context.go(OnboardingStep.availability.route),
+    );
+  }
 }
 
 class NotificationEducationScreen extends ConsumerWidget {

@@ -10,6 +10,8 @@ final class DayCapacity {
     required this.availableMinutes,
     required this.bufferMinutes,
     required this.schedulableMinutes,
+    required this.lockedMinutes,
+    required this.usableMinutes,
     required this.isNoStudyDay,
   });
 
@@ -18,6 +20,8 @@ final class DayCapacity {
   final int availableMinutes;
   final int bufferMinutes;
   final int schedulableMinutes;
+  final int lockedMinutes;
+  final int usableMinutes;
   final bool isNoStudyDay;
 }
 
@@ -27,6 +31,7 @@ DayCapacity capacityForDate({
   required List<WeeklyAvailability> week,
   required List<CalendarException> exceptions,
   required int planningBufferPercent,
+  int lockedMinutes = 0,
 }) {
   final day = calendarDate(date);
   WeeklyAvailability? pattern;
@@ -46,26 +51,34 @@ DayCapacity capacityForDate({
     }
   }
 
-  var available = base;
-  var noStudy = base == 0;
+  var available = base < 0 ? 0 : base;
+  var noStudy = available == 0;
   if (exception != null) {
     if (exception.isNoStudyDay) {
       available = 0;
       noStudy = true;
     } else {
-      available = exception.availableMinutesOverride ?? base;
+      final override = exception.availableMinutesOverride ?? available;
+      available = override < 0 ? 0 : override;
       noStudy = available == 0;
     }
   }
 
-  final buffer = noStudy ? 0 : (available * planningBufferPercent / 100).round();
+  final percent = planningBufferPercent < 0
+      ? 0
+      : (planningBufferPercent > 100 ? 100 : planningBufferPercent);
+  final buffer = noStudy ? 0 : (available * percent / 100).round();
   final schedulable = available - buffer;
+  final locked = lockedMinutes < 0 ? 0 : lockedMinutes;
+  final afterLock = (schedulable < 0 ? 0 : schedulable) - locked;
   return DayCapacity(
     date: day,
-    baseMinutes: base,
+    baseMinutes: base < 0 ? 0 : base,
     availableMinutes: available,
     bufferMinutes: buffer,
     schedulableMinutes: schedulable < 0 ? 0 : schedulable,
+    lockedMinutes: locked,
+    usableMinutes: afterLock < 0 ? 0 : afterLock,
     isNoStudyDay: noStudy,
   );
 }

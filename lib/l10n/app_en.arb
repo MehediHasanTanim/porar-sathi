@@ -246,7 +246,7 @@
       "count": {"type": "int"}
     }
   },
-  "actionCreatePlan": "Create My Study Plan",
+  "actionCreatePlan": "Generate My Plan",
   "summaryTitle": "Your study plan is ready",
   "summaryFinish": "Expected syllabus finish",
   "summaryFinishPending": "Add chapters to forecast a finish date.",
@@ -350,5 +350,38 @@
     "placeholders": {
       "duration": {"type": "String"}
     }
-  }
+  },
+  "averageDailyStudy": "Average daily study",
+  "tasksGenerated": "{count} tasks",
+  "@tasksGenerated": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "paceAhead": "Ahead",
+  "paceOnTrack": "On Track",
+  "paceSlightlyBehind": "Slightly Behind",
+  "paceBehind": "Behind",
+  "paceAtRisk": "At Risk",
+  "riskLabel": "Risk",
+  "riskNone": "None",
+  "riskLow": "Low",
+  "riskMedium": "Tight",
+  "riskHigh": "High",
+  "riskImpossible": "Impossible",
+  "planShortfall": "Required {requiredTime}, available {availableTime}, shortfall {shortfallTime}.",
+  "@planShortfall": {
+    "placeholders": {
+      "requiredTime": {"type": "String"},
+      "availableTime": {"type": "String"},
+      "shortfallTime": {"type": "String"}
+    }
+  },
+  "subjectAllocation": "Subject allocation",
+  "suggestionIncreaseAvailability": "Add more study time",
+  "suggestionIncreaseIntensity": "Increase daily intensity",
+  "suggestionReduceBuffer": "Reduce the revision buffer",
+  "suggestionPrioritize": "Mark lower-priority chapters optional",
+  "suggestionEstimates": "Change estimated duration",
+  "suggestionExamDate": "Change the exam date"
 }

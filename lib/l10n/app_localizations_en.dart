@@ -611,7 +611,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get actionCreatePlan => 'Create My Study Plan';
+  String get actionCreatePlan => 'Generate My Plan';
 
   @override
   String get summaryTitle => 'Your study plan is ready';
@@ -875,4 +875,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String exceptionSaved(String duration) {
     return 'Saved. The planner can schedule $duration that day.';
   }
+
+  @override
+  String get averageDailyStudy => 'Average daily study';
+
+  @override
+  String tasksGenerated(int count) {
+    return '$count tasks';
+  }
+
+  @override
+  String get paceAhead => 'Ahead';
+
+  @override
+  String get paceOnTrack => 'On Track';
+
+  @override
+  String get paceSlightlyBehind => 'Slightly Behind';
+
+  @override
+  String get paceBehind => 'Behind';
+
+  @override
+  String get paceAtRisk => 'At Risk';
+
+  @override
+  String get riskLabel => 'Risk';
+
+  @override
+  String get riskNone => 'None';
+
+  @override
+  String get riskLow => 'Low';
+
+  @override
+  String get riskMedium => 'Tight';
+
+  @override
+  String get riskHigh => 'High';
+
+  @override
+  String get riskImpossible => 'Impossible';
+
+  @override
+  String planShortfall(
+    String requiredTime,
+    String availableTime,
+    String shortfallTime,
+  ) {
+    return 'Required $requiredTime, available $availableTime, shortfall $shortfallTime.';
+  }
+
+  @override
+  String get subjectAllocation => 'Subject allocation';
+
+  @override
+  String get suggestionIncreaseAvailability => 'Add more study time';
+
+  @override
+  String get suggestionIncreaseIntensity => 'Increase daily intensity';
+
+  @override
+  String get suggestionReduceBuffer => 'Reduce the revision buffer';
+
+  @override
+  String get suggestionPrioritize => 'Mark lower-priority chapters optional';
+
+  @override
+  String get suggestionEstimates => 'Change estimated duration';
+
+  @override
+  String get suggestionExamDate => 'Change the exam date';
 }

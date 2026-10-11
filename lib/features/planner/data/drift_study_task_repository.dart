@@ -6,6 +6,7 @@ import 'package:porar_sathi/core/database/reference_checks.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/errors/app_exception.dart';
 import 'package:porar_sathi/core/time/calendar_date.dart';
+import 'package:porar_sathi/features/planner/domain/planner_run.dart';
 import 'package:porar_sathi/features/planner/domain/study_task.dart';
 import 'package:porar_sathi/features/planner/domain/study_task_repository.dart';
 
@@ -89,6 +90,66 @@ final class DriftStudyTaskRepository implements StudyTaskRepository {
         saved.add(await save(task));
       }
       return saved;
+    });
+  }
+
+  @override
+  Future<List<StudyTask>> listByPlan(String studyPlanId) async {
+    final query = _database.select(_database.studyTasks)
+      ..where((task) => task.studyPlanId.equals(studyPlanId))
+      ..orderBy([(task) => OrderingTerm.asc(task.plannedDate)]);
+    final rows = await query.get();
+    return [for (final row in rows) row.toDomain()];
+  }
+
+  @override
+  Future<PlannerRun> replaceGeneratedPlan({
+    required PlannerRun run,
+    required List<StudyTask> tasks,
+  }) {
+    return runDatabaseTransaction(_database, () async {
+      final normalizedRun = normalizePlannerRun(run);
+      final normalizedTasks = [for (final task in tasks) normalizeStudyTask(task)];
+      for (final task in normalizedTasks) {
+        if (task.studyPlanId != normalizedRun.studyPlanId ||
+            task.generationBatchId != normalizedRun.id ||
+            task.isLocked ||
+            task.source != TaskSource.autoPlanner) {
+          throw const ValidationException(
+            ValidationIssue.requiredText,
+            message: 'Generated task does not match this planner run.',
+          );
+        }
+      }
+      final checks = ReferenceChecks(_database);
+      await checks.studyPlanExists(normalizedRun.studyPlanId);
+      await (_database.delete(_database.studyTasks)..where(
+            (task) =>
+                task.studyPlanId.equals(normalizedRun.studyPlanId) &
+                task.isLocked.equals(false) &
+                task.source.equals(TaskSource.autoPlanner.code) &
+                task.status.equals(TaskStatus.planned.code),
+          ))
+          .go();
+      for (final task in normalizedTasks) {
+        await _checkReferences(task);
+        await _database.into(_database.studyTasks).insert(task.toCompanion());
+      }
+      await _database.into(_database.plannerRuns).insert(
+        PlannerRunsCompanion.insert(
+          id: normalizedRun.id,
+          studyPlanId: normalizedRun.studyPlanId,
+          trigger: normalizedRun.trigger.code,
+          startedAt: normalizedRun.startedAt,
+          completedAt: Value(normalizedRun.completedAt),
+          inputTaskCount: normalizedRun.inputTaskCount,
+          outputTaskCount: normalizedRun.outputTaskCount,
+          riskLevel: normalizedRun.riskLevel.code,
+          expectedFinishDate: Value(normalizedRun.expectedFinishDate),
+          algorithmVersion: normalizedRun.algorithmVersion,
+        ),
+      );
+      return normalizedRun;
     });
   }
 
