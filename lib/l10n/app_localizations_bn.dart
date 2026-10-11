@@ -55,7 +55,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get actionRetry => 'আবার চেষ্টা করুন';
 
   @override
-  String get actionDone => 'শেষ';
+  String get actionDone => 'হয়ে গেছে';
 
   @override
   String get actionBack => 'পেছনে';
@@ -1117,4 +1117,133 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get taskPractice => 'অনুশীলন';
+
+  @override
+  String get revisionQueue => 'পুনরাবৃত্তি';
+
+  @override
+  String get dueToday => 'আজ বাকি';
+
+  @override
+  String get overdue => 'সময় পেরিয়ে গেছে';
+
+  @override
+  String get upcoming => 'সামনে';
+
+  @override
+  String get revisionEmpty => 'এই তালিকায় পুনরাবৃত্তি নেই।';
+
+  @override
+  String get actionStartRevision => 'পুনরাবৃত্তি শুরু';
+
+  @override
+  String lastStudied(String date) {
+    return 'শেষ পড়া $date';
+  }
+
+  @override
+  String previousRevisions(int count) {
+    return 'আগের পুনরাবৃত্তি $countটি';
+  }
+
+  @override
+  String get actionReschedule => 'আরেক দিনে';
+
+  @override
+  String get revisionCompleteTitle => 'পুনরাবৃত্তি শেষ';
+
+  @override
+  String get needAnotherRevision => 'আরেকবার পড়বেন?';
+
+  @override
+  String nextRevision(String date) {
+    return 'পরের পুনরাবৃত্তি: $date';
+  }
+
+  @override
+  String get backlogTitle => 'বাকি পড়া';
+
+  @override
+  String overdueTasks(int count) {
+    return '$countটি কাজ সময় পেরিয়ে গেছে';
+  }
+
+  @override
+  String get oldestMissed => 'সবচেয়ে পুরনো বাদ পড়া কাজ';
+
+  @override
+  String recoveryEstimate(int days) {
+    return 'এই বাকি পড়া $days দিনে শেষ করা যাবে।';
+  }
+
+  @override
+  String get actionBuildCatchUp => 'ধরার পরিকল্পনা বানান';
+
+  @override
+  String get catchUpTitle => 'ধরার পরিকল্পনা';
+
+  @override
+  String get extraStudy => 'বাড়তি পড়ার সময়';
+
+  @override
+  String get actionApply => 'বসান';
+
+  @override
+  String get catchUpAdded => 'ধরার পরিকল্পনা যোগ হয়েছে';
+
+  @override
+  String get actionViewUpdatedPlan => 'নতুন পরিকল্পনা দেখুন';
+
+  @override
+  String get replanTitle => 'পরিকল্পনা আপডেট দরকার';
+
+  @override
+  String replanMoved(int count) {
+    return '$countটি কাজ অন্য দিনে';
+  }
+
+  @override
+  String replanAdded(int count) {
+    return '$countটি কাজ যোগ';
+  }
+
+  @override
+  String replanRemoved(int count) {
+    return '$countটি কাজ সরানো';
+  }
+
+  @override
+  String get finishChange => 'শেষ হওয়ার তারিখ বদলেছে';
+
+  @override
+  String get actionApplyChanges => 'পরিবর্তন বসান';
+
+  @override
+  String get actionKeepPlan => 'আগের পরিকল্পনা রাখুন';
+
+  @override
+  String get planUpdated => 'পড়ার পরিকল্পনা আপডেট হয়েছে';
+
+  @override
+  String get actionViewToday => 'আজকের পড়া দেখুন';
+
+  @override
+  String get actionUpdatePlan => 'পরিকল্পনা আপডেট';
+
+  @override
+  String get planNeedsUpdate => 'পরিকল্পনা আপডেট দরকার';
+
+  @override
+  String daysOverdue(int count) {
+    return '$count দিন দেরি';
+  }
+
+  @override
+  String get actionStudyNow => 'এখন পড়ুন';
+
+  @override
+  String get actionRemove => 'সরিয়ে ফেলুন';
+
+  @override
+  String get noBacklog => 'বাদ পড়া কোনো পড়া নেই।';
 }

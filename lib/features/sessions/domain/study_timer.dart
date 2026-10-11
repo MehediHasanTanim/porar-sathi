@@ -18,6 +18,7 @@ final class ActiveStudyTimer {
     this.chapterId,
     this.examName,
     this.quickStudy = false,
+    this.revisionId,
   });
 
   final String id;
@@ -32,6 +33,7 @@ final class ActiveStudyTimer {
   final int elapsedBeforeResume;
   final TimerPhase phase;
   final bool quickStudy;
+  final String? revisionId;
 
   int elapsedSeconds(DateTime now) {
     if (phase != TimerPhase.running) {
@@ -68,6 +70,7 @@ final class ActiveStudyTimer {
       elapsedBeforeResume: elapsedSeconds(now),
       phase: TimerPhase.paused,
       quickStudy: quickStudy,
+      revisionId: revisionId,
     );
   }
 
@@ -88,6 +91,7 @@ final class ActiveStudyTimer {
       elapsedBeforeResume: elapsedBeforeResume,
       phase: TimerPhase.running,
       quickStudy: quickStudy,
+      revisionId: revisionId,
     );
   }
 
@@ -106,6 +110,7 @@ final class ActiveStudyTimer {
       elapsedBeforeResume: elapsed,
       phase: TimerPhase.completed,
       quickStudy: quickStudy,
+      revisionId: revisionId,
     );
   }
 
@@ -123,6 +128,7 @@ final class ActiveStudyTimer {
       'elapsedBeforeResume': elapsedBeforeResume,
       'phase': phase.name,
       'quickStudy': quickStudy,
+      'revisionId': revisionId,
     };
   }
 
@@ -155,6 +161,7 @@ final class ActiveStudyTimer {
       elapsedBeforeResume: json['elapsedBeforeResume']! as int,
       phase: phase.first,
       quickStudy: json['quickStudy'] as bool? ?? false,
+      revisionId: json['revisionId'] as String?,
     );
   }
 }

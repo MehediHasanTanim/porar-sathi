@@ -36,7 +36,7 @@ void main() {
     expect(plan.followUpTask!.plannedDate, DateTime(2026, 10, 12));
     expect(plan.followUpTask!.isLocked, isFalse);
     expect(plan.revision!.dueDate, DateTime(2026, 10, 13));
-    expect(plan.revision!.estimatedMinutes, 20);
+    expect(plan.revision!.estimatedMinutes, 10);
     expect(plan.revision!.revisionNumber, 1);
     expect(plan.subject!.confidence, Confidence.high);
   });

@@ -174,6 +174,70 @@ final class DriftStudyTaskRepository implements StudyTaskRepository {
   }
 
   @override
+  Future<PlannerRun> applyAdaptivePlan({
+    required PlannerRun run,
+    required List<StudyTask> tasks,
+    required DateTime today,
+  }) {
+    return runDatabaseTransaction(_database, () async {
+      final normalizedRun = normalizePlannerRun(run);
+      final normalizedTasks = [for (final task in tasks) normalizeStudyTask(task)];
+      final day = calendarDate(today);
+      for (final task in normalizedTasks) {
+        final allowed =
+            task.source == TaskSource.autoPlanner ||
+            task.source == TaskSource.revisionEngine ||
+            task.source == TaskSource.catchUp;
+        if (task.studyPlanId != normalizedRun.studyPlanId ||
+            task.generationBatchId != normalizedRun.id ||
+            task.isLocked ||
+            !allowed ||
+            task.status != TaskStatus.planned ||
+            calendarDate(task.plannedDate).isBefore(day)) {
+          throw const ValidationException(
+            ValidationIssue.requiredText,
+            message: 'Adaptive task does not match this planner run.',
+          );
+        }
+      }
+      final checks = ReferenceChecks(_database);
+      await checks.studyPlanExists(normalizedRun.studyPlanId);
+      await (_database.delete(_database.studyTasks)..where(
+            (task) =>
+                task.studyPlanId.equals(normalizedRun.studyPlanId) &
+                task.isLocked.equals(false) &
+                task.status.equals(TaskStatus.planned.code) &
+                task.plannedDate.isBiggerOrEqualValue(day) &
+                task.source.isIn([
+                  TaskSource.autoPlanner.code,
+                  TaskSource.revisionEngine.code,
+                  TaskSource.catchUp.code,
+                ]),
+          ))
+          .go();
+      for (final task in normalizedTasks) {
+        await _checkReferences(task);
+        await _database.into(_database.studyTasks).insert(task.toCompanion());
+      }
+      await _database.into(_database.plannerRuns).insert(
+        PlannerRunsCompanion.insert(
+          id: normalizedRun.id,
+          studyPlanId: normalizedRun.studyPlanId,
+          trigger: normalizedRun.trigger.code,
+          startedAt: normalizedRun.startedAt,
+          completedAt: Value(normalizedRun.completedAt),
+          inputTaskCount: normalizedRun.inputTaskCount,
+          outputTaskCount: normalizedRun.outputTaskCount,
+          riskLevel: normalizedRun.riskLevel.code,
+          expectedFinishDate: Value(normalizedRun.expectedFinishDate),
+          algorithmVersion: normalizedRun.algorithmVersion,
+        ),
+      );
+      return normalizedRun;
+    });
+  }
+
+  @override
   Future<void> delete(String id) {
     return runDatabaseTransaction(_database, () async {
       final removed = await (_database.delete(_database.studyTasks)

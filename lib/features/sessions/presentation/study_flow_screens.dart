@@ -332,9 +332,13 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton(
               onPressed: () async {
-                await ref.read(studyTimerControllerProvider.notifier).finish();
+                final finished = await ref.read(studyTimerControllerProvider.notifier).finish();
                 if (context.mounted) {
-                  context.pushReplacement(AppRoutes.finishSession);
+                  context.pushReplacement(
+                    finished?.revisionId == null
+                        ? AppRoutes.finishSession
+                        : AppRoutes.revisionComplete,
+                  );
                 }
               },
               child: Text(paused ? l10n.actionFinishNow : l10n.actionFinish),
@@ -938,6 +942,13 @@ Future<void> _commit({
     studyPlanId: task?.studyPlanId ?? subject?.studyPlanId ?? '',
     followUpTaskId: ids.next(),
     revisionId: ids.next(),
+    moreRevisionIds: [ids.next(), ids.next()],
+    existingRevisions: chapter == null
+        ? const []
+        : await ref.read(revisionRepositoryProvider).watchByChapter(chapter.id).first,
+    examDate: task?.examId == null
+        ? null
+        : (await ref.read(examRepositoryProvider).findById(task!.examId!))?.startDate,
   );
   await ref.read(studySessionRepositoryProvider).commitCompletion(plan);
 }

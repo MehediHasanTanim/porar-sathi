@@ -474,5 +474,88 @@
   "taskNewStudy": "New study",
   "taskContinue": "Continue",
   "taskRevision": "Revision",
-  "taskPractice": "Practice"
+  "taskPractice": "Practice",
+  "revisionQueue": "Revision",
+  "dueToday": "Due Today",
+  "overdue": "Overdue",
+  "upcoming": "Upcoming",
+  "revisionEmpty": "No revisions in this list.",
+  "actionStartRevision": "Start Revision",
+  "lastStudied": "Last studied {date}",
+  "@lastStudied": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "previousRevisions": "{count} previous revisions",
+  "@previousRevisions": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "actionReschedule": "Reschedule",
+  "revisionCompleteTitle": "Revision complete",
+  "needAnotherRevision": "Need another revision?",
+  "nextRevision": "Next revision: {date}",
+  "@nextRevision": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "actionDone": "Done",
+  "backlogTitle": "Backlog",
+  "overdueTasks": "{count} overdue tasks",
+  "@overdueTasks": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "oldestMissed": "Oldest missed task",
+  "recoveryEstimate": "You can recover this backlog in {days} days.",
+  "@recoveryEstimate": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "actionBuildCatchUp": "Build Catch-Up Plan",
+  "catchUpTitle": "Catch-up plan",
+  "extraStudy": "Suggested extra study",
+  "actionApply": "Apply",
+  "catchUpAdded": "Catch-up plan added",
+  "actionViewUpdatedPlan": "View updated plan",
+  "replanTitle": "Your plan needs an update",
+  "replanMoved": "{count} tasks moved",
+  "@replanMoved": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "replanAdded": "{count} tasks added",
+  "@replanAdded": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "replanRemoved": "{count} tasks removed",
+  "@replanRemoved": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "finishChange": "Expected finish changed",
+  "actionApplyChanges": "Apply Changes",
+  "actionKeepPlan": "Keep Current Plan",
+  "planUpdated": "Study plan updated",
+  "actionViewToday": "View Today",
+  "actionUpdatePlan": "Update plan",
+  "planNeedsUpdate": "Your plan needs an update",
+  "daysOverdue": "{count} days overdue",
+  "@daysOverdue": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "actionStudyNow": "Study Now",
+  "actionRemove": "Remove",
+  "noBacklog": "No missed study is waiting."
 }

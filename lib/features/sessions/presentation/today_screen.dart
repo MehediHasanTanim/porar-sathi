@@ -11,7 +11,10 @@ import 'package:porar_sathi/app/widgets/empty_state.dart';
 import 'package:porar_sathi/app/widgets/primary_button.dart';
 import 'package:porar_sathi/core/database/repository_providers.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
+import 'package:porar_sathi/core/utils/id_generator.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
+import 'package:porar_sathi/features/planner/application/commit_day_rollover.dart';
+import 'package:porar_sathi/features/planner/application/load_adaptive_plan.dart';
 import 'package:porar_sathi/features/planner/domain/plan_forecast.dart';
 import 'package:porar_sathi/features/sessions/application/load_today.dart';
 import 'package:porar_sathi/features/sessions/application/study_timer_controller.dart';
@@ -33,6 +36,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
   TodayDashboard? _dashboard;
   var _loading = true;
   var _hasPlan = false;
+  var _needsReplan = false;
 
   @override
   void initState() {
@@ -52,7 +56,51 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
       }
       return;
     }
-    final today = ref.read(clockProvider).today();
+    final clock = ref.read(clockProvider);
+    final today = clock.today();
+    try {
+      await commitDayRollover(
+        tasks: ref.read(studyTaskRepositoryProvider),
+        revisions: ref.read(revisionRepositoryProvider),
+        planId: planId,
+        today: today,
+        now: clock.now(),
+      );
+    } on Object {
+      // Today still opens if rollover cannot be stored.
+    }
+    var needsReplan = false;
+    if (settings.autoReplanEnabled) {
+      try {
+        final ids = ref.read(idGeneratorProvider);
+        final proposal = await loadAdaptivePlan(
+          plans: ref.read(studyPlanRepositoryProvider),
+          subjects: ref.read(subjectRepositoryProvider),
+          chapters: ref.read(chapterRepositoryProvider),
+          exams: ref.read(examRepositoryProvider),
+          availability: ref.read(availabilityRepositoryProvider),
+          tasks: ref.read(studyTaskRepositoryProvider),
+          revisions: ref.read(revisionRepositoryProvider),
+          runs: ref.read(plannerRunRepositoryProvider),
+          planId: planId,
+          today: today,
+          createdAt: clock.now(),
+          runId: ids.next(),
+          ids: [for (var index = 0; index < 40; index++) ids.next()],
+          trigger: PlannerTrigger.missedTask,
+        );
+        if (proposal.diff.hasChanges && !proposal.diff.major) {
+          await ref.read(studyTaskRepositoryProvider).applyAdaptivePlan(
+            run: proposal.run,
+            tasks: proposal.tasks,
+            today: today,
+          );
+        }
+        needsReplan = proposal.diff.major && proposal.diff.hasChanges;
+      } on Object {
+        needsReplan = false;
+      }
+    }
     final dashboard = await loadTodayDashboard(
       planId: planId,
       today: today,
@@ -67,6 +115,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
       setState(() {
         _hasPlan = true;
         _dashboard = dashboard;
+        _needsReplan = needsReplan;
         _loading = false;
       });
     }
@@ -101,6 +150,13 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 children: [
                   _Header(now: now),
+                  if (_needsReplan) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    AppCard(
+                      onTap: () => context.push(AppRoutes.replan),
+                      child: Text(l10n.planNeedsUpdate),
+                    ),
+                  ],
                   if (timer != null &&
                       (timer.phase == TimerPhase.running ||
                           timer.phase == TimerPhase.paused)) ...[
@@ -138,7 +194,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                         children: [
                           Expanded(child: Text(l10n.revisionDueCount(dashboard.revisionDueCount))),
                           TextButton(
-                            onPressed: () => context.go(AppRoutes.syllabus),
+                            onPressed: () => context.push(AppRoutes.revisions),
                             child: Text(l10n.actionReview),
                           ),
                         ],
@@ -158,7 +214,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () => context.go(AppRoutes.plan),
+                            onPressed: () => context.push(AppRoutes.backlog),
                             child: Text(l10n.actionViewBacklog),
                           ),
                         ],

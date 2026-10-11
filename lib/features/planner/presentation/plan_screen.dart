@@ -124,6 +124,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           ),
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton(
+            onPressed: () => context.push(AppRoutes.replan),
+            child: Text(l10n.actionUpdatePlan),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton(
             onPressed: () async {
               await context.push(AppRoutes.availability);
               await _load();

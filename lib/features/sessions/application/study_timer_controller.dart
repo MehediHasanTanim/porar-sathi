@@ -27,6 +27,7 @@ class StudyTimerController extends _$StudyTimerController {
       elapsedBeforeResume: 0,
       phase: TimerPhase.running,
       quickStudy: timer.quickStudy,
+      revisionId: timer.revisionId,
     );
     return _save(running);
   }

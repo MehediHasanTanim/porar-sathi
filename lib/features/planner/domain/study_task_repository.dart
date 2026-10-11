@@ -31,5 +31,14 @@ abstract interface class StudyTaskRepository implements Repository {
     required List<StudyTask> tasks,
   });
 
+  /// Replaces future generated, catch-up, and revision tasks.
+  ///
+  /// Completed, in-progress, locked, and manual tasks stay in place.
+  Future<PlannerRun> applyAdaptivePlan({
+    required PlannerRun run,
+    required List<StudyTask> tasks,
+    required DateTime today,
+  });
+
   Future<void> delete(String id);
 }

@@ -10,8 +10,11 @@ import 'package:porar_sathi/features/onboarding/presentation/language_selection_
 import 'package:porar_sathi/features/onboarding/presentation/schedule_screens.dart';
 import 'package:porar_sathi/features/onboarding/presentation/setup_screens.dart';
 import 'package:porar_sathi/features/onboarding/presentation/splash_screen.dart';
+import 'package:porar_sathi/features/planner/presentation/backlog_screens.dart';
 import 'package:porar_sathi/features/planner/presentation/exception_screen.dart';
 import 'package:porar_sathi/features/planner/presentation/plan_screen.dart';
+import 'package:porar_sathi/features/planner/presentation/replan_preview_screen.dart';
+import 'package:porar_sathi/features/revision/presentation/revision_screens.dart';
 import 'package:porar_sathi/features/subjects/presentation/subject_screens.dart';
 import 'package:porar_sathi/features/syllabus/presentation/chapter_screens.dart';
 import 'package:porar_sathi/features/progress/presentation/progress_screen.dart';
@@ -275,6 +278,38 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => TaskDetailScreen(
           taskId: state.pathParameters['taskId']!,
         ),
+      ),
+      GoRoute(
+        path: AppRoutes.revisionComplete,
+        builder: (context, state) => const RevisionCompleteScreen(),
+      ),
+      GoRoute(
+        path: '/revisions/:revisionId',
+        builder: (context, state) => RevisionDetailScreen(
+          revisionId: state.pathParameters['revisionId']!,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.revisions,
+        builder: (context, state) => const RevisionQueueScreen(),
+      ),
+      GoRoute(
+        path: '/backlog/:taskId',
+        builder: (context, state) => BacklogTaskScreen(
+          taskId: state.pathParameters['taskId']!,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.backlog,
+        builder: (context, state) => const BacklogDashboardScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.catchUp,
+        builder: (context, state) => const CatchUpScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.replan,
+        builder: (context, state) => const ReplanPreviewScreen(),
       ),
     ],
   );

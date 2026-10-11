@@ -83,9 +83,9 @@ final class DriftStudySessionRepository implements StudySessionRepository {
           : normalizeStudyTask(plan.followUpTask!);
       final chapter = plan.chapter == null ? null : normalizeChapter(plan.chapter!);
       final subject = plan.subject == null ? null : normalizeSubject(plan.subject!);
-      final revision = plan.revision == null
-          ? null
-          : normalizeRevisionSchedule(plan.revision!);
+      final revisions = [
+        for (final item in plan.revisions) normalizeRevisionSchedule(item),
+      ];
       final checks = ReferenceChecks(_database);
       await checks.planIdForSubject(session.subjectId);
       if (session.chapterId != null) {
@@ -131,7 +131,7 @@ final class DriftStudySessionRepository implements StudySessionRepository {
             .into(_database.subjects)
             .insertOnConflictUpdate(_subjectCompanion(subject));
       }
-      if (revision != null) {
+      for (final revision in revisions) {
         await checks.studyPlanExists(revision.studyPlanId);
         await _database
             .into(_database.revisionSchedules)
@@ -143,7 +143,7 @@ final class DriftStudySessionRepository implements StudySessionRepository {
         followUpTask: followUp,
         chapter: chapter,
         subject: subject,
-        revision: revision,
+        revisions: revisions,
       );
     });
   }

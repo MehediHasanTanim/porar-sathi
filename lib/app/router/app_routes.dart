@@ -18,6 +18,11 @@ abstract final class AppRoutes {
   static const session = '/session';
   static const finishSession = '/session/finish';
   static const quickStudy = '/quick-study';
+  static const revisions = '/revisions';
+  static const revisionComplete = '/revisions/complete';
+  static const backlog = '/backlog';
+  static const catchUp = '/catch-up';
+  static const replan = '/replan';
 
   static String subject(String id) => '/subjects/$id';
   static String editSubject(String id) => '/subjects/$id/edit';
@@ -27,4 +32,6 @@ abstract final class AppRoutes {
   static String completeTask(String id) => '/tasks/$id/complete';
   static String partialTask(String id) => '/tasks/$id/partial';
   static String moveTask(String id) => '/tasks/$id/move';
+  static String revision(String id) => '/revisions/$id';
+  static String backlogTask(String id) => '/backlog/$id';
 }

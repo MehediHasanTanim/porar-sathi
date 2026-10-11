@@ -14,6 +14,8 @@ abstract interface class RevisionRepository implements Repository {
 
   Future<List<RevisionSchedule>> listDue(String studyPlanId, DateTime onOrBefore);
 
+  Future<List<RevisionSchedule>> listByPlan(String studyPlanId);
+
   Future<RevisionSchedule> save(RevisionSchedule schedule);
 
   Future<List<RevisionSchedule>> saveAll(List<RevisionSchedule> schedules);

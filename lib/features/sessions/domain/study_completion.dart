@@ -1,6 +1,7 @@
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/calendar_date.dart';
 import 'package:porar_sathi/features/planner/domain/study_task.dart';
+import 'package:porar_sathi/features/revision/domain/revision_engine.dart';
 import 'package:porar_sathi/features/revision/domain/revision_schedule.dart';
 import 'package:porar_sathi/features/sessions/domain/study_session.dart';
 import 'package:porar_sathi/features/subjects/domain/subject.dart';
@@ -14,7 +15,7 @@ final class StudyCompletionPlan {
     this.followUpTask,
     this.chapter,
     this.subject,
-    this.revision,
+    this.revisions = const [],
   });
 
   final StudySession session;
@@ -22,7 +23,9 @@ final class StudyCompletionPlan {
   final StudyTask? followUpTask;
   final Chapter? chapter;
   final Subject? subject;
-  final RevisionSchedule? revision;
+  final List<RevisionSchedule> revisions;
+
+  RevisionSchedule? get revision => revisions.isEmpty ? null : revisions.first;
 
   int get remainingMinutes {
     final current = chapter;
@@ -46,6 +49,9 @@ StudyCompletionPlan applyStudyCompletion({
   required String studyPlanId,
   required String followUpTaskId,
   required String revisionId,
+  List<String> moreRevisionIds = const [],
+  List<RevisionSchedule> existingRevisions = const [],
+  DateTime? examDate,
 }) {
   final missed = session.result == SessionResult.couldNotStudy;
   final finished = !missed &&
@@ -112,20 +118,21 @@ StudyCompletionPlan applyStudyCompletion({
     );
   }
 
-  RevisionSchedule? revision;
-  if (needsRevision && updatedChapter != null && !missed) {
-    revision = RevisionSchedule(
-      id: revisionId,
-      studyPlanId: studyPlanId,
-      chapterId: updatedChapter.id,
-      sourceStudySessionId: session.id,
-      revisionNumber: 1,
-      dueDate: calendarDate(now).add(const Duration(days: 2)),
-      estimatedMinutes: 20,
-      status: RevisionStatus.pending,
-      createdAt: now,
-    );
-  }
+  final revisions = needsRevision && updatedChapter != null && !missed
+      ? buildRevisionSchedule(
+          studyPlanId: studyPlanId,
+          chapterId: updatedChapter.id,
+          studiedOn: now,
+          studyMinutes: session.plannedMinutes,
+          confidence: session.confidenceAfter ?? updatedChapter.confidence,
+          examImportance: updatedChapter.examImportance,
+          examDate: examDate,
+          existing: existingRevisions,
+          createdAt: now,
+          ids: [revisionId, ...moreRevisionIds],
+          sourceStudySessionId: session.id,
+        )
+      : const <RevisionSchedule>[];
 
   return StudyCompletionPlan(
     session: session,
@@ -133,6 +140,6 @@ StudyCompletionPlan applyStudyCompletion({
     followUpTask: followUp,
     chapter: updatedChapter,
     subject: updatedSubject,
-    revision: revision,
+    revisions: revisions,
   );
 }

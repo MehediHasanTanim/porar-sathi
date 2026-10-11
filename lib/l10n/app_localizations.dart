@@ -2177,6 +2177,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Practice'**
   String get taskPractice;
+
+  /// No description provided for @revisionQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision'**
+  String get revisionQueue;
+
+  /// No description provided for @dueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Today'**
+  String get dueToday;
+
+  /// No description provided for @overdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get overdue;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcoming;
+
+  /// No description provided for @revisionEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No revisions in this list.'**
+  String get revisionEmpty;
+
+  /// No description provided for @actionStartRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Revision'**
+  String get actionStartRevision;
+
+  /// No description provided for @lastStudied.
+  ///
+  /// In en, this message translates to:
+  /// **'Last studied {date}'**
+  String lastStudied(String date);
+
+  /// No description provided for @previousRevisions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} previous revisions'**
+  String previousRevisions(int count);
+
+  /// No description provided for @actionReschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule'**
+  String get actionReschedule;
+
+  /// No description provided for @revisionCompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision complete'**
+  String get revisionCompleteTitle;
+
+  /// No description provided for @needAnotherRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'Need another revision?'**
+  String get needAnotherRevision;
+
+  /// No description provided for @nextRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'Next revision: {date}'**
+  String nextRevision(String date);
+
+  /// No description provided for @backlogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backlog'**
+  String get backlogTitle;
+
+  /// No description provided for @overdueTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue tasks'**
+  String overdueTasks(int count);
+
+  /// No description provided for @oldestMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest missed task'**
+  String get oldestMissed;
+
+  /// No description provided for @recoveryEstimate.
+  ///
+  /// In en, this message translates to:
+  /// **'You can recover this backlog in {days} days.'**
+  String recoveryEstimate(int days);
+
+  /// No description provided for @actionBuildCatchUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Catch-Up Plan'**
+  String get actionBuildCatchUp;
+
+  /// No description provided for @catchUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Catch-up plan'**
+  String get catchUpTitle;
+
+  /// No description provided for @extraStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested extra study'**
+  String get extraStudy;
+
+  /// No description provided for @actionApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get actionApply;
+
+  /// No description provided for @catchUpAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Catch-up plan added'**
+  String get catchUpAdded;
+
+  /// No description provided for @actionViewUpdatedPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'View updated plan'**
+  String get actionViewUpdatedPlan;
+
+  /// No description provided for @replanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan needs an update'**
+  String get replanTitle;
+
+  /// No description provided for @replanMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks moved'**
+  String replanMoved(int count);
+
+  /// No description provided for @replanAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks added'**
+  String replanAdded(int count);
+
+  /// No description provided for @replanRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks removed'**
+  String replanRemoved(int count);
+
+  /// No description provided for @finishChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected finish changed'**
+  String get finishChange;
+
+  /// No description provided for @actionApplyChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Changes'**
+  String get actionApplyChanges;
+
+  /// No description provided for @actionKeepPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Current Plan'**
+  String get actionKeepPlan;
+
+  /// No description provided for @planUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Study plan updated'**
+  String get planUpdated;
+
+  /// No description provided for @actionViewToday.
+  ///
+  /// In en, this message translates to:
+  /// **'View Today'**
+  String get actionViewToday;
+
+  /// No description provided for @actionUpdatePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Update plan'**
+  String get actionUpdatePlan;
+
+  /// No description provided for @planNeedsUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan needs an update'**
+  String get planNeedsUpdate;
+
+  /// No description provided for @daysOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days overdue'**
+  String daysOverdue(int count);
+
+  /// No description provided for @actionStudyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Study Now'**
+  String get actionStudyNow;
+
+  /// No description provided for @actionRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get actionRemove;
+
+  /// No description provided for @noBacklog.
+  ///
+  /// In en, this message translates to:
+  /// **'No missed study is waiting.'**
+  String get noBacklog;
 }
 
 class _AppLocalizationsDelegate

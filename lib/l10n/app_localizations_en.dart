@@ -1125,4 +1125,133 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskPractice => 'Practice';
+
+  @override
+  String get revisionQueue => 'Revision';
+
+  @override
+  String get dueToday => 'Due Today';
+
+  @override
+  String get overdue => 'Overdue';
+
+  @override
+  String get upcoming => 'Upcoming';
+
+  @override
+  String get revisionEmpty => 'No revisions in this list.';
+
+  @override
+  String get actionStartRevision => 'Start Revision';
+
+  @override
+  String lastStudied(String date) {
+    return 'Last studied $date';
+  }
+
+  @override
+  String previousRevisions(int count) {
+    return '$count previous revisions';
+  }
+
+  @override
+  String get actionReschedule => 'Reschedule';
+
+  @override
+  String get revisionCompleteTitle => 'Revision complete';
+
+  @override
+  String get needAnotherRevision => 'Need another revision?';
+
+  @override
+  String nextRevision(String date) {
+    return 'Next revision: $date';
+  }
+
+  @override
+  String get backlogTitle => 'Backlog';
+
+  @override
+  String overdueTasks(int count) {
+    return '$count overdue tasks';
+  }
+
+  @override
+  String get oldestMissed => 'Oldest missed task';
+
+  @override
+  String recoveryEstimate(int days) {
+    return 'You can recover this backlog in $days days.';
+  }
+
+  @override
+  String get actionBuildCatchUp => 'Build Catch-Up Plan';
+
+  @override
+  String get catchUpTitle => 'Catch-up plan';
+
+  @override
+  String get extraStudy => 'Suggested extra study';
+
+  @override
+  String get actionApply => 'Apply';
+
+  @override
+  String get catchUpAdded => 'Catch-up plan added';
+
+  @override
+  String get actionViewUpdatedPlan => 'View updated plan';
+
+  @override
+  String get replanTitle => 'Your plan needs an update';
+
+  @override
+  String replanMoved(int count) {
+    return '$count tasks moved';
+  }
+
+  @override
+  String replanAdded(int count) {
+    return '$count tasks added';
+  }
+
+  @override
+  String replanRemoved(int count) {
+    return '$count tasks removed';
+  }
+
+  @override
+  String get finishChange => 'Expected finish changed';
+
+  @override
+  String get actionApplyChanges => 'Apply Changes';
+
+  @override
+  String get actionKeepPlan => 'Keep Current Plan';
+
+  @override
+  String get planUpdated => 'Study plan updated';
+
+  @override
+  String get actionViewToday => 'View Today';
+
+  @override
+  String get actionUpdatePlan => 'Update plan';
+
+  @override
+  String get planNeedsUpdate => 'Your plan needs an update';
+
+  @override
+  String daysOverdue(int count) {
+    return '$count days overdue';
+  }
+
+  @override
+  String get actionStudyNow => 'Study Now';
+
+  @override
+  String get actionRemove => 'Remove';
+
+  @override
+  String get noBacklog => 'No missed study is waiting.';
 }
