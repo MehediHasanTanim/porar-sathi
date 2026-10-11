@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:porar_sathi/app/theme/app_spacing.dart';
-
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     required this.label,
@@ -16,10 +14,9 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: AppSpacing.buttonHeight,
       child: FilledButton(
         onPressed: onPressed,
-        child: Text(label),
+        child: Text(label, textAlign: TextAlign.center),
       ),
     );
   }

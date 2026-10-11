@@ -396,6 +396,7 @@ class _ExamDetailsScreenState extends ConsumerState<ExamDetailsScreen> {
         title: Text(exam.name),
         actions: [
           IconButton(
+            tooltip: l10n.actionEdit,
             onPressed: () async {
               await context.push('/exams/${exam.id}/edit');
               await _load();

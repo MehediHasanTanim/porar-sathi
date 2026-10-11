@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/features/settings/data/shared_preferences_settings_repository.dart';
 import 'package:porar_sathi/features/settings/domain/app_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +41,11 @@ void main() {
       defaultSessionDuration: 60,
       planningBuffer: 20,
       autoReplanEnabled: false,
+      maxDailyMinutes: 120,
+      revisionPolicy: RevisionPolicy.frequent,
+      defaultPlanningMode: PlanningMode.light,
+      defaultDailyIntensity: DailyIntensity.focused,
+      reducedMotion: true,
       onboardingStep: 'plan',
     );
 

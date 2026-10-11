@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:porar_sathi/app/router/app_routes.dart';
+import 'package:porar_sathi/app/theme/app_colors.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
 import 'package:porar_sathi/app/widgets/app_error.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/app/widgets/confirm_dialog.dart';
 import 'package:porar_sathi/app/widgets/option_chips.dart';
 import 'package:porar_sathi/core/database/repository_providers.dart';
@@ -75,11 +77,26 @@ class _SubjectFormScreenState extends ConsumerState<SubjectFormScreen> {
               spacing: AppSpacing.sm,
               children: [
                 for (final token in SubjectAppearance.colorTokens)
-                  GestureDetector(
-                    onTap: () => setState(() => _color = token),
-                    child: CircleAvatar(
-                      backgroundColor: SubjectAppearance.colorFor(token),
-                      child: _color == token ? const Icon(Icons.check, color: Colors.white) : null,
+                  Semantics(
+                    button: true,
+                    selected: _color == token,
+                    label: '${l10n.color} $token',
+                    child: GestureDetector(
+                      onTap: () => setState(() => _color = token),
+                      child: CircleAvatar(
+                        backgroundColor: SubjectAppearance.colorFor(token),
+                        child: _color == token
+                            ? Icon(
+                                Icons.check,
+                                color: ThemeData.estimateBrightnessForColor(
+                                          SubjectAppearance.colorFor(token),
+                                        ) ==
+                                        Brightness.dark
+                                    ? Colors.white
+                                    : AppPalette.onSurface,
+                              )
+                            : null,
+                      ),
                     ),
                   ),
               ],
@@ -93,6 +110,7 @@ class _SubjectFormScreenState extends ConsumerState<SubjectFormScreen> {
               children: [
                 for (final token in SubjectAppearance.iconTokens)
                   IconButton(
+                    tooltip: '${l10n.icon} $token',
                     isSelected: _icon == token,
                     onPressed: () => setState(() => _icon = token),
                     icon: Icon(SubjectAppearance.iconFor(token)),
@@ -232,6 +250,7 @@ class _SubjectFormScreenState extends ConsumerState<SubjectFormScreen> {
       title: l10n.deleteSubjectTitle(existing.name),
       body: l10n.deleteSubjectBody,
       confirmLabel: l10n.actionDelete,
+      destructive: true,
     );
     if (!confirmed || !mounted) {
       return;
@@ -246,7 +265,7 @@ class _SubjectFormScreenState extends ConsumerState<SubjectFormScreen> {
         return;
       }
       if (error.message?.contains('Study history') != true) {
-        showAppError(context, error);
+        await showDeleteFailed(context, onRetry: _delete);
         return;
       }
       final erase = await confirmAction(
@@ -254,6 +273,7 @@ class _SubjectFormScreenState extends ConsumerState<SubjectFormScreen> {
         title: l10n.deleteSubjectTitle(existing.name),
         body: l10n.deleteHistoryBody,
         confirmLabel: l10n.actionDeleteHistory,
+        destructive: true,
       );
       if (!erase) {
         return;
@@ -309,6 +329,7 @@ class _SubjectDetailsScreenState extends ConsumerState<SubjectDetailsScreen> {
         title: Text(subject.name),
         actions: [
           IconButton(
+            tooltip: l10n.actionEdit,
             onPressed: () async {
               await context.push(AppRoutes.editSubject(subject.id));
               await _load();

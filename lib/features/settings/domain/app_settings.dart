@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'package:porar_sathi/core/domain/academic_enums.dart';
+
 part 'app_settings.freezed.dart';
 
 enum AppLanguage {
@@ -68,6 +70,7 @@ abstract final class SettingsDefaults {
   static const sessionMinutes = 45;
   static const planningBufferPercent = 15;
   static const autoReplan = true;
+  static const maxDailyMinutes = 180;
 }
 
 @freezed
@@ -81,6 +84,11 @@ abstract class AppSettings with _$AppSettings {
     required int defaultSessionDuration,
     required int planningBuffer,
     required bool autoReplanEnabled,
+    required int maxDailyMinutes,
+    required RevisionPolicy revisionPolicy,
+    required PlanningMode defaultPlanningMode,
+    required DailyIntensity defaultDailyIntensity,
+    required bool reducedMotion,
     required String onboardingStep,
   }) = _AppSettings;
 }
@@ -92,8 +100,13 @@ AppSettings initialAppSettings(AppLanguage language) {
     onboardingComplete: false,
     firstDayOfWeek: FirstDayOfWeek.saturday,
     defaultSessionDuration: SettingsDefaults.sessionMinutes,
-      planningBuffer: SettingsDefaults.planningBufferPercent,
-      autoReplanEnabled: SettingsDefaults.autoReplan,
-      onboardingStep: 'language',
-    );
+    planningBuffer: SettingsDefaults.planningBufferPercent,
+    autoReplanEnabled: SettingsDefaults.autoReplan,
+    maxDailyMinutes: SettingsDefaults.maxDailyMinutes,
+    revisionPolicy: RevisionPolicy.standard,
+    defaultPlanningMode: PlanningMode.balanced,
+    defaultDailyIntensity: DailyIntensity.normal,
+    reducedMotion: false,
+    onboardingStep: 'language',
+  );
 }

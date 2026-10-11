@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/features/settings/domain/app_settings.dart';
 import 'package:porar_sathi/features/settings/domain/settings_repository.dart';
 
@@ -21,6 +22,11 @@ final class SharedPreferencesSettingsRepository implements SettingsRepository {
   static const defaultSessionDurationKey = 'default_session_duration';
   static const planningBufferKey = 'planning_buffer';
   static const autoReplanEnabledKey = 'auto_replan_enabled';
+  static const maxDailyMinutesKey = 'max_daily_minutes';
+  static const revisionPolicyKey = 'revision_policy';
+  static const defaultPlanningModeKey = 'default_planning_mode';
+  static const defaultDailyIntensityKey = 'default_daily_intensity';
+  static const reducedMotionKey = 'reduced_motion';
   static const onboardingStepKey = 'onboarding_step';
 
   @override
@@ -47,6 +53,25 @@ final class SharedPreferencesSettingsRepository implements SettingsRepository {
       autoReplanEnabled:
           _preferences.getBool(autoReplanEnabledKey) ??
           SettingsDefaults.autoReplan,
+      maxDailyMinutes:
+          _preferences.getInt(maxDailyMinutesKey) ??
+          SettingsDefaults.maxDailyMinutes,
+      revisionPolicy: RevisionPolicy.fromStored(
+        _preferences.getString(revisionPolicyKey),
+      ),
+      defaultPlanningMode: _storedOr(
+        PlanningMode.values,
+        _preferences.getString(defaultPlanningModeKey),
+        (value) => value.code,
+        PlanningMode.balanced,
+      ),
+      defaultDailyIntensity: _storedOr(
+        DailyIntensity.values,
+        _preferences.getString(defaultDailyIntensityKey),
+        (value) => value.code,
+        DailyIntensity.normal,
+      ),
+      reducedMotion: _preferences.getBool(reducedMotionKey) ?? false,
       onboardingStep: _preferences.getString(onboardingStepKey) ?? 'language',
     );
   }
@@ -75,6 +100,34 @@ final class SharedPreferencesSettingsRepository implements SettingsRepository {
     );
     await _preferences.setInt(planningBufferKey, settings.planningBuffer);
     await _preferences.setBool(autoReplanEnabledKey, settings.autoReplanEnabled);
+    await _preferences.setInt(maxDailyMinutesKey, settings.maxDailyMinutes);
+    await _preferences.setString(
+      revisionPolicyKey,
+      settings.revisionPolicy.code,
+    );
+    await _preferences.setString(
+      defaultPlanningModeKey,
+      settings.defaultPlanningMode.code,
+    );
+    await _preferences.setString(
+      defaultDailyIntensityKey,
+      settings.defaultDailyIntensity.code,
+    );
+    await _preferences.setBool(reducedMotionKey, settings.reducedMotion);
     await _preferences.setString(onboardingStepKey, settings.onboardingStep);
   }
+}
+
+T _storedOr<T>(
+  List<T> values,
+  String? code,
+  String Function(T value) read,
+  T fallback,
+) {
+  for (final value in values) {
+    if (read(value) == code) {
+      return value;
+    }
+  }
+  return fallback;
 }

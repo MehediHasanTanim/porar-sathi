@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/app/widgets/primary_button.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/features/backup_restore/application/backup_providers.dart';
@@ -107,18 +108,9 @@ class _ExportBackupScreenState extends ConsumerState<ExportBackupScreen> {
           ],
           if (_failed) ...[
             const SizedBox(height: AppSpacing.lg),
-            Text(
-              l10n.backupFailedTitle,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            OutlinedButton(
-              onPressed: _busy ? null : _export,
-              child: Text(l10n.actionRetry),
-            ),
-            TextButton(
-              onPressed: _busy ? null : _export,
-              child: Text(l10n.actionChooseAnotherLocation),
+            BackupFailedState(
+              onRetry: _busy ? null : _export,
+              onChooseLocation: _busy ? null : _export,
             ),
           ],
           const SizedBox(height: AppSpacing.lg),

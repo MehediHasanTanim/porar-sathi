@@ -29,18 +29,33 @@ class PorarSathiApp extends ConsumerWidget {
       });
     }
 
+    final reduceMotion =
+        (settings?.reducedMotion ?? false) ||
+        WidgetsBinding
+            .instance
+            .platformDispatcher
+            .accessibilityFeatures
+            .disableAnimations;
+
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
+      theme: AppTheme.light(reducedMotion: reduceMotion),
+      darkTheme: AppTheme.dark(reducedMotion: reduceMotion),
       themeMode: settings?.theme.materialThemeMode ?? ThemeMode.system,
       locale: settings?.language.locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,
       builder: (context, child) {
-        final content = child ?? const SizedBox.shrink();
+        final media = MediaQuery.of(context);
+        var content = child ?? const SizedBox.shrink();
+        if (reduceMotion && !media.disableAnimations) {
+          content = MediaQuery(
+            data: media.copyWith(disableAnimations: true),
+            child: content,
+          );
+        }
         if (flavor.isProduction) {
           return content;
         }

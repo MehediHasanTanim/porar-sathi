@@ -7,6 +7,8 @@ Future<bool> confirmAction(
   required String title,
   required String body,
   required String confirmLabel,
+  String? cancelLabel,
+  bool destructive = false,
 }) async {
   final l10n = AppLocalizations.of(context);
   final result = await showDialog<bool>(
@@ -17,9 +19,15 @@ Future<bool> confirmAction(
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: Text(l10n.actionCancel),
+          child: Text(cancelLabel ?? l10n.actionCancel),
         ),
         FilledButton(
+          style: destructive
+              ? FilledButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  foregroundColor: Theme.of(context).colorScheme.onError,
+                )
+              : null,
           onPressed: () => Navigator.pop(context, true),
           child: Text(confirmLabel),
         ),
@@ -27,4 +35,16 @@ Future<bool> confirmAction(
     ),
   );
   return result ?? false;
+}
+
+Future<bool> confirmDiscard(BuildContext context) {
+  final l10n = AppLocalizations.of(context);
+  return confirmAction(
+    context,
+    title: l10n.discardChangesTitle,
+    body: l10n.discardChangesBody,
+    confirmLabel: l10n.actionDiscard,
+    cancelLabel: l10n.actionKeepEditing,
+    destructive: true,
+  );
 }

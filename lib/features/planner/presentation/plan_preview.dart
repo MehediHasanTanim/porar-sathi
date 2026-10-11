@@ -5,6 +5,7 @@ import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/theme/app_colors.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
 import 'package:porar_sathi/app/widgets/app_card.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/calendar_date.dart';
 import 'package:porar_sathi/features/planner/domain/generate_plan.dart';
@@ -75,16 +76,18 @@ class PlanPreviewContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  l10n.planShortfall(
+                ImpossibleScheduleNotice(
+                  title: l10n.riskImpossible,
+                  summary: l10n.planShortfall(
                     LocaleFormat.formatDuration(forecast.requiredMinutes, l10n),
                     LocaleFormat.formatDuration(forecast.availableMinutes, l10n),
                     LocaleFormat.formatDuration(forecast.shortfallMinutes, l10n),
                   ),
-                  style: TextStyle(color: colors.danger),
+                  suggestions: [
+                    for (final suggestion in forecast.suggestions)
+                      _suggestionLabel(l10n, suggestion),
+                  ],
                 ),
-                for (final suggestion in forecast.suggestions)
-                  Text('• ${_suggestionLabel(l10n, suggestion)}'),
               ],
             ),
           ),

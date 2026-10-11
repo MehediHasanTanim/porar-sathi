@@ -24,9 +24,9 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   final Color canvas;
 
   static const light = AppSemanticColors(
-    success: Color(0xFF16A34A),
-    warning: Color(0xFFD97706),
-    danger: Color(0xFFDC3E3E),
+    success: Color(0xFF127A38),
+    warning: Color(0xFFB45309),
+    danger: Color(0xFFC62828),
     info: Color(0xFF2F6FED),
     muted: Color(0xFF667085),
     outline: Color(0xFFE4E9F2),

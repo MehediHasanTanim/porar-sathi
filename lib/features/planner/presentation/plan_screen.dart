@@ -160,6 +160,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     : LocaleFormat.formatDuration(exception.availableMinutesOverride ?? 0, l10n),
               ),
               trailing: IconButton(
+                tooltip: l10n.actionDelete,
                 onPressed: () async {
                   await ref.read(availabilityRepositoryProvider).deleteException(exception.id);
                   await _load();

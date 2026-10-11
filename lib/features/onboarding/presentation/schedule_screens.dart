@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/router/app_routes.dart';
 import 'package:porar_sathi/app/theme/app_colors.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
 import 'package:porar_sathi/app/widgets/app_card.dart';
 import 'package:porar_sathi/app/widgets/app_error.dart';
@@ -315,6 +316,7 @@ class _DayRow extends StatelessWidget {
             onChanged: (value) => onChanged(value ? 120 : 0),
           ),
           IconButton(
+            tooltip: l10n.changeStudyTime,
             onPressed: !enabled
                 ? null
                 : () async {
@@ -694,10 +696,15 @@ class _PlanSummaryScreenState extends ConsumerState<PlanSummaryScreen> {
     final l10n = AppLocalizations.of(context);
     final result = _result;
     if (_error != null) {
-      return Scaffold(body: Center(child: Text(l10n.errorGeneric)));
+      return Scaffold(
+        body: PlannerFailureState(
+          onRetry: _load,
+          onReview: () => context.go(OnboardingStep.availability.route),
+        ),
+      );
     }
     if (result == null) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Scaffold(body: LoadingState(message: l10n.stateCreatingPlan));
     }
     final today = ref.read(clockProvider).today();
     return OnboardingScaffold(
@@ -799,7 +806,7 @@ class _NotificationEducationScreenState
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: Row(
                 children: [
-                  const Icon(Icons.check_circle, color: AppPalette.secondary),
+                  Icon(Icons.check_circle, color: context.semanticColors.success),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(child: Text(label)),
                 ],
@@ -886,9 +893,9 @@ class SetupCompleteScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(l10n.completeNoTasks),
                 const SizedBox(height: AppSpacing.sm),
-                const Icon(
+                Icon(
                   Icons.check_circle,
-                  color: AppPalette.secondary,
+                  color: context.semanticColors.success,
                   size: 36,
                 ),
               ],

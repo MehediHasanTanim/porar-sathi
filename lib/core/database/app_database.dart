@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import 'package:porar_sathi/core/database/migration_notice.dart';
 import 'package:porar_sathi/core/database/tables.dart';
 
 part 'app_database.g.dart';
@@ -49,6 +50,9 @@ class AppDatabase extends _$AppDatabase {
 
 /// Sequential, non-destructive upgrades. Version 1 had no tables.
 Future<void> migrateAppDatabase(Migrator migrator, int from, int to) async {
+  if (from < to) {
+    databaseMigrationNotice.value = true;
+  }
   if (from < 2 && to >= 2) {
     await migrator.createAll();
   }

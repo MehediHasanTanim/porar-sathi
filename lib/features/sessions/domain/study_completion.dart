@@ -52,6 +52,7 @@ StudyCompletionPlan applyStudyCompletion({
   List<String> moreRevisionIds = const [],
   List<RevisionSchedule> existingRevisions = const [],
   DateTime? examDate,
+  RevisionPolicy revisionPolicy = RevisionPolicy.standard,
 }) {
   final missed = session.result == SessionResult.couldNotStudy;
   final finished = !missed &&
@@ -131,6 +132,7 @@ StudyCompletionPlan applyStudyCompletion({
           createdAt: now,
           ids: [revisionId, ...moreRevisionIds],
           sourceStudySessionId: session.id,
+          policy: revisionPolicy,
         )
       : const <RevisionSchedule>[];
 

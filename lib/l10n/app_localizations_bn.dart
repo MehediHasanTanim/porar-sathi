@@ -1197,7 +1197,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get extraStudy => 'বাড়তি পড়ার সময়';
 
   @override
-  String get actionApply => 'বসান';
+  String get actionApply => 'প্রয়োগ করুন';
 
   @override
   String get catchUpAdded => 'ধরার পরিকল্পনা যোগ হয়েছে';
@@ -1645,4 +1645,121 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get backupReset => 'মুছে ফেলা';
+
+  @override
+  String get maxDailyWorkload => 'দিনে সর্বোচ্চ পড়া';
+
+  @override
+  String get revisionPolicy => 'পুনরাবৃত্তির নিয়ম';
+
+  @override
+  String get revisionStandard => 'স্বাভাবিক';
+
+  @override
+  String get revisionStandardHelp =>
+      '২ দিন পর, ৭ দিন পর, এবং পরীক্ষার আগের দিন।';
+
+  @override
+  String get revisionLight => 'হালকা';
+
+  @override
+  String get revisionLightHelp => '৭ দিন পর, এবং পরীক্ষার আগের দিন।';
+
+  @override
+  String get revisionFrequent => 'ঘন ঘন';
+
+  @override
+  String get revisionFrequentHelp => '১ দিন, ৩ দিন, এবং ৭ দিন পর।';
+
+  @override
+  String get reducedMotion => 'কম অ্যানিমেশন';
+
+  @override
+  String get reducedMotionHelp =>
+      'অ্যানিমেশন কমে যায়। ফোনের সেটিংও মান্য হয়।';
+
+  @override
+  String get searchSyllabus => 'বিষয় ও অধ্যায় খুঁজুন';
+
+  @override
+  String get searchChapters => 'অধ্যায় খুঁজুন';
+
+  @override
+  String noSearchResults(String query) {
+    return '\"$query\" এর জন্য কিছু পাওয়া যায়নি।';
+  }
+
+  @override
+  String get actionClearFilters => 'ফিল্টার সরান';
+
+  @override
+  String get actionTryAnotherSearch => 'আবার খুঁজুন';
+
+  @override
+  String get actionClear => 'মুছুন';
+
+  @override
+  String get filters => 'ফিল্টার';
+
+  @override
+  String get discardChangesTitle => 'বদলগুলো বাদ দেবেন?';
+
+  @override
+  String get discardChangesBody => 'এই পর্দার বদলগুলো থাকবে না।';
+
+  @override
+  String get actionKeepEditing => 'সম্পাদনা চালিয়ে যান';
+
+  @override
+  String get actionDiscard => 'বাদ দিন';
+
+  @override
+  String get plannerFailedTitle => 'সঠিক পরিকল্পনা তৈরি হয়নি।';
+
+  @override
+  String get plannerFailedBody =>
+      'পড়ার সময়, পরীক্ষার তারিখ ও অধ্যায়ের আনুমানিক সময় দেখে নিন।';
+
+  @override
+  String get actionReviewSetup => 'সেটআপ দেখুন';
+
+  @override
+  String get migrationTitle => 'পড়ার সাথী আপডেট হচ্ছে';
+
+  @override
+  String get migrationBody =>
+      'এই সংস্করণের জন্য আপনার পড়ার তথ্য প্রস্তুত করা হচ্ছে।';
+
+  @override
+  String get actionEdit => 'সম্পাদনা';
+
+  @override
+  String get deleteFailedTitle => 'এটি মুছে ফেলা যায়নি।';
+
+  @override
+  String get changeStudyTime => 'পড়ার সময় বদলান';
+
+  @override
+  String get difficultyVeryEasy => 'খুব সহজ';
+
+  @override
+  String get difficultyVeryDifficult => 'খুব কঠিন';
+
+  @override
+  String get confidenceVeryLow => 'খুব কম';
+
+  @override
+  String get confidenceVeryHigh => 'খুব বেশি';
+
+  @override
+  String get intensityIntensive => 'ঘন পড়া';
+
+  @override
+  String get settingsApplyToPlan => 'এই পরিকল্পনায় এবং পরেরটিতেও থাকবে।';
+
+  @override
+  String get statusPlanned => 'পরিকল্পনায় আছে';
+
+  @override
+  String get statusRevised => 'পুনরাবৃত্তি হয়েছে';
 }

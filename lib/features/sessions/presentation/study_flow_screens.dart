@@ -1049,6 +1049,8 @@ Future<void> _commit({
         ? null
         : (await ref.read(examRepositoryProvider).findById(task!.examId!))
               ?.startDate,
+    revisionPolicy: (await ref.read(settingsControllerProvider.future))
+        .revisionPolicy,
   );
   await ref.read(studySessionRepositoryProvider).commitCompletion(plan);
   await reconcileReminders(ref);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:porar_sathi/app/theme/app_spacing.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/features/notifications/application/notification_providers.dart';
 import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/notifications/domain/notification_preferences.dart';
@@ -68,32 +69,21 @@ class _NotificationSettingsScreenState
     return Scaffold(
       appBar: AppBar(title: Text(l10n.notificationSettingsTitle)),
       body: preferences == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingState()
           : ListView(
               padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
                 if (_permitted == false) ...[
-                  Text(
-                    l10n.notificationsDeniedTitle,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: AppSpacing.xs),
-                  Text(l10n.notificationsDeniedBody),
-                  const SizedBox(height: AppSpacing.sm),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      onPressed: () async {
-                        try {
-                          await ref
-                              .read(notificationSchedulerProvider)
-                              .openSystemSettings();
-                        } on Object {
-                          // The explanation above stays on screen.
-                        }
-                      },
-                      child: Text(l10n.actionOpenSettings),
-                    ),
+                  NotificationDeniedState(
+                    onOpenSettings: () async {
+                      try {
+                        await ref
+                            .read(notificationSchedulerProvider)
+                            .openSystemSettings();
+                      } on Object {
+                        // The explanation above stays on screen.
+                      }
+                    },
                   ),
                   const SizedBox(height: AppSpacing.md),
                 ],

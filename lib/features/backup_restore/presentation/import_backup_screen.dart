@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/router/app_routes.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/app/widgets/primary_button.dart';
 import 'package:porar_sathi/features/backup_restore/application/backup_providers.dart';
 import 'package:porar_sathi/features/backup_restore/domain/backup_archive.dart';
@@ -52,7 +53,7 @@ class _ImportBackupScreenState extends ConsumerState<ImportBackupScreen> {
           _ImportStep.check => _checking(l10n),
           _ImportStep.summary => _summary(l10n),
           _ImportStep.confirm => _confirm(l10n),
-          _ImportStep.failed => _failed(l10n),
+          _ImportStep.failed => _failed(),
           _ImportStep.done => _done(l10n),
         },
       ),
@@ -170,25 +171,17 @@ class _ImportBackupScreenState extends ConsumerState<ImportBackupScreen> {
     ];
   }
 
-  List<Widget> _failed(AppLocalizations l10n) {
+  List<Widget> _failed() {
     return [
-      Text(
-        l10n.restoreFailedTitle,
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
-      const SizedBox(height: AppSpacing.sm),
-      Text(l10n.restoreFailedBody),
-      const SizedBox(height: AppSpacing.lg),
-      PrimaryButton(label: l10n.actionRetry, onPressed: _restore),
-      TextButton(
-        onPressed: () => setState(() {
+      RestoreFailedState(
+        onRetry: _restore,
+        onChooseAnother: () => setState(() {
           _step = _ImportStep.choose;
           _accepted = null;
           _problem = null;
           _bytes = null;
           _needsPassword = false;
         }),
-        child: Text(l10n.actionChooseAnotherBackup),
       ),
     ];
   }

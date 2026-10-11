@@ -3101,6 +3101,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset'**
   String get backupReset;
+
+  /// No description provided for @maxDailyWorkload.
+  ///
+  /// In en, this message translates to:
+  /// **'Max daily workload'**
+  String get maxDailyWorkload;
+
+  /// No description provided for @revisionPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision policy'**
+  String get revisionPolicy;
+
+  /// No description provided for @revisionStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get revisionStandard;
+
+  /// No description provided for @revisionStandardHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Review after 2 days, after 7 days, and the day before the exam.'**
+  String get revisionStandardHelp;
+
+  /// No description provided for @revisionLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get revisionLight;
+
+  /// No description provided for @revisionLightHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Review after 7 days and the day before the exam.'**
+  String get revisionLightHelp;
+
+  /// No description provided for @revisionFrequent.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequent'**
+  String get revisionFrequent;
+
+  /// No description provided for @revisionFrequentHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Review after 1 day, 3 days, and 7 days.'**
+  String get revisionFrequentHelp;
+
+  /// No description provided for @reducedMotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduced motion'**
+  String get reducedMotion;
+
+  /// No description provided for @reducedMotionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Use fewer animations. The system setting is also respected.'**
+  String get reducedMotionHelp;
+
+  /// No description provided for @searchSyllabus.
+  ///
+  /// In en, this message translates to:
+  /// **'Search subjects and chapters'**
+  String get searchSyllabus;
+
+  /// No description provided for @searchChapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Search chapters'**
+  String get searchChapters;
+
+  /// No description provided for @noSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results for \"{query}\".'**
+  String noSearchResults(String query);
+
+  /// No description provided for @actionClearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get actionClearFilters;
+
+  /// No description provided for @actionTryAnotherSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Another Search'**
+  String get actionTryAnotherSearch;
+
+  /// No description provided for @actionClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get actionClear;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @discardChangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard your changes?'**
+  String get discardChangesTitle;
+
+  /// No description provided for @discardChangesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your edits on this screen will be lost.'**
+  String get discardChangesBody;
+
+  /// No description provided for @actionKeepEditing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Editing'**
+  String get actionKeepEditing;
+
+  /// No description provided for @actionDiscard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get actionDiscard;
+
+  /// No description provided for @plannerFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t create a valid plan.'**
+  String get plannerFailedTitle;
+
+  /// No description provided for @plannerFailedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your study time, exam date, and chapter estimates.'**
+  String get plannerFailedBody;
+
+  /// No description provided for @actionReviewSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Setup'**
+  String get actionReviewSetup;
+
+  /// No description provided for @migrationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating Pocket Tutor'**
+  String get migrationTitle;
+
+  /// No description provided for @migrationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your study data is being prepared for this version.'**
+  String get migrationBody;
+
+  /// No description provided for @actionEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get actionEdit;
+
+  /// No description provided for @deleteFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete this item.'**
+  String get deleteFailedTitle;
+
+  /// No description provided for @changeStudyTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Change study time'**
+  String get changeStudyTime;
+
+  /// No description provided for @difficultyVeryEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Easy'**
+  String get difficultyVeryEasy;
+
+  /// No description provided for @difficultyVeryDifficult.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Difficult'**
+  String get difficultyVeryDifficult;
+
+  /// No description provided for @confidenceVeryLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Low'**
+  String get confidenceVeryLow;
+
+  /// No description provided for @confidenceVeryHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Very High'**
+  String get confidenceVeryHigh;
+
+  /// No description provided for @intensityIntensive.
+  ///
+  /// In en, this message translates to:
+  /// **'Intensive'**
+  String get intensityIntensive;
+
+  /// No description provided for @settingsApplyToPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved for this plan and for the next one.'**
+  String get settingsApplyToPlan;
+
+  /// No description provided for @statusPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get statusPlanned;
+
+  /// No description provided for @statusRevised.
+  ///
+  /// In en, this message translates to:
+  /// **'Revised'**
+  String get statusRevised;
 }
 
 class _AppLocalizationsDelegate

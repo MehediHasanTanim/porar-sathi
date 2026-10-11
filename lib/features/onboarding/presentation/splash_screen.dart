@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:porar_sathi/app/theme/app_colors.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
+import 'package:porar_sathi/core/database/migration_notice.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
 import 'package:porar_sathi/l10n/app_localizations.dart';
@@ -28,6 +30,7 @@ class SplashScreen extends ConsumerWidget {
                 'assets/branding/app_icon.png',
                 width: 112,
                 height: 112,
+                semanticLabel: l10n.appName,
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
@@ -45,34 +48,47 @@ class SplashScreen extends ConsumerWidget {
               const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.splashTagline,
-                style: theme.textTheme.bodyMedium?.copyWith(color: colors.muted),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colors.muted,
+                ),
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
-              settings.when(
-                data: (_) => const _LoadingMark(),
-                loading: () => const _LoadingMark(),
-                error: (_, _) => Column(
-                  children: [
-                    Text(
-                      l10n.errorGeneric,
-                      style: theme.textTheme.bodyMedium,
-                      textAlign: TextAlign.center,
+              ValueListenableBuilder<bool>(
+                valueListenable: databaseMigrationNotice,
+                builder: (context, migrating, _) {
+                  if (migrating) {
+                    return const MigrationState();
+                  }
+                  return settings.when(
+                    data: (_) => const _LoadingMark(),
+                    loading: () => const _LoadingMark(),
+                    error: (_, _) => Column(
+                      children: [
+                        Text(
+                          l10n.errorGeneric,
+                          style: theme.textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        FilledButton(
+                          onPressed: () => ref
+                              .read(settingsControllerProvider.notifier)
+                              .reload(),
+                          child: Text(l10n.actionRetry),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: AppSpacing.md),
-                    FilledButton(
-                      onPressed: () =>
-                          ref.read(settingsControllerProvider.notifier).reload(),
-                      child: Text(l10n.actionRetry),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
               const SizedBox(height: AppSpacing.md),
               if (!settings.hasError)
                 Text(
                   l10n.loadingStudySpace,
-                  style: theme.textTheme.bodySmall?.copyWith(color: colors.muted),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colors.muted,
+                  ),
                 ),
               const SizedBox(height: AppSpacing.xl),
               Text(

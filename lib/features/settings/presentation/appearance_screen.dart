@@ -13,8 +13,9 @@ class AppearanceScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final theme = ref.watch(settingsControllerProvider).asData?.value.theme ??
-        AppThemePreference.system;
+    final settings = ref.watch(settingsControllerProvider).asData?.value;
+    final theme = settings?.theme ?? AppThemePreference.system;
+    final reducedMotion = settings?.reducedMotion ?? false;
     final controller = ref.read(settingsControllerProvider.notifier);
 
     return Scaffold(
@@ -44,6 +45,15 @@ class AppearanceScreen extends ConsumerWidget {
             subtitle: '',
             selected: theme == AppThemePreference.system,
             onTap: () => controller.setTheme(AppThemePreference.system),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(l10n.reducedMotion),
+            subtitle: Text(l10n.reducedMotionHelp),
+            value: reducedMotion,
+            onChanged: (value) =>
+                controller.setReducedMotion(enabled: value),
           ),
         ],
       ),

@@ -284,6 +284,31 @@ enum PlannerTrigger {
       StoredEnum.byCode(values, code, (value) => value.code);
 }
 
+/// How soon finished chapters come back for review.
+enum RevisionPolicy {
+  /// Two days later, seven days later, then the day before the exam.
+  standard('STANDARD'),
+
+  /// Seven days later, then the day before the exam.
+  light('LIGHT'),
+
+  /// One day, three days, and seven days later.
+  frequent('FREQUENT');
+
+  const RevisionPolicy(this.code);
+
+  final String code;
+
+  static RevisionPolicy fromStored(String? code) {
+    for (final value in values) {
+      if (value.code == code) {
+        return value;
+      }
+    }
+    return RevisionPolicy.standard;
+  }
+}
+
 enum PlannerRiskLevel {
   none('NONE'),
   low('LOW'),

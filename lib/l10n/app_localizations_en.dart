@@ -1655,4 +1655,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backupReset => 'Reset';
+
+  @override
+  String get maxDailyWorkload => 'Max daily workload';
+
+  @override
+  String get revisionPolicy => 'Revision policy';
+
+  @override
+  String get revisionStandard => 'Standard';
+
+  @override
+  String get revisionStandardHelp =>
+      'Review after 2 days, after 7 days, and the day before the exam.';
+
+  @override
+  String get revisionLight => 'Light';
+
+  @override
+  String get revisionLightHelp =>
+      'Review after 7 days and the day before the exam.';
+
+  @override
+  String get revisionFrequent => 'Frequent';
+
+  @override
+  String get revisionFrequentHelp => 'Review after 1 day, 3 days, and 7 days.';
+
+  @override
+  String get reducedMotion => 'Reduced motion';
+
+  @override
+  String get reducedMotionHelp =>
+      'Use fewer animations. The system setting is also respected.';
+
+  @override
+  String get searchSyllabus => 'Search subjects and chapters';
+
+  @override
+  String get searchChapters => 'Search chapters';
+
+  @override
+  String noSearchResults(String query) {
+    return 'No results for \"$query\".';
+  }
+
+  @override
+  String get actionClearFilters => 'Clear Filters';
+
+  @override
+  String get actionTryAnotherSearch => 'Try Another Search';
+
+  @override
+  String get actionClear => 'Clear';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get discardChangesTitle => 'Discard your changes?';
+
+  @override
+  String get discardChangesBody => 'Your edits on this screen will be lost.';
+
+  @override
+  String get actionKeepEditing => 'Keep Editing';
+
+  @override
+  String get actionDiscard => 'Discard';
+
+  @override
+  String get plannerFailedTitle => 'We couldn\'t create a valid plan.';
+
+  @override
+  String get plannerFailedBody =>
+      'Check your study time, exam date, and chapter estimates.';
+
+  @override
+  String get actionReviewSetup => 'Review Setup';
+
+  @override
+  String get migrationTitle => 'Updating Pocket Tutor';
+
+  @override
+  String get migrationBody =>
+      'Your study data is being prepared for this version.';
+
+  @override
+  String get actionEdit => 'Edit';
+
+  @override
+  String get deleteFailedTitle => 'Couldn\'t delete this item.';
+
+  @override
+  String get changeStudyTime => 'Change study time';
+
+  @override
+  String get difficultyVeryEasy => 'Very Easy';
+
+  @override
+  String get difficultyVeryDifficult => 'Very Difficult';
+
+  @override
+  String get confidenceVeryLow => 'Very Low';
+
+  @override
+  String get confidenceVeryHigh => 'Very High';
+
+  @override
+  String get intensityIntensive => 'Intensive';
+
+  @override
+  String get settingsApplyToPlan => 'Saved for this plan and for the next one.';
+
+  @override
+  String get statusPlanned => 'Planned';
+
+  @override
+  String get statusRevised => 'Revised';
 }

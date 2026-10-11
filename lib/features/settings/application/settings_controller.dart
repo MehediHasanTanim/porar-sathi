@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:porar_sathi/core/domain/academic_enums.dart';
+import 'package:porar_sathi/core/errors/app_exception.dart';
 import 'package:porar_sathi/core/result/result.dart';
 import 'package:porar_sathi/core/validation/validators.dart';
 import 'package:porar_sathi/features/settings/data/settings_repository_provider.dart';
@@ -54,6 +56,37 @@ class SettingsController extends _$SettingsController {
 
   Future<void> setAutoReplanEnabled({required bool enabled}) {
     return _update((settings) => settings.copyWith(autoReplanEnabled: enabled));
+  }
+
+  Future<void> setMaxDailyMinutes(int minutes) async {
+    final result = Validators.availabilityMinutes(minutes);
+    switch (result) {
+      case Success(:final value):
+        if (value == 0) {
+          throw const ValidationException(ValidationIssue.availabilityMinutes);
+        }
+        await _update((settings) => settings.copyWith(maxDailyMinutes: value));
+      case Failure(:final error):
+        throw error;
+    }
+  }
+
+  Future<void> setRevisionPolicy(RevisionPolicy policy) {
+    return _update((settings) => settings.copyWith(revisionPolicy: policy));
+  }
+
+  Future<void> setDefaultPlanningMode(PlanningMode mode) {
+    return _update((settings) => settings.copyWith(defaultPlanningMode: mode));
+  }
+
+  Future<void> setDefaultDailyIntensity(DailyIntensity intensity) {
+    return _update(
+      (settings) => settings.copyWith(defaultDailyIntensity: intensity),
+    );
+  }
+
+  Future<void> setReducedMotion({required bool enabled}) {
+    return _update((settings) => settings.copyWith(reducedMotion: enabled));
   }
 
   Future<void> setOnboardingStep(String step) {

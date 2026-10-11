@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:porar_sathi/app/localization/locale_format.dart';
 import 'package:porar_sathi/app/router/app_routes.dart';
 import 'package:porar_sathi/app/theme/app_spacing.dart';
-import 'package:porar_sathi/app/widgets/app_error.dart';
+import 'package:porar_sathi/app/widgets/app_states.dart';
 import 'package:porar_sathi/app/widgets/confirm_dialog.dart';
 import 'package:porar_sathi/app/widgets/settings_tile.dart';
 import 'package:porar_sathi/core/database/repository_providers.dart';
@@ -165,6 +165,7 @@ class _DataBackupScreenState extends ConsumerState<DataBackupScreen> {
       title: l10n.resetProgress,
       body: l10n.resetProgressBody,
       confirmLabel: l10n.resetProgress,
+      destructive: true,
     );
     if (!confirmed || !mounted) {
       return;
@@ -172,9 +173,9 @@ class _DataBackupScreenState extends ConsumerState<DataBackupScreen> {
     try {
       await ref.read(backupRepositoryProvider).resetProgress();
       await reconcileReminders(ref);
-    } on Object catch (error) {
+    } on Object {
       if (mounted) {
-        showAppError(context, error);
+        await showDeleteFailed(context, onRetry: _resetProgress);
       }
     }
   }
@@ -194,6 +195,7 @@ class _DataBackupScreenState extends ConsumerState<DataBackupScreen> {
       title: l10n.deletePlan,
       body: l10n.deletePlanBody,
       confirmLabel: l10n.actionDelete,
+      destructive: true,
     );
     if (!confirmed || !mounted) {
       return;
@@ -204,9 +206,9 @@ class _DataBackupScreenState extends ConsumerState<DataBackupScreen> {
           .read(settingsControllerProvider.notifier)
           .setCurrentStudyPlanId(null);
       await reconcileReminders(ref);
-    } on Object catch (error) {
+    } on Object {
       if (mounted) {
-        showAppError(context, error);
+        await showDeleteFailed(context, onRetry: _deletePlan);
       }
     }
   }
@@ -218,6 +220,7 @@ class _DataBackupScreenState extends ConsumerState<DataBackupScreen> {
       title: l10n.deleteAllData,
       body: l10n.deleteAllDataBody,
       confirmLabel: l10n.deleteAllData,
+      destructive: true,
     );
     if (!confirmed || !mounted) {
       return;
@@ -230,9 +233,9 @@ class _DataBackupScreenState extends ConsumerState<DataBackupScreen> {
       if (mounted) {
         context.go(OnboardingStep.language.route);
       }
-    } on Object catch (error) {
+    } on Object {
       if (mounted) {
-        showAppError(context, error);
+        await showDeleteFailed(context, onRetry: _deleteAll);
       }
     }
   }

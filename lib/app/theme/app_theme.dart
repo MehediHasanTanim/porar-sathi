@@ -5,25 +5,27 @@ import 'package:porar_sathi/app/theme/app_spacing.dart';
 import 'package:porar_sathi/app/theme/app_typography.dart';
 
 abstract final class AppTheme {
-  static ThemeData light() => _build(
+  static ThemeData light({bool reducedMotion = false}) => _build(
     brightness: Brightness.light,
     semantic: AppSemanticColors.light,
+    reducedMotion: reducedMotion,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: AppPalette.primary,
       onPrimary: Colors.white,
-      secondary: AppPalette.secondary,
+      secondary: Color(0xFF047857),
       onSecondary: Colors.white,
-      error: Color(0xFFDC3E3E),
+      error: Color(0xFFC62828),
       onError: Colors.white,
       surface: AppPalette.surface,
       onSurface: AppPalette.onSurface,
     ),
   );
 
-  static ThemeData dark() => _build(
+  static ThemeData dark({bool reducedMotion = false}) => _build(
     brightness: Brightness.dark,
     semantic: AppSemanticColors.dark,
+    reducedMotion: reducedMotion,
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
       primary: AppPalette.primaryDark,
@@ -41,6 +43,7 @@ abstract final class AppTheme {
     required Brightness brightness,
     required AppSemanticColors semantic,
     required ColorScheme colorScheme,
+    required bool reducedMotion,
   }) {
     final textTheme = AppTypography.textTheme(colorScheme.onSurface);
     final radius = BorderRadius.circular(AppSpacing.radiusMd);
@@ -55,6 +58,18 @@ abstract final class AppTheme {
       fontFamilyFallback: AppFonts.fallback,
       textTheme: textTheme,
       extensions: [semantic],
+      pageTransitionsTheme: reducedMotion
+          ? const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: NoMotionPageTransitionsBuilder(),
+                TargetPlatform.iOS: NoMotionPageTransitionsBuilder(),
+                TargetPlatform.macOS: NoMotionPageTransitionsBuilder(),
+                TargetPlatform.linux: NoMotionPageTransitionsBuilder(),
+                TargetPlatform.windows: NoMotionPageTransitionsBuilder(),
+                TargetPlatform.fuchsia: NoMotionPageTransitionsBuilder(),
+              },
+            )
+          : const PageTransitionsTheme(),
       appBarTheme: AppBarTheme(
         backgroundColor: semantic.canvas,
         foregroundColor: colorScheme.onSurface,
@@ -169,10 +184,29 @@ abstract final class AppTheme {
         }),
       ),
       dividerTheme: DividerThemeData(color: semantic.outline, space: 1),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppPalette.primary,
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: radius),
       ),
     );
+  }
+}
+
+/// Route change with no slide or fade.
+class NoMotionPageTransitionsBuilder extends PageTransitionsBuilder {
+  const NoMotionPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return child;
   }
 }
