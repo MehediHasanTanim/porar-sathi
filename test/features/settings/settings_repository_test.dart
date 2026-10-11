@@ -40,6 +40,7 @@ void main() {
       defaultSessionDuration: 60,
       planningBuffer: 20,
       autoReplanEnabled: false,
+      onboardingStep: 'plan',
     );
 
     await repository.save(saved);

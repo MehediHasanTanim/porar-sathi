@@ -81,6 +81,7 @@ abstract class AppSettings with _$AppSettings {
     required int defaultSessionDuration,
     required int planningBuffer,
     required bool autoReplanEnabled,
+    required String onboardingStep,
   }) = _AppSettings;
 }
 
@@ -91,7 +92,8 @@ AppSettings initialAppSettings(AppLanguage language) {
     onboardingComplete: false,
     firstDayOfWeek: FirstDayOfWeek.saturday,
     defaultSessionDuration: SettingsDefaults.sessionMinutes,
-    planningBuffer: SettingsDefaults.planningBufferPercent,
-    autoReplanEnabled: SettingsDefaults.autoReplan,
-  );
+      planningBuffer: SettingsDefaults.planningBufferPercent,
+      autoReplanEnabled: SettingsDefaults.autoReplan,
+      onboardingStep: 'language',
+    );
 }

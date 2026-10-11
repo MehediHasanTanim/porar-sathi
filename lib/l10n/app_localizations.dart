@@ -613,6 +613,1110 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count}%'**
   String bufferPercent(int count);
+
+  /// No description provided for @onboardingProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} of {total}'**
+  String onboardingProgress(int current, int total);
+
+  /// No description provided for @welcomeHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Know exactly what to study every day'**
+  String get welcomeHeadline;
+
+  /// No description provided for @welcomeBenefitPlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily study plan'**
+  String get welcomeBenefitPlanTitle;
+
+  /// No description provided for @welcomeBenefitPlanBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your syllabus, exam dates and available study time. Porar Sathi turns them into a realistic daily plan.'**
+  String get welcomeBenefitPlanBody;
+
+  /// No description provided for @welcomeBenefitSyllabusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your syllabus'**
+  String get welcomeBenefitSyllabusTitle;
+
+  /// No description provided for @welcomeBenefitSyllabusBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Know how much is done and what\'s left.'**
+  String get welcomeBenefitSyllabusBody;
+
+  /// No description provided for @welcomeBenefitTrackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on track'**
+  String get welcomeBenefitTrackTitle;
+
+  /// No description provided for @welcomeBenefitTrackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Miss a day? Porar Sathi adjusts the plan.'**
+  String get welcomeBenefitTrackBody;
+
+  /// No description provided for @actionSetUpPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Up My Study Plan'**
+  String get actionSetUpPlan;
+
+  /// No description provided for @studyTypeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you preparing for?'**
+  String get studyTypeTitle;
+
+  /// No description provided for @studyTypeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll tailor the setup to your study style.'**
+  String get studyTypeSubtitle;
+
+  /// No description provided for @studyTypeSsc.
+  ///
+  /// In en, this message translates to:
+  /// **'SSC'**
+  String get studyTypeSsc;
+
+  /// No description provided for @studyTypeSscBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary School Certificate'**
+  String get studyTypeSscBody;
+
+  /// No description provided for @studyTypeHsc.
+  ///
+  /// In en, this message translates to:
+  /// **'HSC'**
+  String get studyTypeHsc;
+
+  /// No description provided for @studyTypeHscBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Higher Secondary Certificate'**
+  String get studyTypeHscBody;
+
+  /// No description provided for @studyTypeUniversity.
+  ///
+  /// In en, this message translates to:
+  /// **'University'**
+  String get studyTypeUniversity;
+
+  /// No description provided for @studyTypeUniversityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Semester, midterm or final'**
+  String get studyTypeUniversityBody;
+
+  /// No description provided for @studyTypeAdmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Admission Test'**
+  String get studyTypeAdmission;
+
+  /// No description provided for @studyTypeAdmissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'University, medical, engineering'**
+  String get studyTypeAdmissionBody;
+
+  /// No description provided for @studyTypeDiploma.
+  ///
+  /// In en, this message translates to:
+  /// **'Diploma / Polytechnic'**
+  String get studyTypeDiploma;
+
+  /// No description provided for @studyTypeDiplomaBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Polytechnic courses'**
+  String get studyTypeDiplomaBody;
+
+  /// No description provided for @studyTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get studyTypeOther;
+
+  /// No description provided for @studyTypeOtherBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom setup'**
+  String get studyTypeOtherBody;
+
+  /// No description provided for @studyTypeFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change this later.'**
+  String get studyTypeFootnote;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A little about you'**
+  String get profileTitle;
+
+  /// No description provided for @profileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This helps personalize your study plan. No account is required.'**
+  String get profileSubtitle;
+
+  /// No description provided for @profileName.
+  ///
+  /// In en, this message translates to:
+  /// **'What should we call you?'**
+  String get profileName;
+
+  /// No description provided for @optionalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optionalHint;
+
+  /// No description provided for @profileYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic session (optional)'**
+  String get profileYear;
+
+  /// No description provided for @profileInstitution.
+  ///
+  /// In en, this message translates to:
+  /// **'Your institution (optional)'**
+  String get profileInstitution;
+
+  /// No description provided for @profilePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored only on this device.'**
+  String get profilePrivacy;
+
+  /// No description provided for @actionSkipForNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get actionSkipForNow;
+
+  /// No description provided for @skippedStudentName.
+  ///
+  /// In en, this message translates to:
+  /// **'Student'**
+  String get skippedStudentName;
+
+  /// No description provided for @planTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first study plan'**
+  String get planTitle;
+
+  /// No description provided for @planSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give this plan a name so it\'s easy to recognize later.'**
+  String get planSubtitle;
+
+  /// No description provided for @planName.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan name'**
+  String get planName;
+
+  /// No description provided for @planType.
+  ///
+  /// In en, this message translates to:
+  /// **'Study goal'**
+  String get planType;
+
+  /// No description provided for @planStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan start date'**
+  String get planStart;
+
+  /// No description provided for @planEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Target end date'**
+  String get planEnd;
+
+  /// No description provided for @planTypeBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'Board Exam'**
+  String get planTypeBoard;
+
+  /// No description provided for @planTypeSemester.
+  ///
+  /// In en, this message translates to:
+  /// **'Semester'**
+  String get planTypeSemester;
+
+  /// No description provided for @planTypeAdmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Admission'**
+  String get planTypeAdmission;
+
+  /// No description provided for @planTypeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get planTypeCustom;
+
+  /// No description provided for @examTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'When is your exam?'**
+  String get examTitle;
+
+  /// No description provided for @examSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Porar Sathi uses the exam date to decide how much you need to study each day.'**
+  String get examSubtitle;
+
+  /// No description provided for @examName.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam name'**
+  String get examName;
+
+  /// No description provided for @examType.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam type'**
+  String get examType;
+
+  /// No description provided for @examEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End date'**
+  String get examEnd;
+
+  /// No description provided for @examImportance.
+  ///
+  /// In en, this message translates to:
+  /// **'Importance'**
+  String get examImportance;
+
+  /// No description provided for @importanceNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get importanceNormal;
+
+  /// No description provided for @importanceImportant.
+  ///
+  /// In en, this message translates to:
+  /// **'Important'**
+  String get importanceImportant;
+
+  /// No description provided for @importanceVeryImportant.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Important'**
+  String get importanceVeryImportant;
+
+  /// No description provided for @actionAddAnotherExam.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another exam'**
+  String get actionAddAnotherExam;
+
+  /// No description provided for @examNoDate.
+  ///
+  /// In en, this message translates to:
+  /// **'I don\'t have the exam date yet'**
+  String get examNoDate;
+
+  /// No description provided for @daysFromToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days from today'**
+  String daysFromToday(int count);
+
+  /// No description provided for @examTypeBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'Board'**
+  String get examTypeBoard;
+
+  /// No description provided for @examTypeMidterm.
+  ///
+  /// In en, this message translates to:
+  /// **'Midterm'**
+  String get examTypeMidterm;
+
+  /// No description provided for @examTypeFinal.
+  ///
+  /// In en, this message translates to:
+  /// **'Final'**
+  String get examTypeFinal;
+
+  /// No description provided for @examTypeAdmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Admission'**
+  String get examTypeAdmission;
+
+  /// No description provided for @examTypeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get examTypeCustom;
+
+  /// No description provided for @availabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How much time can you study each day?'**
+  String get availabilityTitle;
+
+  /// No description provided for @availabilitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose realistic study time. Your plan will leave some buffer instead of filling every minute.'**
+  String get availabilitySubtitle;
+
+  /// No description provided for @preset1h.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hr/day'**
+  String get preset1h;
+
+  /// No description provided for @preset2h.
+  ///
+  /// In en, this message translates to:
+  /// **'2 hr/day'**
+  String get preset2h;
+
+  /// No description provided for @preset3h.
+  ///
+  /// In en, this message translates to:
+  /// **'3 hr/day'**
+  String get preset3h;
+
+  /// No description provided for @presetCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get presetCustom;
+
+  /// No description provided for @weeklyStudyTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly study time'**
+  String get weeklyStudyTime;
+
+  /// No description provided for @averagePerStudyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Average {duration} per study day'**
+  String averagePerStudyDay(String duration);
+
+  /// No description provided for @offDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get offDay;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get friday;
+
+  /// No description provided for @studyTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'When do you prefer to study?'**
+  String get studyTimeTitle;
+
+  /// No description provided for @studyTimeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This is optional. Your plan will still work if your daily timing changes.'**
+  String get studyTimeSubtitle;
+
+  /// No description provided for @periodMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get periodMorning;
+
+  /// No description provided for @periodMorningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'6 AM – 10 AM'**
+  String get periodMorningTime;
+
+  /// No description provided for @periodAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get periodAfternoon;
+
+  /// No description provided for @periodAfternoonTime.
+  ///
+  /// In en, this message translates to:
+  /// **'12 PM – 4 PM'**
+  String get periodAfternoonTime;
+
+  /// No description provided for @periodEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get periodEvening;
+
+  /// No description provided for @periodEveningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'5 PM – 9 PM'**
+  String get periodEveningTime;
+
+  /// No description provided for @periodNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get periodNight;
+
+  /// No description provided for @periodNightTime.
+  ///
+  /// In en, this message translates to:
+  /// **'9 PM – 12 AM'**
+  String get periodNightTime;
+
+  /// No description provided for @preferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How should Porar Sathi build your plan?'**
+  String get preferencesTitle;
+
+  /// No description provided for @planningMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Planning style'**
+  String get planningMode;
+
+  /// No description provided for @modeBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get modeBalanced;
+
+  /// No description provided for @modeBalancedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Spread daily time across subjects while respecting your urgency.'**
+  String get modeBalancedBody;
+
+  /// No description provided for @modeWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak Subject Focus'**
+  String get modeWeak;
+
+  /// No description provided for @modeWeakBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Give extra attention to difficult topics and low-confidence subjects.'**
+  String get modeWeakBody;
+
+  /// No description provided for @modeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get modeLight;
+
+  /// No description provided for @modeLightBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep daily workload lighter and more sustainable.'**
+  String get modeLightBody;
+
+  /// No description provided for @modeCrunch.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam Crunch'**
+  String get modeCrunch;
+
+  /// No description provided for @modeCrunchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Prioritize urgent exam work and revision.'**
+  String get modeCrunchBody;
+
+  /// No description provided for @studyIntensity.
+  ///
+  /// In en, this message translates to:
+  /// **'Study intensity'**
+  String get studyIntensity;
+
+  /// No description provided for @intensityLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get intensityLight;
+
+  /// No description provided for @intensityNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get intensityNormal;
+
+  /// No description provided for @intensityFocused.
+  ///
+  /// In en, this message translates to:
+  /// **'Focused'**
+  String get intensityFocused;
+
+  /// No description provided for @maxSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum study session'**
+  String get maxSession;
+
+  /// No description provided for @revisionBuffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision buffer'**
+  String get revisionBuffer;
+
+  /// No description provided for @revisionDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days'**
+  String revisionDays(int count);
+
+  /// No description provided for @actionCreatePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Create My Study Plan'**
+  String get actionCreatePlan;
+
+  /// No description provided for @summaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your study plan is ready'**
+  String get summaryTitle;
+
+  /// No description provided for @summaryFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected syllabus finish'**
+  String get summaryFinish;
+
+  /// No description provided for @summaryFinishPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Add chapters to forecast a finish date.'**
+  String get summaryFinishPending;
+
+  /// No description provided for @summaryExam.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam'**
+  String get summaryExam;
+
+  /// No description provided for @summaryNoExam.
+  ///
+  /// In en, this message translates to:
+  /// **'No exam date yet'**
+  String get summaryNoExam;
+
+  /// No description provided for @summaryRevisionBuffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision buffer'**
+  String get summaryRevisionBuffer;
+
+  /// No description provided for @firstDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first few days'**
+  String get firstDays;
+
+  /// No description provided for @summaryNoTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily tasks appear after you add subjects and chapters.'**
+  String get summaryNoTasks;
+
+  /// No description provided for @actionUsePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Use This Plan'**
+  String get actionUsePlan;
+
+  /// No description provided for @actionAdjustAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Availability'**
+  String get actionAdjustAvailability;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on track with gentle reminders'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Porar Sathi can remind you about today\'s plan, revision, and upcoming exams.'**
+  String get notificationsBody;
+
+  /// No description provided for @actionEnableReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Reminders'**
+  String get actionEnableReminders;
+
+  /// No description provided for @completeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re ready to study'**
+  String get completeTitle;
+
+  /// No description provided for @completeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first plan is ready. Porar Sathi will adjust it as your progress changes.'**
+  String get completeBody;
+
+  /// No description provided for @actionSeeToday.
+  ///
+  /// In en, this message translates to:
+  /// **'See Today\'s Study'**
+  String get actionSeeToday;
+
+  /// No description provided for @completeNoTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Add subjects and chapters to fill today\'s plan.'**
+  String get completeNoTasks;
+
+  /// No description provided for @subjectCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject code'**
+  String get subjectCode;
+
+  /// No description provided for @paperName.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper'**
+  String get paperName;
+
+  /// No description provided for @priority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get priority;
+
+  /// No description provided for @priorityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get priorityLow;
+
+  /// No description provided for @priorityNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get priorityNormal;
+
+  /// No description provided for @priorityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get priorityHigh;
+
+  /// No description provided for @priorityCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get priorityCritical;
+
+  /// No description provided for @difficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Difficulty'**
+  String get difficulty;
+
+  /// No description provided for @difficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get difficultyEasy;
+
+  /// No description provided for @difficultyModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get difficultyModerate;
+
+  /// No description provided for @difficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Difficult'**
+  String get difficultyHard;
+
+  /// No description provided for @confidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence'**
+  String get confidence;
+
+  /// No description provided for @confidenceLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get confidenceLow;
+
+  /// No description provided for @confidenceMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get confidenceMedium;
+
+  /// No description provided for @confidenceHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get confidenceHigh;
+
+  /// No description provided for @color.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get color;
+
+  /// No description provided for @icon.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get icon;
+
+  /// No description provided for @archiveSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive subject'**
+  String get archiveSubject;
+
+  /// No description provided for @deleteSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete subject'**
+  String get deleteSubject;
+
+  /// No description provided for @deleteSubjectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String deleteSubjectTitle(String name);
+
+  /// No description provided for @deleteSubjectBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes its chapters and future tasks.'**
+  String get deleteSubjectBody;
+
+  /// No description provided for @deleteHistoryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Study history exists. Delete that history too?'**
+  String get deleteHistoryBody;
+
+  /// No description provided for @actionDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get actionDelete;
+
+  /// No description provided for @actionDeleteHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete history'**
+  String get actionDeleteHistory;
+
+  /// No description provided for @editSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit subject'**
+  String get editSubject;
+
+  /// No description provided for @chaptersProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} chapters'**
+  String chaptersProgress(int done, int total);
+
+  /// No description provided for @syllabusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Syllabus completed'**
+  String get syllabusCompleted;
+
+  /// No description provided for @chapterTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter title'**
+  String get chapterTitleLabel;
+
+  /// No description provided for @chapterNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter number'**
+  String get chapterNumber;
+
+  /// No description provided for @estimatedTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated study time'**
+  String get estimatedTime;
+
+  /// No description provided for @chapterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get chapterStatus;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @editChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit chapter'**
+  String get editChapter;
+
+  /// No description provided for @bulkAddChapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Add multiple chapters'**
+  String get bulkAddChapters;
+
+  /// No description provided for @bulkPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter one chapter per line'**
+  String get bulkPlaceholder;
+
+  /// No description provided for @createChapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Create {count} chapters'**
+  String createChapters(int count);
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get inProgress;
+
+  /// No description provided for @notStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not started'**
+  String get notStarted;
+
+  /// No description provided for @revisionDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision due'**
+  String get revisionDue;
+
+  /// No description provided for @skipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get skipped;
+
+  /// No description provided for @editExam.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit exam'**
+  String get editExam;
+
+  /// No description provided for @examDateChangeWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Your study plan may need to be updated.'**
+  String get examDateChangeWarning;
+
+  /// No description provided for @upcomingExams.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcomingExams;
+
+  /// No description provided for @completedExams.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completedExams;
+
+  /// No description provided for @noExamsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No exams yet'**
+  String get noExamsTitle;
+
+  /// No description provided for @noExamsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an exam date so the plan knows what you\'re preparing for.'**
+  String get noExamsBody;
+
+  /// No description provided for @linkSyllabus.
+  ///
+  /// In en, this message translates to:
+  /// **'Map syllabus'**
+  String get linkSyllabus;
+
+  /// No description provided for @syllabusMappingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s included in this exam?'**
+  String get syllabusMappingTitle;
+
+  /// No description provided for @availabilityEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly availability'**
+  String get availabilityEdit;
+
+  /// No description provided for @addException.
+  ///
+  /// In en, this message translates to:
+  /// **'Add exception'**
+  String get addException;
+
+  /// No description provided for @exceptionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar exceptions'**
+  String get exceptionsTitle;
+
+  /// No description provided for @exceptionDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get exceptionDate;
+
+  /// No description provided for @exceptionReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get exceptionReason;
+
+  /// No description provided for @exceptionMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available minutes'**
+  String get exceptionMinutes;
+
+  /// No description provided for @exceptionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get exceptionType;
+
+  /// No description provided for @noStudyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'No study day'**
+  String get noStudyDay;
+
+  /// No description provided for @reducedAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduced availability'**
+  String get reducedAvailability;
+
+  /// No description provided for @extraStudyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra study day'**
+  String get extraStudyDay;
+
+  /// No description provided for @saveOverride.
+  ///
+  /// In en, this message translates to:
+  /// **'Save override'**
+  String get saveOverride;
+
+  /// No description provided for @todayCapacity.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s study time'**
+  String get todayCapacity;
+
+  /// No description provided for @schedulableCapacity.
+  ///
+  /// In en, this message translates to:
+  /// **'Time the planner can schedule'**
+  String get schedulableCapacity;
+
+  /// No description provided for @capacityBuffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Planning buffer'**
+  String get capacityBuffer;
+
+  /// No description provided for @noExceptions.
+  ///
+  /// In en, this message translates to:
+  /// **'No calendar exceptions yet.'**
+  String get noExceptions;
+
+  /// No description provided for @exceptionSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved. The planner can schedule {duration} that day.'**
+  String exceptionSaved(String duration);
 }
 
 class _AppLocalizationsDelegate

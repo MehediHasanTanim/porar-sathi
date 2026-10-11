@@ -21,6 +21,7 @@ final class SharedPreferencesSettingsRepository implements SettingsRepository {
   static const defaultSessionDurationKey = 'default_session_duration';
   static const planningBufferKey = 'planning_buffer';
   static const autoReplanEnabledKey = 'auto_replan_enabled';
+  static const onboardingStepKey = 'onboarding_step';
 
   @override
   Future<AppSettings> load() async {
@@ -46,6 +47,7 @@ final class SharedPreferencesSettingsRepository implements SettingsRepository {
       autoReplanEnabled:
           _preferences.getBool(autoReplanEnabledKey) ??
           SettingsDefaults.autoReplan,
+      onboardingStep: _preferences.getString(onboardingStepKey) ?? 'language',
     );
   }
 
@@ -73,5 +75,6 @@ final class SharedPreferencesSettingsRepository implements SettingsRepository {
     );
     await _preferences.setInt(planningBufferKey, settings.planningBuffer);
     await _preferences.setBool(autoReplanEnabledKey, settings.autoReplanEnabled);
+    await _preferences.setString(onboardingStepKey, settings.onboardingStep);
   }
 }

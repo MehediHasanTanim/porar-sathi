@@ -58,11 +58,18 @@ class SettingsController extends _$SettingsController {
     );
   }
 
-  /// Language selection is the foundation gate. Phase 3 inserts the rest of
-  /// onboarding before this flag is set.
+  Future<void> setOnboardingStep(String step) {
+    return _update((settings) => settings.copyWith(onboardingStep: step));
+  }
+
+  /// Set only after setup complete. Earlier steps keep this false so a
+  /// half-finished setup resumes instead of opening an empty home.
   Future<void> completeOnboarding() {
     return _update(
-      (settings) => settings.copyWith(onboardingComplete: true),
+      (settings) => settings.copyWith(
+        onboardingComplete: true,
+        onboardingStep: 'complete',
+      ),
     );
   }
 

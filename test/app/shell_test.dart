@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:porar_sathi/app/app.dart';
 import 'package:porar_sathi/app/theme/app_typography.dart';
+import 'package:porar_sathi/features/onboarding/data/onboarding_draft_repository.dart';
+import 'package:porar_sathi/features/onboarding/data/onboarding_draft_repository_provider.dart';
+import 'package:porar_sathi/features/settings/application/settings_controller.dart';
 import 'package:porar_sathi/features/settings/data/settings_repository_provider.dart';
 import 'package:porar_sathi/features/settings/data/shared_preferences_settings_repository.dart';
 import 'package:porar_sathi/features/settings/domain/app_settings.dart';
@@ -23,6 +26,9 @@ void main() {
       ProviderScope(
         overrides: [
           settingsRepositoryProvider.overrideWithValue(repository),
+          onboardingDraftRepositoryProvider.overrideWithValue(
+            SharedPreferencesOnboardingDraftRepository(preferences),
+          ),
         ],
         child: const PorarSathiApp(),
       ),
@@ -42,9 +48,13 @@ void main() {
 
     expect(find.text('চালিয়ে যান'), findsOneWidget);
 
-    await tester.tap(find.text('চালিয়ে যান'));
+    final button = tester.element(find.text('চালিয়ে যান'));
+    await ProviderScope.containerOf(button)
+        .read(settingsControllerProvider.notifier)
+        .completeOnboarding();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 50));
+    await tester.pumpAndSettle();
 
     expect(find.text('আজ'), findsOneWidget);
 

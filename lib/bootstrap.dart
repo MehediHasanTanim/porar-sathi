@@ -11,6 +11,8 @@ import 'package:porar_sathi/core/database/database_provider.dart';
 import 'package:porar_sathi/core/logging/app_logger.dart';
 import 'package:porar_sathi/core/notifications/notification_scheduler.dart';
 import 'package:porar_sathi/core/time/local_time_zone.dart';
+import 'package:porar_sathi/features/onboarding/data/onboarding_draft_repository.dart';
+import 'package:porar_sathi/features/onboarding/data/onboarding_draft_repository_provider.dart';
 import 'package:porar_sathi/features/settings/data/settings_repository_provider.dart';
 import 'package:porar_sathi/features/settings/data/shared_preferences_settings_repository.dart';
 
@@ -28,6 +30,9 @@ Future<void> bootstrap(AppFlavor flavor) async {
     preferences,
     deviceLocale: deviceLocale,
   );
+  final onboardingDraftRepository = SharedPreferencesOnboardingDraftRepository(
+    preferences,
+  );
   final database = await openAppDatabase();
 
   runApp(
@@ -35,6 +40,9 @@ Future<void> bootstrap(AppFlavor flavor) async {
       overrides: [
         appFlavorProvider.overrideWithValue(flavor),
         settingsRepositoryProvider.overrideWithValue(settingsRepository),
+        onboardingDraftRepositoryProvider.overrideWithValue(
+          onboardingDraftRepository,
+        ),
         appDatabaseProvider.overrideWith((ref) {
           ref.onDispose(database.close);
           return database;

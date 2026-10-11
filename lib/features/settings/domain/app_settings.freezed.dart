@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- AppLanguage get language; AppThemePreference get theme; bool get onboardingComplete; FirstDayOfWeek get firstDayOfWeek; String? get currentStudyPlanId; int get defaultSessionDuration; int get planningBuffer; bool get autoReplanEnabled;
+ AppLanguage get language; AppThemePreference get theme; bool get onboardingComplete; FirstDayOfWeek get firstDayOfWeek; String? get currentStudyPlanId; int get defaultSessionDuration; int get planningBuffer; bool get autoReplanEnabled; String get onboardingStep;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 @override
 bool operator ==(Object other) {
   final _this = this as AppSettings;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.language, _this.language) || other.language == _this.language)&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.onboardingComplete, _this.onboardingComplete) || other.onboardingComplete == _this.onboardingComplete)&&(identical(other.firstDayOfWeek, _this.firstDayOfWeek) || other.firstDayOfWeek == _this.firstDayOfWeek)&&(identical(other.currentStudyPlanId, _this.currentStudyPlanId) || other.currentStudyPlanId == _this.currentStudyPlanId)&&(identical(other.defaultSessionDuration, _this.defaultSessionDuration) || other.defaultSessionDuration == _this.defaultSessionDuration)&&(identical(other.planningBuffer, _this.planningBuffer) || other.planningBuffer == _this.planningBuffer)&&(identical(other.autoReplanEnabled, _this.autoReplanEnabled) || other.autoReplanEnabled == _this.autoReplanEnabled));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.language, _this.language) || other.language == _this.language)&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.onboardingComplete, _this.onboardingComplete) || other.onboardingComplete == _this.onboardingComplete)&&(identical(other.firstDayOfWeek, _this.firstDayOfWeek) || other.firstDayOfWeek == _this.firstDayOfWeek)&&(identical(other.currentStudyPlanId, _this.currentStudyPlanId) || other.currentStudyPlanId == _this.currentStudyPlanId)&&(identical(other.defaultSessionDuration, _this.defaultSessionDuration) || other.defaultSessionDuration == _this.defaultSessionDuration)&&(identical(other.planningBuffer, _this.planningBuffer) || other.planningBuffer == _this.planningBuffer)&&(identical(other.autoReplanEnabled, _this.autoReplanEnabled) || other.autoReplanEnabled == _this.autoReplanEnabled)&&(identical(other.onboardingStep, _this.onboardingStep) || other.onboardingStep == _this.onboardingStep));
 }
 
 
 @override
 int get hashCode {
   final _this = this as AppSettings;
-  return Object.hash(runtimeType,_this.language,_this.theme,_this.onboardingComplete,_this.firstDayOfWeek,_this.currentStudyPlanId,_this.defaultSessionDuration,_this.planningBuffer,_this.autoReplanEnabled);
+  return Object.hash(runtimeType,_this.language,_this.theme,_this.onboardingComplete,_this.firstDayOfWeek,_this.currentStudyPlanId,_this.defaultSessionDuration,_this.planningBuffer,_this.autoReplanEnabled,_this.onboardingStep);
 }
 
 @override
 String toString() {
   final _this = this as AppSettings;
-  return 'AppSettings(language: ${_this.language}, theme: ${_this.theme}, onboardingComplete: ${_this.onboardingComplete}, firstDayOfWeek: ${_this.firstDayOfWeek}, currentStudyPlanId: ${_this.currentStudyPlanId}, defaultSessionDuration: ${_this.defaultSessionDuration}, planningBuffer: ${_this.planningBuffer}, autoReplanEnabled: ${_this.autoReplanEnabled})';
+  return 'AppSettings(language: ${_this.language}, theme: ${_this.theme}, onboardingComplete: ${_this.onboardingComplete}, firstDayOfWeek: ${_this.firstDayOfWeek}, currentStudyPlanId: ${_this.currentStudyPlanId}, defaultSessionDuration: ${_this.defaultSessionDuration}, planningBuffer: ${_this.planningBuffer}, autoReplanEnabled: ${_this.autoReplanEnabled}, onboardingStep: ${_this.onboardingStep})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- AppLanguage language, AppThemePreference theme, bool onboardingComplete, FirstDayOfWeek firstDayOfWeek, String? currentStudyPlanId, int defaultSessionDuration, int planningBuffer, bool autoReplanEnabled
+ AppLanguage language, AppThemePreference theme, bool onboardingComplete, FirstDayOfWeek firstDayOfWeek, String? currentStudyPlanId, int defaultSessionDuration, int planningBuffer, bool autoReplanEnabled, String onboardingStep
 });
 
 
@@ -68,7 +68,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? language = null,Object? theme = null,Object? onboardingComplete = null,Object? firstDayOfWeek = null,Object? currentStudyPlanId = freezed,Object? defaultSessionDuration = null,Object? planningBuffer = null,Object? autoReplanEnabled = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? language = null,Object? theme = null,Object? onboardingComplete = null,Object? firstDayOfWeek = null,Object? currentStudyPlanId = freezed,Object? defaultSessionDuration = null,Object? planningBuffer = null,Object? autoReplanEnabled = null,Object? onboardingStep = null,}) {
   return _then(AppSettings(
 language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as AppLanguage,theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
@@ -78,7 +78,8 @@ as FirstDayOfWeek,currentStudyPlanId: freezed == currentStudyPlanId ? _self.curr
 as String?,defaultSessionDuration: null == defaultSessionDuration ? _self.defaultSessionDuration : defaultSessionDuration // ignore: cast_nullable_to_non_nullable
 as int,planningBuffer: null == planningBuffer ? _self.planningBuffer : planningBuffer // ignore: cast_nullable_to_non_nullable
 as int,autoReplanEnabled: null == autoReplanEnabled ? _self.autoReplanEnabled : autoReplanEnabled // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,onboardingStep: null == onboardingStep ? _self.onboardingStep : onboardingStep // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppLanguage language,  AppThemePreference theme,  bool onboardingComplete,  FirstDayOfWeek firstDayOfWeek,  String? currentStudyPlanId,  int defaultSessionDuration,  int planningBuffer,  bool autoReplanEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppLanguage language,  AppThemePreference theme,  bool onboardingComplete,  FirstDayOfWeek firstDayOfWeek,  String? currentStudyPlanId,  int defaultSessionDuration,  int planningBuffer,  bool autoReplanEnabled,  String onboardingStep)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstDayOfWeek,_that.currentStudyPlanId,_that.defaultSessionDuration,_that.planningBuffer,_that.autoReplanEnabled);case _:
+return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstDayOfWeek,_that.currentStudyPlanId,_that.defaultSessionDuration,_that.planningBuffer,_that.autoReplanEnabled,_that.onboardingStep);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstD
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppLanguage language,  AppThemePreference theme,  bool onboardingComplete,  FirstDayOfWeek firstDayOfWeek,  String? currentStudyPlanId,  int defaultSessionDuration,  int planningBuffer,  bool autoReplanEnabled)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppLanguage language,  AppThemePreference theme,  bool onboardingComplete,  FirstDayOfWeek firstDayOfWeek,  String? currentStudyPlanId,  int defaultSessionDuration,  int planningBuffer,  bool autoReplanEnabled,  String onboardingStep)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstDayOfWeek,_that.currentStudyPlanId,_that.defaultSessionDuration,_that.planningBuffer,_that.autoReplanEnabled);case _:
+return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstDayOfWeek,_that.currentStudyPlanId,_that.defaultSessionDuration,_that.planningBuffer,_that.autoReplanEnabled,_that.onboardingStep);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +205,10 @@ return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstD
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppLanguage language,  AppThemePreference theme,  bool onboardingComplete,  FirstDayOfWeek firstDayOfWeek,  String? currentStudyPlanId,  int defaultSessionDuration,  int planningBuffer,  bool autoReplanEnabled)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppLanguage language,  AppThemePreference theme,  bool onboardingComplete,  FirstDayOfWeek firstDayOfWeek,  String? currentStudyPlanId,  int defaultSessionDuration,  int planningBuffer,  bool autoReplanEnabled,  String onboardingStep)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstDayOfWeek,_that.currentStudyPlanId,_that.defaultSessionDuration,_that.planningBuffer,_that.autoReplanEnabled);case _:
+return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstDayOfWeek,_that.currentStudyPlanId,_that.defaultSessionDuration,_that.planningBuffer,_that.autoReplanEnabled,_that.onboardingStep);case _:
   return null;
 
 }
@@ -219,7 +220,7 @@ return $default(_that.language,_that.theme,_that.onboardingComplete,_that.firstD
 
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({required this.language, required this.theme, required this.onboardingComplete, required this.firstDayOfWeek, this.currentStudyPlanId, required this.defaultSessionDuration, required this.planningBuffer, required this.autoReplanEnabled});
+  const _AppSettings({required this.language, required this.theme, required this.onboardingComplete, required this.firstDayOfWeek, this.currentStudyPlanId, required this.defaultSessionDuration, required this.planningBuffer, required this.autoReplanEnabled, required this.onboardingStep});
   
 
 @override final  AppLanguage language;
@@ -230,6 +231,7 @@ class _AppSettings implements AppSettings {
 @override final  int defaultSessionDuration;
 @override final  int planningBuffer;
 @override final  bool autoReplanEnabled;
+@override final  String onboardingStep;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -241,18 +243,18 @@ _$AppSettingsCopyWith<_AppSettings> get copyWith => __$AppSettingsCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.language, language) || other.language == language)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.onboardingComplete, onboardingComplete) || other.onboardingComplete == onboardingComplete)&&(identical(other.firstDayOfWeek, firstDayOfWeek) || other.firstDayOfWeek == firstDayOfWeek)&&(identical(other.currentStudyPlanId, currentStudyPlanId) || other.currentStudyPlanId == currentStudyPlanId)&&(identical(other.defaultSessionDuration, defaultSessionDuration) || other.defaultSessionDuration == defaultSessionDuration)&&(identical(other.planningBuffer, planningBuffer) || other.planningBuffer == planningBuffer)&&(identical(other.autoReplanEnabled, autoReplanEnabled) || other.autoReplanEnabled == autoReplanEnabled));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.language, language) || other.language == language)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.onboardingComplete, onboardingComplete) || other.onboardingComplete == onboardingComplete)&&(identical(other.firstDayOfWeek, firstDayOfWeek) || other.firstDayOfWeek == firstDayOfWeek)&&(identical(other.currentStudyPlanId, currentStudyPlanId) || other.currentStudyPlanId == currentStudyPlanId)&&(identical(other.defaultSessionDuration, defaultSessionDuration) || other.defaultSessionDuration == defaultSessionDuration)&&(identical(other.planningBuffer, planningBuffer) || other.planningBuffer == planningBuffer)&&(identical(other.autoReplanEnabled, autoReplanEnabled) || other.autoReplanEnabled == autoReplanEnabled)&&(identical(other.onboardingStep, onboardingStep) || other.onboardingStep == onboardingStep));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,language,theme,onboardingComplete,firstDayOfWeek,currentStudyPlanId,defaultSessionDuration,planningBuffer,autoReplanEnabled);
+    return Object.hash(runtimeType,language,theme,onboardingComplete,firstDayOfWeek,currentStudyPlanId,defaultSessionDuration,planningBuffer,autoReplanEnabled,onboardingStep);
 }
 
 @override
 String toString() {
-    return 'AppSettings(language: $language, theme: $theme, onboardingComplete: $onboardingComplete, firstDayOfWeek: $firstDayOfWeek, currentStudyPlanId: $currentStudyPlanId, defaultSessionDuration: $defaultSessionDuration, planningBuffer: $planningBuffer, autoReplanEnabled: $autoReplanEnabled)';
+    return 'AppSettings(language: $language, theme: $theme, onboardingComplete: $onboardingComplete, firstDayOfWeek: $firstDayOfWeek, currentStudyPlanId: $currentStudyPlanId, defaultSessionDuration: $defaultSessionDuration, planningBuffer: $planningBuffer, autoReplanEnabled: $autoReplanEnabled, onboardingStep: $onboardingStep)';
 }
 
 
@@ -263,7 +265,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- AppLanguage language, AppThemePreference theme, bool onboardingComplete, FirstDayOfWeek firstDayOfWeek, String? currentStudyPlanId, int defaultSessionDuration, int planningBuffer, bool autoReplanEnabled
+ AppLanguage language, AppThemePreference theme, bool onboardingComplete, FirstDayOfWeek firstDayOfWeek, String? currentStudyPlanId, int defaultSessionDuration, int planningBuffer, bool autoReplanEnabled, String onboardingStep
 });
 
 
@@ -280,7 +282,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? language = null,Object? theme = null,Object? onboardingComplete = null,Object? firstDayOfWeek = null,Object? currentStudyPlanId = freezed,Object? defaultSessionDuration = null,Object? planningBuffer = null,Object? autoReplanEnabled = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? language = null,Object? theme = null,Object? onboardingComplete = null,Object? firstDayOfWeek = null,Object? currentStudyPlanId = freezed,Object? defaultSessionDuration = null,Object? planningBuffer = null,Object? autoReplanEnabled = null,Object? onboardingStep = null,}) {
   return _then(_AppSettings(
 language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as AppLanguage,theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
@@ -290,7 +292,8 @@ as FirstDayOfWeek,currentStudyPlanId: freezed == currentStudyPlanId ? _self.curr
 as String?,defaultSessionDuration: null == defaultSessionDuration ? _self.defaultSessionDuration : defaultSessionDuration // ignore: cast_nullable_to_non_nullable
 as int,planningBuffer: null == planningBuffer ? _self.planningBuffer : planningBuffer // ignore: cast_nullable_to_non_nullable
 as int,autoReplanEnabled: null == autoReplanEnabled ? _self.autoReplanEnabled : autoReplanEnabled // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,onboardingStep: null == onboardingStep ? _self.onboardingStep : onboardingStep // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

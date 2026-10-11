@@ -5,9 +5,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:porar_sathi/app/router/app_routes.dart';
 import 'package:porar_sathi/app/router/app_shell.dart';
 import 'package:porar_sathi/app/router/redirect.dart';
+import 'package:porar_sathi/features/exams/presentation/exam_screens.dart';
 import 'package:porar_sathi/features/onboarding/presentation/language_selection_screen.dart';
+import 'package:porar_sathi/features/onboarding/presentation/schedule_screens.dart';
+import 'package:porar_sathi/features/onboarding/presentation/setup_screens.dart';
 import 'package:porar_sathi/features/onboarding/presentation/splash_screen.dart';
+import 'package:porar_sathi/features/planner/presentation/exception_screen.dart';
 import 'package:porar_sathi/features/planner/presentation/plan_screen.dart';
+import 'package:porar_sathi/features/subjects/presentation/subject_screens.dart';
+import 'package:porar_sathi/features/syllabus/presentation/chapter_screens.dart';
 import 'package:porar_sathi/features/progress/presentation/progress_screen.dart';
 import 'package:porar_sathi/features/sessions/presentation/today_screen.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
@@ -31,10 +37,13 @@ GoRouter appRouter(Ref ref) {
     refreshListenable: refresh,
     redirect: (context, state) {
       final settings = ref.read(settingsControllerProvider);
+      final value = settings.asData?.value;
       return resolveAppRedirect(
         isSettingsLoading: settings.isLoading,
         hasSettingsError: settings.hasError,
-        onboardingComplete: settings.asData?.value.onboardingComplete ?? false,
+        onboardingComplete: value?.onboardingComplete ?? false,
+        onboardingStep: value?.onboardingStep ?? 'language',
+        hasActivePlan: value?.currentStudyPlanId != null,
         location: state.matchedLocation,
       );
     },
@@ -44,8 +53,127 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: AppRoutes.onboarding,
+        path: '/onboarding/language',
         builder: (context, state) => const LanguageSelectionScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/welcome',
+        builder: (context, state) => const WelcomeScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/study-type',
+        builder: (context, state) => const StudyTypeScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/profile',
+        builder: (context, state) => const StudentProfileScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/plan',
+        builder: (context, state) => const CreatePlanScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/exam',
+        builder: (context, state) => const ExamSetupScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/availability',
+        builder: (context, state) => const WeeklyAvailabilityScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/study-time',
+        builder: (context, state) => const PreferredStudyTimeScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/preferences',
+        builder: (context, state) => const PlanningPreferencesScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/summary',
+        builder: (context, state) => const PlanSummaryScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/notifications',
+        builder: (context, state) => const NotificationEducationScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/complete',
+        builder: (context, state) => const SetupCompleteScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.newSubject,
+        builder: (context, state) => const SubjectFormScreen(),
+      ),
+      GoRoute(
+        path: '/subjects/:subjectId/edit',
+        builder: (context, state) => SubjectFormScreen(
+          subjectId: state.pathParameters['subjectId'],
+        ),
+      ),
+      GoRoute(
+        path: '/subjects/:subjectId/chapters/new',
+        builder: (context, state) => ChapterFormScreen(
+          subjectId: state.pathParameters['subjectId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/subjects/:subjectId/chapters/bulk',
+        builder: (context, state) => BulkChaptersScreen(
+          subjectId: state.pathParameters['subjectId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/subjects/:subjectId/chapters/:chapterId',
+        builder: (context, state) => ChapterFormScreen(
+          subjectId: state.pathParameters['subjectId']!,
+          chapterId: state.pathParameters['chapterId'],
+        ),
+      ),
+      GoRoute(
+        path: '/subjects/:subjectId/chapters',
+        builder: (context, state) => ChapterListScreen(
+          subjectId: state.pathParameters['subjectId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/subjects/:subjectId',
+        builder: (context, state) => SubjectDetailsScreen(
+          subjectId: state.pathParameters['subjectId']!,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.exams,
+        builder: (context, state) => const ExamListScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.newExam,
+        builder: (context, state) => const ExamFormScreen(),
+      ),
+      GoRoute(
+        path: '/exams/:examId/edit',
+        builder: (context, state) => ExamFormScreen(
+          examId: state.pathParameters['examId'],
+        ),
+      ),
+      GoRoute(
+        path: '/exams/:examId/syllabus',
+        builder: (context, state) => ExamSyllabusScreen(
+          examId: state.pathParameters['examId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/exams/:examId',
+        builder: (context, state) => ExamDetailsScreen(
+          examId: state.pathParameters['examId']!,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.availability,
+        builder: (context, state) => const WeeklyAvailabilityScreen(onboarding: false),
+      ),
+      GoRoute(
+        path: AppRoutes.newException,
+        builder: (context, state) => const CalendarExceptionScreen(),
       ),
       GoRoute(
         path: AppRoutes.home,

@@ -14,6 +14,19 @@ final class LocalNotificationScheduler implements NotificationScheduler {
 
   final FlutterLocalNotificationsPlugin _plugin;
 
+  Future<void> requestPermission() async {
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestNotificationsPermission();
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >()
+        ?.requestPermissions(alert: true, badge: true, sound: true);
+  }
+
   @override
   Future<void> initialize() async {
     const settings = InitializationSettings(
