@@ -257,9 +257,13 @@
   "summaryNoTasks": "Daily tasks appear after you add subjects and chapters.",
   "actionUsePlan": "Use This Plan",
   "actionAdjustAvailability": "Adjust Availability",
-  "notificationsTitle": "Stay on track with gentle reminders",
-  "notificationsBody": "Porar Sathi can remind you about today's plan, revision, and upcoming exams.",
-  "actionEnableReminders": "Enable Reminders",
+  "notificationsTitle": "Get gentle study reminders",
+  "notificationsBody": "Pocket Tutor can remind you about:",
+  "notificationsBenefitPlan": "Today's plan",
+  "notificationsBenefitRevision": "Revision",
+  "notificationsBenefitExam": "Upcoming exams",
+  "notificationsBenefitEvening": "Evening review",
+  "actionEnableReminders": "Enable Notifications",
   "completeTitle": "You're ready to study",
   "completeBody": "Your first plan is ready. Porar Sathi will adjust it as your progress changes.",
   "actionSeeToday": "See Today's Study",
@@ -629,5 +633,79 @@
     }
   },
   "balancedStudy": "Study time is balanced.",
-  "noStudyYet": "No study recorded yet."
+  "noStudyYet": "No study recorded yet.",
+
+  "notificationsDeniedTitle": "Notifications are turned off",
+  "notificationsDeniedBody": "Your study plan still works normally. You just won't receive reminders.",
+  "actionOpenSettings": "Open Settings",
+  "actionContinueWithoutNotifications": "Continue Without Notifications",
+  "notificationSettingsTitle": "Notifications",
+  "remindersEnabled": "Reminders",
+  "dailyPlanReminder": "Daily plan",
+  "revisionReminder": "Revision",
+  "examCountdownReminder": "Exam countdown",
+  "missedTaskReminder": "Missed task",
+  "eveningReviewReminder": "Evening review",
+  "studySessionReminder": "Study session",
+  "reminderTime": "Reminder time",
+  "examThresholdsLabel": "Countdown",
+  "dailyReminderTitle": "Today's study",
+  "dailyReminderBody": "You have {count} study tasks today — {duration} in total.",
+  "@dailyReminderBody": {
+    "placeholders": {
+      "count": {"type": "String"},
+      "duration": {"type": "String"}
+    }
+  },
+  "revisionReminderTitle": "Revision is due",
+  "revisionReminderBody": "A revision is due today.",
+  "examReminderTitle": "Exam coming up",
+  "examReminderBody": "{name} is in {days} days.",
+  "@examReminderBody": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "String"}
+    }
+  },
+  "missedReminderTitle": "Still some study left",
+  "missedReminderBody": "{count} tasks are still open today.",
+  "@missedReminderBody": {
+    "placeholders": {
+      "count": {"type": "String"}
+    }
+  },
+  "eveningReminderTitle": "Evening review",
+  "eveningReminderBody": "{done} finished, {remaining} still open.",
+  "@eveningReminderBody": {
+    "placeholders": {
+      "done": {"type": "String"},
+      "remaining": {"type": "String"}
+    }
+  },
+  "sessionReminderTitle": "Time to study",
+  "sessionReminderBody": "{title}",
+  "@sessionReminderBody": {
+    "placeholders": {
+      "title": {"type": "String"}
+    }
+  },
+  "reminderDurationMinutes": "{count} minutes",
+  "@reminderDurationMinutes": {
+    "placeholders": {
+      "count": {"type": "String"}
+    }
+  },
+  "reminderDurationHours": "{count} hours",
+  "@reminderDurationHours": {
+    "placeholders": {
+      "count": {"type": "String"}
+    }
+  },
+  "reminderDurationHoursMinutes": "{hours} hours {minutes} minutes",
+  "@reminderDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {"type": "String"},
+      "minutes": {"type": "String"}
+    }
+  }
 }

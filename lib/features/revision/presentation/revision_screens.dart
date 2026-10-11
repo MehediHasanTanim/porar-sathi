@@ -15,6 +15,7 @@ import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/calendar_date.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/planner/domain/study_task.dart';
 import 'package:porar_sathi/features/revision/domain/revision_schedule.dart';
 import 'package:porar_sathi/features/sessions/application/study_timer_controller.dart';
@@ -42,7 +43,8 @@ class RevisionQueueScreen extends ConsumerStatefulWidget {
   const RevisionQueueScreen({super.key});
 
   @override
-  ConsumerState<RevisionQueueScreen> createState() => _RevisionQueueScreenState();
+  ConsumerState<RevisionQueueScreen> createState() =>
+      _RevisionQueueScreenState();
 }
 
 class _RevisionQueueScreenState extends ConsumerState<RevisionQueueScreen> {
@@ -66,14 +68,22 @@ class _RevisionQueueScreenState extends ConsumerState<RevisionQueueScreen> {
       }
       return;
     }
-    final revisions = await ref.read(revisionRepositoryProvider).listByPlan(planId);
-    final subjects = await ref.read(subjectRepositoryProvider).watchByPlan(planId, includeArchived: true).first;
-    final chapters = await ref.read(chapterRepositoryProvider).listByPlan(planId);
+    final revisions = await ref
+        .read(revisionRepositoryProvider)
+        .listByPlan(planId);
+    final subjects = await ref
+        .read(subjectRepositoryProvider)
+        .watchByPlan(planId, includeArchived: true)
+        .first;
+    final chapters = await ref
+        .read(chapterRepositoryProvider)
+        .listByPlan(planId);
     if (mounted) {
       setState(() {
         _revisions = [
           for (final revision in revisions)
-            if (revision.status != RevisionStatus.completed && revision.status != RevisionStatus.skipped)
+            if (revision.status != RevisionStatus.completed &&
+                revision.status != RevisionStatus.skipped)
               revision,
         ];
         _subjects = {for (final subject in subjects) subject.id: subject};
@@ -108,7 +118,8 @@ class _RevisionQueueScreenState extends ConsumerState<RevisionQueueScreen> {
                     _RevisionList(
                       revisions: [
                         for (final revision in _revisions)
-                          if (revisionBucket(revision, today) == bucket) revision,
+                          if (revisionBucket(revision, today) == bucket)
+                            revision,
                       ],
                       chapters: _chapters,
                       subjects: _subjects,
@@ -183,7 +194,10 @@ class _RevisionSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(subject?.name ?? l10n.revisionQueue, style: Theme.of(context).textTheme.titleSmall),
+        Text(
+          subject?.name ?? l10n.revisionQueue,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         Text(chapter?.title ?? revision.chapterId),
         Text(LocaleFormat.formatDuration(revision.estimatedMinutes, l10n)),
         if (chapter != null) Text(l10n.confidence),
@@ -199,7 +213,8 @@ class RevisionDetailScreen extends ConsumerStatefulWidget {
   final String revisionId;
 
   @override
-  ConsumerState<RevisionDetailScreen> createState() => _RevisionDetailScreenState();
+  ConsumerState<RevisionDetailScreen> createState() =>
+      _RevisionDetailScreenState();
 }
 
 class _RevisionDetailScreenState extends ConsumerState<RevisionDetailScreen> {
@@ -215,21 +230,30 @@ class _RevisionDetailScreenState extends ConsumerState<RevisionDetailScreen> {
   }
 
   Future<void> _load() async {
-    final revision = await ref.read(revisionRepositoryProvider).findById(widget.revisionId);
+    final revision = await ref
+        .read(revisionRepositoryProvider)
+        .findById(widget.revisionId);
     if (revision == null || !mounted) {
       return;
     }
-    final chapter = await ref.read(chapterRepositoryProvider).findById(revision.chapterId);
+    final chapter = await ref
+        .read(chapterRepositoryProvider)
+        .findById(revision.chapterId);
     final subject = chapter == null
         ? null
         : await ref.read(subjectRepositoryProvider).findById(chapter.subjectId);
-    final history = await ref.read(revisionRepositoryProvider).watchByChapter(revision.chapterId).first;
+    final history = await ref
+        .read(revisionRepositoryProvider)
+        .watchByChapter(revision.chapterId)
+        .first;
     if (mounted) {
       setState(() {
         _revision = revision;
         _chapter = chapter;
         _subject = subject;
-        _previous = history.where((item) => item.status == RevisionStatus.completed).length;
+        _previous = history
+            .where((item) => item.status == RevisionStatus.completed)
+            .length;
       });
     }
   }
@@ -248,19 +272,30 @@ class _RevisionDetailScreenState extends ConsumerState<RevisionDetailScreen> {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          Text(chapter?.title ?? revision.chapterId, style: Theme.of(context).textTheme.headlineSmall),
+          Text(
+            chapter?.title ?? revision.chapterId,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
           Text(LocaleFormat.formatDate(revision.dueDate, locale)),
           Text(LocaleFormat.formatDuration(revision.estimatedMinutes, l10n)),
           if (chapter?.updatedAt != null)
-            Text(l10n.lastStudied(LocaleFormat.formatDate(chapter!.updatedAt, locale))),
+            Text(
+              l10n.lastStudied(
+                LocaleFormat.formatDate(chapter!.updatedAt, locale),
+              ),
+            ),
           Text(l10n.previousRevisions(_previous)),
           if (chapter != null) Text(_confidenceLabel(chapter.confidence)),
           const SizedBox(height: AppSpacing.lg),
           PrimaryButton(label: l10n.actionStartRevision, onPressed: _start),
           const SizedBox(height: AppSpacing.sm),
-          OutlinedButton(onPressed: _reschedule, child: Text(l10n.actionReschedule)),
           OutlinedButton(
-            onPressed: () => _update(revision.copyWith(status: RevisionStatus.skipped)),
+            onPressed: _reschedule,
+            child: Text(l10n.actionReschedule),
+          ),
+          OutlinedButton(
+            onPressed: () =>
+                _update(revision.copyWith(status: RevisionStatus.skipped)),
             child: Text(l10n.actionSkip),
           ),
         ],
@@ -295,21 +330,23 @@ class _RevisionDetailScreenState extends ConsumerState<RevisionDetailScreen> {
     );
     try {
       await ref.read(studyTaskRepositoryProvider).save(task);
-      await ref.read(studyTimerControllerProvider.notifier).start(
-        ActiveStudyTimer(
-          id: ref.read(idGeneratorProvider).next(),
-          taskId: task.id,
-          subjectId: subject.id,
-          chapterId: chapter.id,
-          subjectName: subject.name,
-          title: chapter.title,
-          plannedMinutes: revision.estimatedMinutes,
-          startedAt: now,
-          elapsedBeforeResume: 0,
-          phase: TimerPhase.idle,
-          revisionId: revision.id,
-        ),
-      );
+      await ref
+          .read(studyTimerControllerProvider.notifier)
+          .start(
+            ActiveStudyTimer(
+              id: ref.read(idGeneratorProvider).next(),
+              taskId: task.id,
+              subjectId: subject.id,
+              chapterId: chapter.id,
+              subjectName: subject.name,
+              title: chapter.title,
+              plannedMinutes: revision.estimatedMinutes,
+              startedAt: now,
+              elapsedBeforeResume: 0,
+              phase: TimerPhase.idle,
+              revisionId: revision.id,
+            ),
+          );
       if (mounted) {
         await context.push(AppRoutes.session);
       }
@@ -339,7 +376,10 @@ class _RevisionDetailScreenState extends ConsumerState<RevisionDetailScreen> {
                     Localizations.localeOf(sheetContext),
                   ),
                 ),
-                onTap: () => Navigator.pop(sheetContext, today.add(Duration(days: offset))),
+                onTap: () => Navigator.pop(
+                  sheetContext,
+                  today.add(Duration(days: offset)),
+                ),
               ),
           ],
         );
@@ -349,13 +389,17 @@ class _RevisionDetailScreenState extends ConsumerState<RevisionDetailScreen> {
       return;
     }
     await _update(
-      revision.copyWith(dueDate: calendarDate(picked), status: RevisionStatus.scheduled),
+      revision.copyWith(
+        dueDate: calendarDate(picked),
+        status: RevisionStatus.scheduled,
+      ),
     );
   }
 
   Future<void> _update(RevisionSchedule revision) async {
     try {
       await ref.read(revisionRepositoryProvider).save(revision);
+      await reconcileReminders(ref);
       if (mounted) {
         context.pop();
       }
@@ -371,10 +415,12 @@ class RevisionCompleteScreen extends ConsumerStatefulWidget {
   const RevisionCompleteScreen({super.key});
 
   @override
-  ConsumerState<RevisionCompleteScreen> createState() => _RevisionCompleteScreenState();
+  ConsumerState<RevisionCompleteScreen> createState() =>
+      _RevisionCompleteScreenState();
 }
 
-class _RevisionCompleteScreenState extends ConsumerState<RevisionCompleteScreen> {
+class _RevisionCompleteScreenState
+    extends ConsumerState<RevisionCompleteScreen> {
   var _confidence = 2;
   var _another = true;
   RevisionSchedule? _next;
@@ -391,17 +437,23 @@ class _RevisionCompleteScreenState extends ConsumerState<RevisionCompleteScreen>
     if (revisionId == null) {
       return;
     }
-    final current = await ref.read(revisionRepositoryProvider).findById(revisionId);
+    final current = await ref
+        .read(revisionRepositoryProvider)
+        .findById(revisionId);
     if (current == null) {
       return;
     }
-    final history = await ref.read(revisionRepositoryProvider).watchByChapter(current.chapterId).first;
+    final history = await ref
+        .read(revisionRepositoryProvider)
+        .watchByChapter(current.chapterId)
+        .first;
     RevisionSchedule? next;
     for (final item in history) {
       if (item.revisionNumber <= current.revisionNumber) {
         continue;
       }
-      if (item.status == RevisionStatus.completed || item.status == RevisionStatus.skipped) {
+      if (item.status == RevisionStatus.completed ||
+          item.status == RevisionStatus.skipped) {
         continue;
       }
       next = item;
@@ -433,7 +485,12 @@ class _RevisionCompleteScreenState extends ConsumerState<RevisionCompleteScreen>
             value: _another,
             onChanged: (value) => setState(() => _another = value),
           ),
-          if (_next != null) Text(l10n.nextRevision(LocaleFormat.formatDate(_next!.dueDate, locale))),
+          if (_next != null)
+            Text(
+              l10n.nextRevision(
+                LocaleFormat.formatDate(_next!.dueDate, locale),
+              ),
+            ),
           const SizedBox(height: AppSpacing.lg),
           PrimaryButton(label: l10n.actionDone, onPressed: _save),
         ],
@@ -448,22 +505,39 @@ class _RevisionCompleteScreenState extends ConsumerState<RevisionCompleteScreen>
       return;
     }
     try {
-      final current = await ref.read(revisionRepositoryProvider).findById(revisionId);
+      final current = await ref
+          .read(revisionRepositoryProvider)
+          .findById(revisionId);
       if (current == null) {
         return;
       }
       final now = ref.read(clockProvider).now();
-      await ref.read(revisionRepositoryProvider).save(
-        current.copyWith(status: RevisionStatus.completed, completedAt: now),
-      );
-      final chapter = await ref.read(chapterRepositoryProvider).findById(current.chapterId);
+      await ref
+          .read(revisionRepositoryProvider)
+          .save(
+            current.copyWith(
+              status: RevisionStatus.completed,
+              completedAt: now,
+            ),
+          );
+      final chapter = await ref
+          .read(chapterRepositoryProvider)
+          .findById(current.chapterId);
       if (chapter != null) {
-        await ref.read(chapterRepositoryProvider).save(
-          chapter.copyWith(confidence: Confidence.values[_confidence], updatedAt: now),
-        );
+        await ref
+            .read(chapterRepositoryProvider)
+            .save(
+              chapter.copyWith(
+                confidence: Confidence.values[_confidence],
+                updatedAt: now,
+              ),
+            );
       }
       if (!_another) {
-        final history = await ref.read(revisionRepositoryProvider).watchByChapter(current.chapterId).first;
+        final history = await ref
+            .read(revisionRepositoryProvider)
+            .watchByChapter(current.chapterId)
+            .first;
         final later = [
           for (final item in history)
             if (item.revisionNumber > current.revisionNumber &&
@@ -475,6 +549,7 @@ class _RevisionCompleteScreenState extends ConsumerState<RevisionCompleteScreen>
           await ref.read(revisionRepositoryProvider).saveAll(later);
         }
       }
+      await reconcileReminders(ref);
       await ref.read(studyTimerControllerProvider.notifier).clear();
       if (mounted) {
         context.go(AppRoutes.today);

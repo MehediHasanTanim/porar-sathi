@@ -11,6 +11,7 @@ import 'package:porar_sathi/core/database/repository_providers.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/planner/application/load_adaptive_plan.dart';
 import 'package:porar_sathi/features/planner/domain/adaptive_plan.dart';
 import 'package:porar_sathi/features/planner/domain/replan_diff.dart';
@@ -21,7 +22,8 @@ class ReplanPreviewScreen extends ConsumerStatefulWidget {
   const ReplanPreviewScreen({super.key});
 
   @override
-  ConsumerState<ReplanPreviewScreen> createState() => _ReplanPreviewScreenState();
+  ConsumerState<ReplanPreviewScreen> createState() =>
+      _ReplanPreviewScreenState();
 }
 
 class _ReplanPreviewScreenState extends ConsumerState<ReplanPreviewScreen> {
@@ -80,14 +82,21 @@ class _ReplanPreviewScreenState extends ConsumerState<ReplanPreviewScreen> {
     final diff = plan.diff;
     final locale = Localizations.localeOf(context);
     return Scaffold(
-      appBar: AppBar(title: Text(_applied ? l10n.planUpdated : l10n.replanTitle)),
+      appBar: AppBar(
+        title: Text(_applied ? l10n.planUpdated : l10n.replanTitle),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           if (_applied) ...[
-            Text(l10n.planUpdated, style: Theme.of(context).textTheme.headlineSmall),
+            Text(
+              l10n.planUpdated,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
             if (plan.run.expectedFinishDate != null)
-              Text(LocaleFormat.formatDate(plan.run.expectedFinishDate!, locale)),
+              Text(
+                LocaleFormat.formatDate(plan.run.expectedFinishDate!, locale),
+              ),
             Text(l10n.recoveryEstimate(plan.catchUp.recoveryDays)),
             const SizedBox(height: AppSpacing.lg),
             PrimaryButton(
@@ -106,8 +115,15 @@ class _ReplanPreviewScreenState extends ConsumerState<ReplanPreviewScreen> {
               ),
             ],
             const SizedBox(height: AppSpacing.lg),
-            Text(l10n.replanTitle, style: Theme.of(context).textTheme.titleMedium),
-            for (final change in [...diff.moved, ...diff.added, ...diff.removed])
+            Text(
+              l10n.replanTitle,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            for (final change in [
+              ...diff.moved,
+              ...diff.added,
+              ...diff.removed,
+            ])
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Text(_changeLabel(change, locale)),
@@ -126,8 +142,12 @@ class _ReplanPreviewScreenState extends ConsumerState<ReplanPreviewScreen> {
   }
 
   String _changeLabel(ReplanTaskChange change, Locale locale) {
-    final from = change.from == null ? '' : LocaleFormat.formatDate(change.from!, locale);
-    final to = change.to == null ? '' : LocaleFormat.formatDate(change.to!, locale);
+    final from = change.from == null
+        ? ''
+        : LocaleFormat.formatDate(change.from!, locale);
+    final to = change.to == null
+        ? ''
+        : LocaleFormat.formatDate(change.to!, locale);
     if (from.isEmpty) {
       return '${change.title} → $to';
     }
@@ -143,11 +163,14 @@ class _ReplanPreviewScreenState extends ConsumerState<ReplanPreviewScreen> {
       return;
     }
     try {
-      await ref.read(studyTaskRepositoryProvider).applyAdaptivePlan(
-        run: plan.run,
-        tasks: plan.tasks,
-        today: ref.read(clockProvider).today(),
-      );
+      await ref
+          .read(studyTaskRepositoryProvider)
+          .applyAdaptivePlan(
+            run: plan.run,
+            tasks: plan.tasks,
+            today: ref.read(clockProvider).today(),
+          );
+      await reconcileReminders(ref);
       if (mounted) {
         setState(() => _applied = true);
       }

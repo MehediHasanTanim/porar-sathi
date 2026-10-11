@@ -16,6 +16,7 @@ import 'package:porar_sathi/core/time/calendar_date.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
 import 'package:porar_sathi/core/validation/validators.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/exams/domain/exam.dart';
 import 'package:porar_sathi/features/exams/domain/exam_syllabus_item.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
@@ -44,7 +45,10 @@ class _ExamListScreenState extends ConsumerState<ExamListScreen> {
     if (planId == null) {
       return;
     }
-    final exams = await ref.read(examRepositoryProvider).watchByPlan(planId).first;
+    final exams = await ref
+        .read(examRepositoryProvider)
+        .watchByPlan(planId)
+        .first;
     if (mounted) {
       setState(() => _exams = exams);
     }
@@ -54,8 +58,12 @@ class _ExamListScreenState extends ConsumerState<ExamListScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final today = ref.watch(clockProvider).today();
-    final upcoming = _exams.where((exam) => !calendarDate(exam.startDate).isBefore(today)).toList();
-    final completed = _exams.where((exam) => calendarDate(exam.startDate).isBefore(today)).toList();
+    final upcoming = _exams
+        .where((exam) => !calendarDate(exam.startDate).isBefore(today))
+        .toList();
+    final completed = _exams
+        .where((exam) => calendarDate(exam.startDate).isBefore(today))
+        .toList();
     return Scaffold(
       appBar: AppBar(title: Text(l10n.examsTitle)),
       floatingActionButton: FloatingActionButton.extended(
@@ -67,16 +75,29 @@ class _ExamListScreenState extends ConsumerState<ExamListScreen> {
         label: Text(l10n.addExam),
       ),
       body: _exams.isEmpty
-          ? EmptyState(icon: Icons.event_outlined, title: l10n.noExamsTitle, body: l10n.noExamsBody)
+          ? EmptyState(
+              icon: Icons.event_outlined,
+              title: l10n.noExamsTitle,
+              body: l10n.noExamsBody,
+            )
           : ListView(
               padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
-                if (upcoming.isNotEmpty) Text(l10n.upcomingExams, style: Theme.of(context).textTheme.titleMedium),
-                for (final exam in upcoming) _ExamTile(exam: exam, today: today, onChanged: _load),
+                if (upcoming.isNotEmpty)
+                  Text(
+                    l10n.upcomingExams,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                for (final exam in upcoming)
+                  _ExamTile(exam: exam, today: today, onChanged: _load),
                 if (completed.isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.md),
-                  Text(l10n.completedExams, style: Theme.of(context).textTheme.titleMedium),
-                  for (final exam in completed) _ExamTile(exam: exam, today: today, onChanged: _load),
+                  Text(
+                    l10n.completedExams,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  for (final exam in completed)
+                    _ExamTile(exam: exam, today: today, onChanged: _load),
                 ],
               ],
             ),
@@ -85,7 +106,11 @@ class _ExamListScreenState extends ConsumerState<ExamListScreen> {
 }
 
 class _ExamTile extends StatelessWidget {
-  const _ExamTile({required this.exam, required this.today, required this.onChanged});
+  const _ExamTile({
+    required this.exam,
+    required this.today,
+    required this.onChanged,
+  });
 
   final Exam exam;
   final DateTime today;
@@ -104,7 +129,10 @@ class _ExamTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(exam.name, style: Theme.of(context).textTheme.titleMedium),
-          Text(DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(exam.startDate)),
+          Text(
+            DateFormat.yMMMd(Localizations.localeOf(context).toString())
+                .format(exam.startDate),
+          ),
           Text(days >= 0 ? l10n.daysRemaining(days) : l10n.completed),
         ],
       ),
@@ -159,21 +187,47 @@ class _ExamFormScreenState extends ConsumerState<ExamFormScreen> {
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: Text(l10n.examDateChangeWarning),
             ),
-          LabeledField(label: l10n.examName, child: TextField(controller: _name)),
+          LabeledField(
+            label: l10n.examName,
+            child: TextField(controller: _name),
+          ),
           const SizedBox(height: AppSpacing.md),
           Text(l10n.examType),
           OptionChips(
-            labels: [l10n.examTypeBoard, l10n.examTypeMidterm, l10n.examTypeFinal, l10n.examTypeAdmission, l10n.examTypeCustom],
-            selectedIndex: [ExamType.board, ExamType.midterm, ExamType.finalExam, ExamType.admission, ExamType.custom].indexOf(_type).clamp(0, 4),
+            labels: [
+              l10n.examTypeBoard,
+              l10n.examTypeMidterm,
+              l10n.examTypeFinal,
+              l10n.examTypeAdmission,
+              l10n.examTypeCustom,
+            ],
+            selectedIndex: [
+              ExamType.board,
+              ExamType.midterm,
+              ExamType.finalExam,
+              ExamType.admission,
+              ExamType.custom,
+            ].indexOf(_type).clamp(0, 4),
             onSelected: (index) => setState(() {
-              _type = [ExamType.board, ExamType.midterm, ExamType.finalExam, ExamType.admission, ExamType.custom][index];
+              _type = [
+                ExamType.board,
+                ExamType.midterm,
+                ExamType.finalExam,
+                ExamType.admission,
+                ExamType.custom,
+              ][index];
             }),
           ),
           const SizedBox(height: AppSpacing.md),
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.examDate),
-            subtitle: Text(_date == null ? l10n.examDate : DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(_date!)),
+            subtitle: Text(
+              _date == null
+                  ? l10n.examDate
+                  : DateFormat.yMMMd(Localizations.localeOf(context).toString())
+                        .format(_date!),
+            ),
             onTap: () async {
               final picked = await showDatePicker(
                 context: context,
@@ -189,7 +243,12 @@ class _ExamFormScreenState extends ConsumerState<ExamFormScreen> {
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.examEnd),
-            subtitle: Text(_end == null ? l10n.optionalHint : DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(_end!)),
+            subtitle: Text(
+              _end == null
+                  ? l10n.optionalHint
+                  : DateFormat.yMMMd(Localizations.localeOf(context).toString())
+                        .format(_end!),
+            ),
             onTap: () async {
               final picked = await showDatePicker(
                 context: context,
@@ -204,18 +263,29 @@ class _ExamFormScreenState extends ConsumerState<ExamFormScreen> {
           ),
           Text(l10n.examImportance),
           OptionChips(
-            labels: [l10n.importanceNormal, l10n.importanceImportant, l10n.importanceVeryImportant],
+            labels: [
+              l10n.importanceNormal,
+              l10n.importanceImportant,
+              l10n.importanceVeryImportant,
+            ],
             selectedIndex: switch (_importance) {
               Priority.critical => 2,
               Priority.high => 1,
               _ => 0,
             },
             onSelected: (index) => setState(() {
-              _importance = [Priority.normal, Priority.high, Priority.critical][index];
+              _importance = [
+                Priority.normal,
+                Priority.high,
+                Priority.critical,
+              ][index];
             }),
           ),
           const SizedBox(height: AppSpacing.md),
-          LabeledField(label: l10n.notes, child: TextField(controller: _notes, maxLines: 3)),
+          LabeledField(
+            label: l10n.notes,
+            child: TextField(controller: _notes, maxLines: 3),
+          ),
         ],
       ),
     );
@@ -258,20 +328,23 @@ class _ExamFormScreenState extends ConsumerState<ExamFormScreen> {
         throw const DatabaseException(message: 'Study plan was not found.');
       }
       final clock = ref.read(clockProvider);
-      await ref.read(examRepositoryProvider).save(
-        Exam(
-          id: _existing?.id ?? ref.read(idGeneratorProvider).next(),
-          studyPlanId: planId,
-          name: _name.text,
-          examType: _type,
-          startDate: date,
-          endDate: _end,
-          importance: _importance,
-          notes: _notes.text,
-          createdAt: _existing?.createdAt ?? clock.now(),
-          updatedAt: clock.now(),
-        ),
-      );
+      await ref
+          .read(examRepositoryProvider)
+          .save(
+            Exam(
+              id: _existing?.id ?? ref.read(idGeneratorProvider).next(),
+              studyPlanId: planId,
+              name: _name.text,
+              examType: _type,
+              startDate: date,
+              endDate: _end,
+              importance: _importance,
+              notes: _notes.text,
+              createdAt: _existing?.createdAt ?? clock.now(),
+              updatedAt: clock.now(),
+            ),
+          );
+      await reconcileReminders(ref);
       if (mounted) {
         context.pop();
       }
@@ -315,7 +388,9 @@ class _ExamDetailsScreenState extends ConsumerState<ExamDetailsScreen> {
     if (exam == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    final days = calendarDate(exam.startDate).difference(ref.watch(clockProvider).today()).inDays;
+    final days = calendarDate(exam.startDate)
+        .difference(ref.watch(clockProvider).today())
+        .inDays;
     return Scaffold(
       appBar: AppBar(
         title: Text(exam.name),
@@ -336,7 +411,10 @@ class _ExamDetailsScreenState extends ConsumerState<ExamDetailsScreen> {
             days >= 0 ? l10n.daysRemaining(days) : l10n.completed,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          Text(DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(exam.startDate)),
+          Text(
+            DateFormat.yMMMMd(Localizations.localeOf(context).toString())
+                .format(exam.startDate),
+          ),
           const SizedBox(height: AppSpacing.lg),
           FilledButton(
             onPressed: () => context.push('/exams/${exam.id}/syllabus'),
@@ -373,12 +451,23 @@ class _ExamSyllabusScreenState extends ConsumerState<ExamSyllabusScreen> {
     if (exam == null) {
       return;
     }
-    final subjects = await ref.read(subjectRepositoryProvider).watchByPlan(exam.studyPlanId).first;
+    final subjects = await ref
+        .read(subjectRepositoryProvider)
+        .watchByPlan(exam.studyPlanId)
+        .first;
     final chapters = <Chapter>[];
     for (final subject in subjects) {
-      chapters.addAll(await ref.read(chapterRepositoryProvider).watchBySubject(subject.id).first);
+      chapters.addAll(
+        await ref
+            .read(chapterRepositoryProvider)
+            .watchBySubject(subject.id)
+            .first,
+      );
     }
-    final linked = await ref.read(examRepositoryProvider).watchSyllabus(widget.examId).first;
+    final linked = await ref
+        .read(examRepositoryProvider)
+        .watchSyllabus(widget.examId)
+        .first;
     if (mounted) {
       setState(() {
         _planId = exam.studyPlanId;
@@ -425,7 +514,9 @@ class _ExamSyllabusScreenState extends ConsumerState<ExamSyllabusScreen> {
     try {
       final ids = ref.read(idGeneratorProvider);
       final items = [
-        for (final chapter in _chapters.where((chapter) => _selected.contains(chapter.id)))
+        for (final chapter in _chapters.where(
+          (chapter) => _selected.contains(chapter.id),
+        ))
           ExamSyllabusItem(
             id: ids.next(),
             examId: widget.examId,
@@ -435,7 +526,9 @@ class _ExamSyllabusScreenState extends ConsumerState<ExamSyllabusScreen> {
             isRequired: true,
           ),
       ];
-      await ref.read(examRepositoryProvider).replaceSyllabus(widget.examId, items);
+      await ref
+          .read(examRepositoryProvider)
+          .replaceSyllabus(widget.examId, items);
       if (mounted) {
         context.pop();
       }

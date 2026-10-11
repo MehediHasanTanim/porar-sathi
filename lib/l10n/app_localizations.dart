@@ -1283,19 +1283,43 @@ abstract class AppLocalizations {
   /// No description provided for @notificationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Stay on track with gentle reminders'**
+  /// **'Get gentle study reminders'**
   String get notificationsTitle;
 
   /// No description provided for @notificationsBody.
   ///
   /// In en, this message translates to:
-  /// **'Porar Sathi can remind you about today\'s plan, revision, and upcoming exams.'**
+  /// **'Pocket Tutor can remind you about:'**
   String get notificationsBody;
+
+  /// No description provided for @notificationsBenefitPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s plan'**
+  String get notificationsBenefitPlan;
+
+  /// No description provided for @notificationsBenefitRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision'**
+  String get notificationsBenefitRevision;
+
+  /// No description provided for @notificationsBenefitExam.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming exams'**
+  String get notificationsBenefitExam;
+
+  /// No description provided for @notificationsBenefitEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening review'**
+  String get notificationsBenefitEvening;
 
   /// No description provided for @actionEnableReminders.
   ///
   /// In en, this message translates to:
-  /// **'Enable Reminders'**
+  /// **'Enable Notifications'**
   String get actionEnableReminders;
 
   /// No description provided for @completeTitle.
@@ -2573,6 +2597,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No study recorded yet.'**
   String get noStudyYet;
+
+  /// No description provided for @notificationsDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are turned off'**
+  String get notificationsDeniedTitle;
+
+  /// No description provided for @notificationsDeniedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your study plan still works normally. You just won\'t receive reminders.'**
+  String get notificationsDeniedBody;
+
+  /// No description provided for @actionOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get actionOpenSettings;
+
+  /// No description provided for @actionContinueWithoutNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Without Notifications'**
+  String get actionContinueWithoutNotifications;
+
+  /// No description provided for @notificationSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationSettingsTitle;
+
+  /// No description provided for @remindersEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remindersEnabled;
+
+  /// No description provided for @dailyPlanReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily plan'**
+  String get dailyPlanReminder;
+
+  /// No description provided for @revisionReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision'**
+  String get revisionReminder;
+
+  /// No description provided for @examCountdownReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam countdown'**
+  String get examCountdownReminder;
+
+  /// No description provided for @missedTaskReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed task'**
+  String get missedTaskReminder;
+
+  /// No description provided for @eveningReviewReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening review'**
+  String get eveningReviewReminder;
+
+  /// No description provided for @studySessionReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Study session'**
+  String get studySessionReminder;
+
+  /// No description provided for @reminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder time'**
+  String get reminderTime;
+
+  /// No description provided for @examThresholdsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Countdown'**
+  String get examThresholdsLabel;
+
+  /// No description provided for @dailyReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s study'**
+  String get dailyReminderTitle;
+
+  /// No description provided for @dailyReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} study tasks today — {duration} in total.'**
+  String dailyReminderBody(String count, String duration);
+
+  /// No description provided for @revisionReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Revision is due'**
+  String get revisionReminderTitle;
+
+  /// No description provided for @revisionReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A revision is due today.'**
+  String get revisionReminderBody;
+
+  /// No description provided for @examReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam coming up'**
+  String get examReminderTitle;
+
+  /// No description provided for @examReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is in {days} days.'**
+  String examReminderBody(String name, String days);
+
+  /// No description provided for @missedReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Still some study left'**
+  String get missedReminderTitle;
+
+  /// No description provided for @missedReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks are still open today.'**
+  String missedReminderBody(String count);
+
+  /// No description provided for @eveningReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening review'**
+  String get eveningReminderTitle;
+
+  /// No description provided for @eveningReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} finished, {remaining} still open.'**
+  String eveningReminderBody(String done, String remaining);
+
+  /// No description provided for @sessionReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to study'**
+  String get sessionReminderTitle;
+
+  /// No description provided for @sessionReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}'**
+  String sessionReminderBody(String title);
+
+  /// No description provided for @reminderDurationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} minutes'**
+  String reminderDurationMinutes(String count);
+
+  /// No description provided for @reminderDurationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hours'**
+  String reminderDurationHours(String count);
+
+  /// No description provided for @reminderDurationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hours {minutes} minutes'**
+  String reminderDurationHoursMinutes(String hours, String minutes);
 }
 
 class _AppLocalizationsDelegate

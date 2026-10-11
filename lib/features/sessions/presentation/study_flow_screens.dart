@@ -16,6 +16,7 @@ import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/calendar_date.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/planner/domain/calendar_exception.dart';
 import 'package:porar_sathi/features/planner/domain/day_capacity.dart';
 import 'package:porar_sathi/features/planner/domain/study_task.dart';
@@ -44,7 +45,10 @@ Future<void> showSkipSheet({
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.skipTitle, style: Theme.of(sheetContext).textTheme.titleMedium),
+            Text(
+              l10n.skipTitle,
+              style: Theme.of(sheetContext).textTheme.titleMedium,
+            ),
             ListTile(
               title: Text(l10n.skipToday),
               onTap: () => Navigator.pop(sheetContext, 'today'),
@@ -76,6 +80,7 @@ Future<void> showSkipSheet({
     _ => task.copyWith(status: TaskStatus.skipped, updatedAt: now),
   };
   await ref.read(studyTaskRepositoryProvider).save(updated);
+  await reconcileReminders(ref);
 }
 
 Future<void> showStartSheet({
@@ -103,21 +108,23 @@ Future<void> showStartSheet({
               label: l10n.actionStartTimer,
               onPressed: () async {
                 Navigator.of(sheetContext).pop();
-                await ref.read(studyTimerControllerProvider.notifier).start(
-                  ActiveStudyTimer(
-                    id: ref.read(idGeneratorProvider).next(),
-                    taskId: task.id,
-                    subjectId: task.subjectId,
-                    chapterId: task.chapterId,
-                    subjectName: subjectName,
-                    title: title,
-                    examName: examName,
-                    plannedMinutes: task.plannedMinutes,
-                    startedAt: ref.read(clockProvider).now(),
-                    elapsedBeforeResume: 0,
-                    phase: TimerPhase.idle,
-                  ),
-                );
+                await ref
+                    .read(studyTimerControllerProvider.notifier)
+                    .start(
+                      ActiveStudyTimer(
+                        id: ref.read(idGeneratorProvider).next(),
+                        taskId: task.id,
+                        subjectId: task.subjectId,
+                        chapterId: task.chapterId,
+                        subjectName: subjectName,
+                        title: title,
+                        examName: examName,
+                        plannedMinutes: task.plannedMinutes,
+                        startedAt: ref.read(clockProvider).now(),
+                        elapsedBeforeResume: 0,
+                        phase: TimerPhase.idle,
+                      ),
+                    );
                 if (context.mounted) {
                   await context.push(AppRoutes.session);
                 }
@@ -161,21 +168,29 @@ class _TaskDetailScreenState extends ConsumerState<TaskDetailScreen> {
   }
 
   Future<void> _load() async {
-    final task = await ref.read(studyTaskRepositoryProvider).findById(widget.taskId);
+    final task = await ref
+        .read(studyTaskRepositoryProvider)
+        .findById(widget.taskId);
     if (task == null || !mounted) {
       return;
     }
-    final subject = await ref.read(subjectRepositoryProvider).findById(task.subjectId);
+    final subject = await ref
+        .read(subjectRepositoryProvider)
+        .findById(task.subjectId);
     final chapter = task.chapterId == null
         ? null
         : await ref.read(chapterRepositoryProvider).findById(task.chapterId!);
     String? examName;
     int? days;
     if (task.examId != null) {
-      final exam = await ref.read(examRepositoryProvider).findById(task.examId!);
+      final exam = await ref
+          .read(examRepositoryProvider)
+          .findById(task.examId!);
       examName = exam?.name;
       if (exam != null) {
-        days = calendarDate(exam.startDate).difference(ref.read(clockProvider).today()).inDays;
+        days = calendarDate(exam.startDate)
+            .difference(ref.read(clockProvider).today())
+            .inDays;
       }
     }
     if (mounted) {
@@ -202,19 +217,26 @@ class _TaskDetailScreenState extends ConsumerState<TaskDetailScreen> {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          Text(chapter?.title ?? task.title, style: Theme.of(context).textTheme.headlineSmall),
+          Text(
+            chapter?.title ?? task.title,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
           Text(LocaleFormat.formatDuration(task.plannedMinutes, l10n)),
           if (_examName != null) Text(_examName!),
-          if (chapter != null) Text('${l10n.difficulty}: ${chapter.difficulty.code}'),
-          if (chapter != null) Text('${l10n.confidence}: ${chapter.confidence.code}'),
+          if (chapter != null)
+            Text('${l10n.difficulty}: ${chapter.difficulty.code}'),
+          if (chapter != null)
+            Text('${l10n.confidence}: ${chapter.confidence.code}'),
           const SizedBox(height: AppSpacing.md),
           Text(l10n.whyThisTask, style: Theme.of(context).textTheme.titleSmall),
           if (_days != null) Text(l10n.daysRemaining(_days!)),
           if (chapter != null &&
-              (chapter.confidence == Confidence.low || chapter.confidence == Confidence.veryLow))
+              (chapter.confidence == Confidence.low ||
+                  chapter.confidence == Confidence.veryLow))
             Text(l10n.confidenceLowReason),
           if (chapter != null &&
-              (chapter.priority == Priority.high || chapter.priority == Priority.critical))
+              (chapter.priority == Priority.high ||
+                  chapter.priority == Priority.critical))
             Text(l10n.highPriorityChapter),
           const SizedBox(height: AppSpacing.lg),
           PrimaryButton(
@@ -299,13 +321,20 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
     final seconds = timer.elapsedSeconds(now);
     final paused = timer.phase == TimerPhase.paused;
     return Scaffold(
-      appBar: AppBar(title: Text(timer.quickStudy ? l10n.quickStudyTitle : timer.subjectName)),
+      appBar: AppBar(
+        title: Text(
+          timer.quickStudy ? l10n.quickStudyTitle : timer.subjectName,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(timer.subjectName, style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              timer.subjectName,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             Text(timer.title),
             if (timer.examName != null) Text(timer.examName!),
             const Spacer(),
@@ -316,23 +345,38 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
               ),
             ),
             if (paused)
-              Center(child: Text(l10n.sessionPaused, style: Theme.of(context).textTheme.titleMedium)),
-            Center(child: Text(l10n.plannedLabel(LocaleFormat.formatDuration(timer.plannedMinutes, l10n)))),
+              Center(
+                child: Text(
+                  l10n.sessionPaused,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+            Center(
+              child: Text(
+                l10n.plannedLabel(
+                  LocaleFormat.formatDuration(timer.plannedMinutes, l10n),
+                ),
+              ),
+            ),
             const Spacer(),
             if (!paused)
               PrimaryButton(
                 label: l10n.actionPause,
-                onPressed: () => ref.read(studyTimerControllerProvider.notifier).pause(),
+                onPressed: () =>
+                    ref.read(studyTimerControllerProvider.notifier).pause(),
               )
             else
               PrimaryButton(
                 label: l10n.actionResume,
-                onPressed: () => ref.read(studyTimerControllerProvider.notifier).resume(),
+                onPressed: () =>
+                    ref.read(studyTimerControllerProvider.notifier).resume(),
               ),
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton(
               onPressed: () async {
-                final finished = await ref.read(studyTimerControllerProvider.notifier).finish();
+                final finished = await ref
+                    .read(studyTimerControllerProvider.notifier)
+                    .finish();
                 if (context.mounted) {
                   context.pushReplacement(
                     finished?.revisionId == null
@@ -357,7 +401,8 @@ class FinishSessionScreen extends ConsumerStatefulWidget {
   final String? taskId;
 
   @override
-  ConsumerState<FinishSessionScreen> createState() => _FinishSessionScreenState();
+  ConsumerState<FinishSessionScreen> createState() =>
+      _FinishSessionScreenState();
 }
 
 class _FinishSessionScreenState extends ConsumerState<FinishSessionScreen> {
@@ -414,7 +459,12 @@ class _FinishSessionScreenState extends ConsumerState<FinishSessionScreen> {
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           OptionChips(
-            labels: [l10n.resultFully, l10n.resultMostly, l10n.resultPartial, l10n.resultCouldNot],
+            labels: [
+              l10n.resultFully,
+              l10n.resultMostly,
+              l10n.resultPartial,
+              l10n.resultCouldNot,
+            ],
             selectedIndex: _resultIndex,
             onSelected: (index) => setState(() {
               _result = SessionResult.values[index];
@@ -466,7 +516,9 @@ class _FinishSessionScreenState extends ConsumerState<FinishSessionScreen> {
     var task = _task;
     try {
       if (task == null && timer != null) {
-        final subject = await ref.read(subjectRepositoryProvider).findById(timer.subjectId);
+        final subject = await ref
+            .read(subjectRepositoryProvider)
+            .findById(timer.subjectId);
         if (subject == null) {
           throw StateError('Subject is missing.');
         }
@@ -522,10 +574,12 @@ class PartialCompletionScreen extends ConsumerStatefulWidget {
   final String taskId;
 
   @override
-  ConsumerState<PartialCompletionScreen> createState() => _PartialCompletionScreenState();
+  ConsumerState<PartialCompletionScreen> createState() =>
+      _PartialCompletionScreenState();
 }
 
-class _PartialCompletionScreenState extends ConsumerState<PartialCompletionScreen> {
+class _PartialCompletionScreenState
+    extends ConsumerState<PartialCompletionScreen> {
   StudyTask? _task;
   var _percent = 50;
 
@@ -533,7 +587,9 @@ class _PartialCompletionScreenState extends ConsumerState<PartialCompletionScree
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final task = await ref.read(studyTaskRepositoryProvider).findById(widget.taskId);
+      final task = await ref
+          .read(studyTaskRepositoryProvider)
+          .findById(widget.taskId);
       if (mounted) {
         setState(() => _task = task);
       }
@@ -564,10 +620,15 @@ class _PartialCompletionScreenState extends ConsumerState<PartialCompletionScree
           OptionChips(
             labels: const ['25%', '50%', '75%'],
             selectedIndex: const [25, 50, 75].indexOf(_percent),
-            onSelected: (index) => setState(() => _percent = [25, 50, 75][index]),
+            onSelected: (index) =>
+                setState(() => _percent = [25, 50, 75][index]),
           ),
           const SizedBox(height: AppSpacing.md),
-          Text(l10n.aboutRemain(LocaleFormat.formatDuration(remain < 0 ? 0 : remain, l10n))),
+          Text(
+            l10n.aboutRemain(
+              LocaleFormat.formatDuration(remain < 0 ? 0 : remain, l10n),
+            ),
+          ),
           const SizedBox(height: AppSpacing.lg),
           PrimaryButton(
             label: l10n.actionSaveReplan,
@@ -636,12 +697,19 @@ class _MoveTaskScreenState extends ConsumerState<MoveTaskScreen> {
   }
 
   Future<void> _load() async {
-    final task = await ref.read(studyTaskRepositoryProvider).findById(widget.taskId);
+    final task = await ref
+        .read(studyTaskRepositoryProvider)
+        .findById(widget.taskId);
     if (task == null) {
       return;
     }
-    final plan = await ref.read(studyPlanRepositoryProvider).findById(task.studyPlanId);
-    final week = await ref.read(availabilityRepositoryProvider).watchWeek(task.studyPlanId).first;
+    final plan = await ref
+        .read(studyPlanRepositoryProvider)
+        .findById(task.studyPlanId);
+    final week = await ref
+        .read(availabilityRepositoryProvider)
+        .watchWeek(task.studyPlanId)
+        .first;
     final exceptions = await ref
         .read(availabilityRepositoryProvider)
         .watchExceptions(task.studyPlanId)
@@ -685,13 +753,16 @@ class _MoveTaskScreenState extends ConsumerState<MoveTaskScreen> {
 
   Future<void> _move(StudyTask task, DateTime date) async {
     try {
-      await ref.read(studyTaskRepositoryProvider).save(
-        task.copyWith(
-          plannedDate: calendarDate(date),
-          isLocked: true,
-          updatedAt: ref.read(clockProvider).now(),
-        ),
-      );
+      await ref
+          .read(studyTaskRepositoryProvider)
+          .save(
+            task.copyWith(
+              plannedDate: calendarDate(date),
+              isLocked: true,
+              updatedAt: ref.read(clockProvider).now(),
+            ),
+          );
+      await reconcileReminders(ref);
       if (mounted) {
         context.pop();
       }
@@ -736,7 +807,11 @@ class _MoveDay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(LocaleFormat.formatDate(date, Localizations.localeOf(context))),
-          Text(l10n.capacityFree(LocaleFormat.formatDuration(capacity.usableMinutes, l10n))),
+          Text(
+            l10n.capacityFree(
+              LocaleFormat.formatDuration(capacity.usableMinutes, l10n),
+            ),
+          ),
           if (tight) Text(l10n.capacityTight),
         ],
       ),
@@ -770,14 +845,20 @@ class _QuickStudyScreenState extends ConsumerState<QuickStudyScreen> {
     if (planId == null) {
       return;
     }
-    final subjects = await ref.read(subjectRepositoryProvider).watchByPlan(planId).first;
+    final subjects = await ref
+        .read(subjectRepositoryProvider)
+        .watchByPlan(planId)
+        .first;
     if (mounted) {
       setState(() => _subjects = subjects);
     }
   }
 
   Future<void> _selectSubject(String id) async {
-    final chapters = await ref.read(chapterRepositoryProvider).watchBySubject(id).first;
+    final chapters = await ref
+        .read(chapterRepositoryProvider)
+        .watchBySubject(id)
+        .first;
     if (mounted) {
       setState(() {
         _subjectId = id;
@@ -790,8 +871,12 @@ class _QuickStudyScreenState extends ConsumerState<QuickStudyScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final subject = _subjects.where((item) => item.id == _subjectId).firstOrNull;
-    final chapter = _chapters.where((item) => item.id == _chapterId).firstOrNull;
+    final subject = _subjects
+        .where((item) => item.id == _subjectId)
+        .firstOrNull;
+    final chapter = _chapters
+        .where((item) => item.id == _chapterId)
+        .firstOrNull;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.quickStudyTitle)),
       body: ListView(
@@ -806,12 +891,17 @@ class _QuickStudyScreenState extends ConsumerState<QuickStudyScreen> {
               onTap: () => _selectSubject(item.id),
             ),
           if (_chapters.isNotEmpty) ...[
-            Text(l10n.chaptersTitle, style: Theme.of(context).textTheme.titleSmall),
+            Text(
+              l10n.chaptersTitle,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             for (final item in _chapters)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(item.title),
-                trailing: item.id == _chapterId ? const Icon(Icons.check) : null,
+                trailing: item.id == _chapterId
+                    ? const Icon(Icons.check)
+                    : null,
                 onTap: () => setState(() => _chapterId = item.id),
               ),
           ],
@@ -830,20 +920,22 @@ class _QuickStudyScreenState extends ConsumerState<QuickStudyScreen> {
             onPressed: subject == null
                 ? null
                 : () async {
-                    await ref.read(studyTimerControllerProvider.notifier).start(
-                      ActiveStudyTimer(
-                        id: ref.read(idGeneratorProvider).next(),
-                        subjectId: subject.id,
-                        chapterId: chapter?.id,
-                        subjectName: subject.name,
-                        title: chapter?.title ?? subject.name,
-                        plannedMinutes: _minutes,
-                        startedAt: ref.read(clockProvider).now(),
-                        elapsedBeforeResume: 0,
-                        phase: TimerPhase.idle,
-                        quickStudy: true,
-                      ),
-                    );
+                    await ref
+                        .read(studyTimerControllerProvider.notifier)
+                        .start(
+                          ActiveStudyTimer(
+                            id: ref.read(idGeneratorProvider).next(),
+                            subjectId: subject.id,
+                            chapterId: chapter?.id,
+                            subjectName: subject.name,
+                            title: chapter?.title ?? subject.name,
+                            plannedMinutes: _minutes,
+                            startedAt: ref.read(clockProvider).now(),
+                            elapsedBeforeResume: 0,
+                            phase: TimerPhase.idle,
+                            quickStudy: true,
+                          ),
+                        );
                     if (context.mounted) {
                       await context.push(AppRoutes.session);
                     }
@@ -910,9 +1002,13 @@ Future<void> _commit({
   Chapter? chapter;
   Subject? subject;
   if (task != null) {
-    subject = await ref.read(subjectRepositoryProvider).findById(task.subjectId);
+    subject = await ref
+        .read(subjectRepositoryProvider)
+        .findById(task.subjectId);
     if (task.chapterId != null) {
-      chapter = await ref.read(chapterRepositoryProvider).findById(task.chapterId!);
+      chapter = await ref
+          .read(chapterRepositoryProvider)
+          .findById(task.chapterId!);
     }
   }
   final session = StudySession(
@@ -945,12 +1041,17 @@ Future<void> _commit({
     moreRevisionIds: [ids.next(), ids.next()],
     existingRevisions: chapter == null
         ? const []
-        : await ref.read(revisionRepositoryProvider).watchByChapter(chapter.id).first,
+        : await ref
+              .read(revisionRepositoryProvider)
+              .watchByChapter(chapter.id)
+              .first,
     examDate: task?.examId == null
         ? null
-        : (await ref.read(examRepositoryProvider).findById(task!.examId!))?.startDate,
+        : (await ref.read(examRepositoryProvider).findById(task!.examId!))
+              ?.startDate,
   );
   await ref.read(studySessionRepositoryProvider).commitCompletion(plan);
+  await reconcileReminders(ref);
 }
 
 String _clock(int seconds) {

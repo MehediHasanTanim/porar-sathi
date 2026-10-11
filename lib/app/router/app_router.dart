@@ -22,6 +22,7 @@ import 'package:porar_sathi/features/progress/presentation/progress_screen.dart'
 import 'package:porar_sathi/features/sessions/presentation/study_flow_screens.dart';
 import 'package:porar_sathi/features/sessions/presentation/today_screen.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
+import 'package:porar_sathi/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:porar_sathi/features/settings/presentation/appearance_screen.dart';
 import 'package:porar_sathi/features/settings/presentation/more_screen.dart';
 import 'package:porar_sathi/features/settings/presentation/study_settings_screen.dart';
@@ -111,21 +112,18 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/subjects/:subjectId/edit',
-        builder: (context, state) => SubjectFormScreen(
-          subjectId: state.pathParameters['subjectId'],
-        ),
+        builder: (context, state) =>
+            SubjectFormScreen(subjectId: state.pathParameters['subjectId']),
       ),
       GoRoute(
         path: '/subjects/:subjectId/chapters/new',
-        builder: (context, state) => ChapterFormScreen(
-          subjectId: state.pathParameters['subjectId']!,
-        ),
+        builder: (context, state) =>
+            ChapterFormScreen(subjectId: state.pathParameters['subjectId']!),
       ),
       GoRoute(
         path: '/subjects/:subjectId/chapters/bulk',
-        builder: (context, state) => BulkChaptersScreen(
-          subjectId: state.pathParameters['subjectId']!,
-        ),
+        builder: (context, state) =>
+            BulkChaptersScreen(subjectId: state.pathParameters['subjectId']!),
       ),
       GoRoute(
         path: '/subjects/:subjectId/chapters/:chapterId',
@@ -136,15 +134,13 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/subjects/:subjectId/chapters',
-        builder: (context, state) => ChapterListScreen(
-          subjectId: state.pathParameters['subjectId']!,
-        ),
+        builder: (context, state) =>
+            ChapterListScreen(subjectId: state.pathParameters['subjectId']!),
       ),
       GoRoute(
         path: '/subjects/:subjectId',
-        builder: (context, state) => SubjectDetailsScreen(
-          subjectId: state.pathParameters['subjectId']!,
-        ),
+        builder: (context, state) =>
+            SubjectDetailsScreen(subjectId: state.pathParameters['subjectId']!),
       ),
       GoRoute(
         path: AppRoutes.exams,
@@ -156,25 +152,23 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/exams/:examId/edit',
-        builder: (context, state) => ExamFormScreen(
-          examId: state.pathParameters['examId'],
-        ),
+        builder: (context, state) =>
+            ExamFormScreen(examId: state.pathParameters['examId']),
       ),
       GoRoute(
         path: '/exams/:examId/syllabus',
-        builder: (context, state) => ExamSyllabusScreen(
-          examId: state.pathParameters['examId']!,
-        ),
+        builder: (context, state) =>
+            ExamSyllabusScreen(examId: state.pathParameters['examId']!),
       ),
       GoRoute(
         path: '/exams/:examId',
-        builder: (context, state) => ExamDetailsScreen(
-          examId: state.pathParameters['examId']!,
-        ),
+        builder: (context, state) =>
+            ExamDetailsScreen(examId: state.pathParameters['examId']!),
       ),
       GoRoute(
         path: AppRoutes.availability,
-        builder: (context, state) => const WeeklyAvailabilityScreen(onboarding: false),
+        builder: (context, state) =>
+            const WeeklyAvailabilityScreen(onboarding: false),
       ),
       GoRoute(
         path: AppRoutes.newException,
@@ -236,6 +230,10 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const StudySettingsScreen(),
       ),
       GoRoute(
+        path: AppRoutes.notifications,
+        builder: (context, state) => const NotificationSettingsScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.appearance,
         builder: (context, state) => const AppearanceScreen(),
       ),
@@ -258,27 +256,23 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/tasks/:taskId/complete',
-        builder: (context, state) => FinishSessionScreen(
-          taskId: state.pathParameters['taskId'],
-        ),
+        builder: (context, state) =>
+            FinishSessionScreen(taskId: state.pathParameters['taskId']),
       ),
       GoRoute(
         path: '/tasks/:taskId/partial',
-        builder: (context, state) => PartialCompletionScreen(
-          taskId: state.pathParameters['taskId']!,
-        ),
+        builder: (context, state) =>
+            PartialCompletionScreen(taskId: state.pathParameters['taskId']!),
       ),
       GoRoute(
         path: '/tasks/:taskId/move',
-        builder: (context, state) => MoveTaskScreen(
-          taskId: state.pathParameters['taskId']!,
-        ),
+        builder: (context, state) =>
+            MoveTaskScreen(taskId: state.pathParameters['taskId']!),
       ),
       GoRoute(
         path: '/tasks/:taskId',
-        builder: (context, state) => TaskDetailScreen(
-          taskId: state.pathParameters['taskId']!,
-        ),
+        builder: (context, state) =>
+            TaskDetailScreen(taskId: state.pathParameters['taskId']!),
       ),
       GoRoute(
         path: AppRoutes.revisionComplete,
@@ -296,9 +290,8 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: '/backlog/:taskId',
-        builder: (context, state) => BacklogTaskScreen(
-          taskId: state.pathParameters['taskId']!,
-        ),
+        builder: (context, state) =>
+            BacklogTaskScreen(taskId: state.pathParameters['taskId']!),
       ),
       GoRoute(
         path: AppRoutes.backlog,

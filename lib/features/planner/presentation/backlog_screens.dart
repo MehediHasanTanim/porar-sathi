@@ -14,6 +14,7 @@ import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/time/calendar_date.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/planner/domain/adaptive_plan.dart';
 import 'package:porar_sathi/features/planner/domain/catch_up_plan.dart';
 import 'package:porar_sathi/features/planner/domain/day_rollover.dart';
@@ -26,10 +27,12 @@ class BacklogDashboardScreen extends ConsumerStatefulWidget {
   const BacklogDashboardScreen({super.key});
 
   @override
-  ConsumerState<BacklogDashboardScreen> createState() => _BacklogDashboardScreenState();
+  ConsumerState<BacklogDashboardScreen> createState() =>
+      _BacklogDashboardScreenState();
 }
 
-class _BacklogDashboardScreenState extends ConsumerState<BacklogDashboardScreen> {
+class _BacklogDashboardScreenState
+    extends ConsumerState<BacklogDashboardScreen> {
   BacklogSnapshot? _snapshot;
   var _loading = true;
 
@@ -51,16 +54,29 @@ class _BacklogDashboardScreenState extends ConsumerState<BacklogDashboardScreen>
     final today = ref.read(clockProvider).today();
     final tasks = ref.read(studyTaskRepositoryProvider);
     final backlog = await tasks.listBacklog(planId, today);
-    final subjects = await ref.read(subjectRepositoryProvider).watchByPlan(planId, includeArchived: true).first;
+    final subjects = await ref
+        .read(subjectRepositoryProvider)
+        .watchByPlan(planId, includeArchived: true)
+        .first;
     final plan = await ref.read(studyPlanRepositoryProvider).findById(planId);
-    final week = await ref.read(availabilityRepositoryProvider).watchWeek(planId).first;
-    final exceptions = await ref.read(availabilityRepositoryProvider).watchExceptions(planId).first;
+    final week = await ref
+        .read(availabilityRepositoryProvider)
+        .watchWeek(planId)
+        .first;
+    final exceptions = await ref
+        .read(availabilityRepositoryProvider)
+        .watchExceptions(planId)
+        .first;
     final existing = await tasks.listByPlan(planId);
-    final exams = await ref.read(examRepositoryProvider).watchByPlan(planId).first;
+    final exams = await ref
+        .read(examRepositoryProvider)
+        .watchByPlan(planId)
+        .first;
     DateTime? examDate;
     for (final exam in exams) {
       final start = calendarDate(exam.startDate);
-      if (!start.isBefore(today) && (examDate == null || start.isBefore(examDate))) {
+      if (!start.isBefore(today) &&
+          (examDate == null || start.isBefore(examDate))) {
         examDate = start;
       }
     }
@@ -93,18 +109,29 @@ class _BacklogDashboardScreenState extends ConsumerState<BacklogDashboardScreen>
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : snapshot == null || snapshot.overdueCount == 0
-          ? EmptyState(icon: Icons.inbox_outlined, title: l10n.backlogTitle, body: l10n.noBacklog)
+          ? EmptyState(
+              icon: Icons.inbox_outlined,
+              title: l10n.backlogTitle,
+              body: l10n.noBacklog,
+            )
           : ListView(
               padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
                 Text(l10n.overdueTasks(snapshot.overdueCount)),
-                Text(LocaleFormat.formatDuration(snapshot.remainingMinutes, l10n)),
+                Text(
+                  LocaleFormat.formatDuration(snapshot.remainingMinutes, l10n),
+                ),
                 Text(l10n.recoveryEstimate(snapshot.recovery.recoveryDays)),
                 if (snapshot.oldest != null) ...[
                   const SizedBox(height: AppSpacing.md),
-                  Text(l10n.oldestMissed, style: Theme.of(context).textTheme.titleSmall),
+                  Text(
+                    l10n.oldestMissed,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                   AppCard(
-                    onTap: () => context.push(AppRoutes.backlogTask(snapshot.oldest!.id)),
+                    onTap: () => context.push(
+                      AppRoutes.backlogTask(snapshot.oldest!.id),
+                    ),
                     child: Text(snapshot.oldest!.title),
                   ),
                 ],
@@ -146,11 +173,15 @@ class _BacklogTaskScreenState extends ConsumerState<BacklogTaskScreen> {
   }
 
   Future<void> _load() async {
-    final task = await ref.read(studyTaskRepositoryProvider).findById(widget.taskId);
+    final task = await ref
+        .read(studyTaskRepositoryProvider)
+        .findById(widget.taskId);
     if (task == null || !mounted) {
       return;
     }
-    final subject = await ref.read(subjectRepositoryProvider).findById(task.subjectId);
+    final subject = await ref
+        .read(subjectRepositoryProvider)
+        .findById(task.subjectId);
     final chapter = task.chapterId == null
         ? null
         : await ref.read(chapterRepositoryProvider).findById(task.chapterId!);
@@ -177,7 +208,12 @@ class _BacklogTaskScreenState extends ConsumerState<BacklogTaskScreen> {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          Text(LocaleFormat.formatDate(task.plannedDate, Localizations.localeOf(context))),
+          Text(
+            LocaleFormat.formatDate(
+              task.plannedDate,
+              Localizations.localeOf(context),
+            ),
+          ),
           Text(_chapterTitle ?? task.title),
           Text(LocaleFormat.formatDuration(task.plannedMinutes, l10n)),
           Text('${task.completionPercent}%'),
@@ -212,9 +248,12 @@ class _BacklogTaskScreenState extends ConsumerState<BacklogTaskScreen> {
           OutlinedButton(
             onPressed: () async {
               final now = ref.read(clockProvider).now();
-              await ref.read(studyTaskRepositoryProvider).save(
-                task.copyWith(status: TaskStatus.cancelled, updatedAt: now),
-              );
+              await ref
+                  .read(studyTaskRepositoryProvider)
+                  .save(
+                    task.copyWith(status: TaskStatus.cancelled, updatedAt: now),
+                  );
+              await reconcileReminders(ref);
               if (context.mounted) {
                 context.pop();
               }
@@ -256,18 +295,31 @@ class _CatchUpScreenState extends ConsumerState<CatchUpScreen> {
     final backlog = await tasks.listBacklog(planId, today);
     final existing = await tasks.listByPlan(planId);
     final plan = await ref.read(studyPlanRepositoryProvider).findById(planId);
-    final week = await ref.read(availabilityRepositoryProvider).watchWeek(planId).first;
-    final exceptions = await ref.read(availabilityRepositoryProvider).watchExceptions(planId).first;
-    final exams = await ref.read(examRepositoryProvider).watchByPlan(planId).first;
+    final week = await ref
+        .read(availabilityRepositoryProvider)
+        .watchWeek(planId)
+        .first;
+    final exceptions = await ref
+        .read(availabilityRepositoryProvider)
+        .watchExceptions(planId)
+        .first;
+    final exams = await ref
+        .read(examRepositoryProvider)
+        .watchByPlan(planId)
+        .first;
     DateTime? examDate;
     for (final exam in exams) {
       final start = calendarDate(exam.startDate);
-      if (!start.isBefore(today) && (examDate == null || start.isBefore(examDate))) {
+      if (!start.isBefore(today) &&
+          (examDate == null || start.isBefore(examDate))) {
         examDate = start;
       }
     }
     final recovery = buildCatchUpPlan(
-      backlogMinutes: backlog.fold<int>(0, (sum, task) => sum + remainingTaskMinutes(task)),
+      backlogMinutes: backlog.fold<int>(
+        0,
+        (sum, task) => sum + remainingTaskMinutes(task),
+      ),
       spare: spareCapacity(
         today: today,
         week: week,
@@ -298,7 +350,10 @@ class _CatchUpScreenState extends ConsumerState<CatchUpScreen> {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          Text(l10n.recoveryEstimate(plan.recoveryDays), style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            l10n.recoveryEstimate(plan.recoveryDays),
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: AppSpacing.md),
           Text(l10n.extraStudy),
           for (final day in plan.days)
@@ -330,7 +385,8 @@ class _CatchUpScreenState extends ConsumerState<CatchUpScreen> {
     final now = ref.read(clockProvider).now();
     final ids = ref.read(idGeneratorProvider);
     final tasks = <StudyTask>[];
-    final ordered = [..._backlog]..sort((a, b) => a.plannedDate.compareTo(b.plannedDate));
+    final ordered = [..._backlog]
+      ..sort((a, b) => a.plannedDate.compareTo(b.plannedDate));
     final owed = [for (final task in ordered) remainingTaskMinutes(task)];
     for (final day in plan.days) {
       var room = day.minutes;
@@ -363,6 +419,7 @@ class _CatchUpScreenState extends ConsumerState<CatchUpScreen> {
     try {
       if (tasks.isNotEmpty) {
         await ref.read(studyTaskRepositoryProvider).saveAll(tasks);
+        await reconcileReminders(ref);
       }
       if (mounted) {
         setState(() => _applied = true);

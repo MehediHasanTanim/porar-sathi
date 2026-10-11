@@ -13,6 +13,7 @@ import 'package:porar_sathi/core/database/repository_providers.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/features/planner/application/commit_day_rollover.dart';
 import 'package:porar_sathi/features/planner/application/load_adaptive_plan.dart';
 import 'package:porar_sathi/features/planner/domain/plan_forecast.dart';
@@ -90,16 +91,23 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
           trigger: PlannerTrigger.missedTask,
         );
         if (proposal.diff.hasChanges && !proposal.diff.major) {
-          await ref.read(studyTaskRepositoryProvider).applyAdaptivePlan(
-            run: proposal.run,
-            tasks: proposal.tasks,
-            today: today,
-          );
+          await ref
+              .read(studyTaskRepositoryProvider)
+              .applyAdaptivePlan(
+                run: proposal.run,
+                tasks: proposal.tasks,
+                today: today,
+              );
         }
         needsReplan = proposal.diff.major && proposal.diff.hasChanges;
       } on Object {
         needsReplan = false;
       }
+    }
+    try {
+      await reconcileReminders(ref);
+    } on Object {
+      // Today still opens if reminders cannot be scheduled.
     }
     final dashboard = await loadTodayDashboard(
       planId: planId,
@@ -170,7 +178,10 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                   if (dashboard.allDone)
                     _Notice(title: l10n.todayAllDone, body: l10n.tomorrowReady)
                   else if (dashboard.tasks.isEmpty)
-                    _Notice(title: l10n.todayEmptyTitle, body: l10n.todayEmptyBody)
+                    _Notice(
+                      title: l10n.todayEmptyTitle,
+                      body: l10n.todayEmptyBody,
+                    )
                   else ...[
                     _Hero(dashboard: dashboard),
                     if (dashboard.nextExam != null) ...[
@@ -178,13 +189,13 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                       _ExamCard(dashboard: dashboard),
                     ],
                     const SizedBox(height: AppSpacing.lg),
-                    Text(l10n.todayStudy, style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      l10n.todayStudy,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     for (final item in dashboard.tasks) ...[
                       const SizedBox(height: AppSpacing.sm),
-                      _TaskCard(
-                        item: item,
-                        onChanged: _load,
-                      ),
+                      _TaskCard(item: item, onChanged: _load),
                     ],
                   ],
                   if (dashboard.revisionDueCount > 0) ...[
@@ -192,7 +203,11 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                     AppCard(
                       child: Row(
                         children: [
-                          Expanded(child: Text(l10n.revisionDueCount(dashboard.revisionDueCount))),
+                          Expanded(
+                            child: Text(
+                              l10n.revisionDueCount(dashboard.revisionDueCount),
+                            ),
+                          ),
                           TextButton(
                             onPressed: () => context.push(AppRoutes.revisions),
                             child: Text(l10n.actionReview),
@@ -209,7 +224,10 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                           Expanded(
                             child: Text(
                               l10n.backlogBehind(
-                                LocaleFormat.formatDuration(dashboard.backlogMinutes, l10n),
+                                LocaleFormat.formatDuration(
+                                  dashboard.backlogMinutes,
+                                  l10n,
+                                ),
                               ),
                             ),
                           ),
@@ -248,7 +266,11 @@ class _Notice extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
       child: Column(
         children: [
-          Text(title, style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headlineSmall,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: AppSpacing.xs),
           Text(body, textAlign: TextAlign.center),
         ],
@@ -269,11 +291,15 @@ class _Header extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleFormat.greeting(now, l10n), style: Theme.of(context).textTheme.headlineSmall),
+        Text(
+          LocaleFormat.greeting(now, l10n),
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
         const SizedBox(height: AppSpacing.xxs),
         Text(
           LocaleFormat.formatDate(now, Localizations.localeOf(context)),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.muted),
+          style: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: colors.muted),
         ),
       ],
     );
@@ -326,8 +352,13 @@ class _ExamCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(exam.name, style: Theme.of(context).textTheme.titleMedium),
-          if (dashboard.daysUntilExam != null) Text(l10n.daysRemaining(dashboard.daysUntilExam!)),
-          Text(pace, style: Theme.of(context).textTheme.titleSmall?.copyWith(color: color)),
+          if (dashboard.daysUntilExam != null)
+            Text(l10n.daysRemaining(dashboard.daysUntilExam!)),
+          Text(
+            pace,
+            style: Theme.of(context).textTheme.titleSmall
+                ?.copyWith(color: color),
+          ),
         ],
       ),
     );
@@ -363,10 +394,17 @@ class _TaskCard extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(subject?.name ?? item.task.title, style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  subject?.name ?? item.task.title,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
                 Text(item.chapter?.title ?? item.task.title),
-                Text(LocaleFormat.formatDuration(item.task.plannedMinutes, l10n)),
-                Text('${_typeLabel(l10n, item.task.taskType)} · ${_statusLabel(l10n, item.task.status)}'),
+                Text(
+                  LocaleFormat.formatDuration(item.task.plannedMinutes, l10n),
+                ),
+                Text(
+                  '${_typeLabel(l10n, item.task.taskType)} · ${_statusLabel(l10n, item.task.status)}',
+                ),
                 if (priority == Priority.high || priority == Priority.critical)
                   Text(l10n.highPriority),
               ],
@@ -397,13 +435,23 @@ class _TaskCard extends ConsumerWidget {
                     case 'move':
                       await context.push(AppRoutes.moveTask(item.task.id));
                     case 'skip':
-                      await showSkipSheet(context: context, ref: ref, task: item.task);
+                      await showSkipSheet(
+                        context: context,
+                        ref: ref,
+                        task: item.task,
+                      );
                   }
                   await onChanged();
                 },
                 itemBuilder: (context) => [
-                  PopupMenuItem(value: 'complete', child: Text(l10n.actionComplete)),
-                  PopupMenuItem(value: 'partial', child: Text(l10n.actionPartial)),
+                  PopupMenuItem(
+                    value: 'complete',
+                    child: Text(l10n.actionComplete),
+                  ),
+                  PopupMenuItem(
+                    value: 'partial',
+                    child: Text(l10n.actionPartial),
+                  ),
                   PopupMenuItem(value: 'skip', child: Text(l10n.actionSkip)),
                   PopupMenuItem(value: 'move', child: Text(l10n.actionMove)),
                 ],

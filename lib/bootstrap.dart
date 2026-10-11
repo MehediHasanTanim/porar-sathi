@@ -11,6 +11,7 @@ import 'package:porar_sathi/core/database/database_provider.dart';
 import 'package:porar_sathi/core/logging/app_logger.dart';
 import 'package:porar_sathi/core/notifications/notification_scheduler.dart';
 import 'package:porar_sathi/core/time/local_time_zone.dart';
+import 'package:porar_sathi/features/notifications/application/notification_providers.dart';
 import 'package:porar_sathi/features/onboarding/data/onboarding_draft_repository.dart';
 import 'package:porar_sathi/features/onboarding/data/onboarding_draft_repository_provider.dart';
 import 'package:porar_sathi/features/settings/data/settings_repository_provider.dart';
@@ -22,7 +23,8 @@ Future<void> bootstrap(AppFlavor flavor) async {
 
   configureLocalTimeZone();
   await initializeDateFormatting();
-  await initializeNotifications();
+  final notifications = LocalNotificationScheduler();
+  await initializeNotifications(notifications);
 
   final preferences = await SharedPreferences.getInstance();
   final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
@@ -39,6 +41,7 @@ Future<void> bootstrap(AppFlavor flavor) async {
     ProviderScope(
       overrides: [
         appFlavorProvider.overrideWithValue(flavor),
+        notificationSchedulerProvider.overrideWithValue(notifications),
         settingsRepositoryProvider.overrideWithValue(settingsRepository),
         onboardingDraftRepositoryProvider.overrideWithValue(
           onboardingDraftRepository,

@@ -639,14 +639,25 @@ class AppLocalizationsBn extends AppLocalizations {
   String get actionAdjustAvailability => 'পড়ার সময় বদলান';
 
   @override
-  String get notificationsTitle => 'হালকা মনে করিয়ে দিতে পারে';
+  String get notificationsTitle => 'হালকা পড়ার রিমাইন্ডার';
 
   @override
-  String get notificationsBody =>
-      'আজকের পরিকল্পনা, পুনরাবৃত্তি ও আসন্ন পরীক্ষার কথা মনে করিয়ে দিতে পারে।';
+  String get notificationsBody => 'পড়ার সাথী আপনাকে মনে করিয়ে দিতে পারে:';
 
   @override
-  String get actionEnableReminders => 'রিমাইন্ডার চালু করুন';
+  String get notificationsBenefitPlan => 'আজকের পরিকল্পনা';
+
+  @override
+  String get notificationsBenefitRevision => 'পুনরাবৃত্তি';
+
+  @override
+  String get notificationsBenefitExam => 'আসন্ন পরীক্ষা';
+
+  @override
+  String get notificationsBenefitEvening => 'সন্ধ্যার রিভিউ';
+
+  @override
+  String get actionEnableReminders => 'নোটিফিকেশন চালু করুন';
 
   @override
   String get completeTitle => 'আপনি শুরু করতে প্রস্তুত';
@@ -1350,4 +1361,109 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noStudyYet => 'এখনো কোনো পড়া লেখা নেই।';
+
+  @override
+  String get notificationsDeniedTitle => 'নোটিফিকেশন বন্ধ আছে';
+
+  @override
+  String get notificationsDeniedBody =>
+      'পড়ার পরিকল্পনা আগের মতোই কাজ করবে। শুধু রিমাইন্ডার আসবে না।';
+
+  @override
+  String get actionOpenSettings => 'সেটিংস খুলুন';
+
+  @override
+  String get actionContinueWithoutNotifications =>
+      'রিমাইন্ডার ছাড়া চালিয়ে যান';
+
+  @override
+  String get notificationSettingsTitle => 'নোটিফিকেশন';
+
+  @override
+  String get remindersEnabled => 'রিমাইন্ডার';
+
+  @override
+  String get dailyPlanReminder => 'আজকের পরিকল্পনা';
+
+  @override
+  String get revisionReminder => 'পুনরাবৃত্তি';
+
+  @override
+  String get examCountdownReminder => 'পরীক্ষার কাউন্টডাউন';
+
+  @override
+  String get missedTaskReminder => 'বাকি কাজ';
+
+  @override
+  String get eveningReviewReminder => 'সন্ধ্যার রিভিউ';
+
+  @override
+  String get studySessionReminder => 'পড়ার সময়';
+
+  @override
+  String get reminderTime => 'রিমাইন্ডারের সময়';
+
+  @override
+  String get examThresholdsLabel => 'কাউন্টডাউন';
+
+  @override
+  String get dailyReminderTitle => 'আজকের পড়া';
+
+  @override
+  String dailyReminderBody(String count, String duration) {
+    return 'আজ $countটি পড়ার কাজ আছে — মোট $duration।';
+  }
+
+  @override
+  String get revisionReminderTitle => 'পুনরাবৃত্তির সময়';
+
+  @override
+  String get revisionReminderBody => 'আজ একটি পুনরাবৃত্তি বাকি।';
+
+  @override
+  String get examReminderTitle => 'পরীক্ষা আসছে';
+
+  @override
+  String examReminderBody(String name, String days) {
+    return '$name — আর $days দিন।';
+  }
+
+  @override
+  String get missedReminderTitle => 'আজকের পড়া বাকি';
+
+  @override
+  String missedReminderBody(String count) {
+    return 'আজ $countটি কাজ বাকি আছে।';
+  }
+
+  @override
+  String get eveningReminderTitle => 'সন্ধ্যার রিভিউ';
+
+  @override
+  String eveningReminderBody(String done, String remaining) {
+    return '$doneটি শেষ, $remainingটি বাকি।';
+  }
+
+  @override
+  String get sessionReminderTitle => 'পড়ার সময়';
+
+  @override
+  String sessionReminderBody(String title) {
+    return '$title';
+  }
+
+  @override
+  String reminderDurationMinutes(String count) {
+    return '$count মিনিট';
+  }
+
+  @override
+  String reminderDurationHours(String count) {
+    return '$count ঘণ্টা';
+  }
+
+  @override
+  String reminderDurationHoursMinutes(String hours, String minutes) {
+    return '$hours ঘণ্টা $minutes মিনিট';
+  }
 }

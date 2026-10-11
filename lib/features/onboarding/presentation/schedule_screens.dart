@@ -14,7 +14,8 @@ import 'package:porar_sathi/core/database/repository_providers.dart';
 import 'package:porar_sathi/core/utils/id_generator.dart';
 import 'package:porar_sathi/core/domain/academic_enums.dart';
 import 'package:porar_sathi/core/errors/app_exception.dart';
-import 'package:porar_sathi/core/notifications/notification_scheduler.dart';
+import 'package:porar_sathi/features/notifications/application/notification_providers.dart';
+import 'package:porar_sathi/features/notifications/application/reconcile_reminders.dart';
 import 'package:porar_sathi/core/time/clock_provider.dart';
 import 'package:porar_sathi/features/onboarding/application/onboarding_controller.dart';
 import 'package:porar_sathi/features/onboarding/domain/onboarding_draft.dart';
@@ -38,7 +39,8 @@ class WeeklyAvailabilityScreen extends ConsumerStatefulWidget {
       _WeeklyAvailabilityScreenState();
 }
 
-class _WeeklyAvailabilityScreenState extends ConsumerState<WeeklyAvailabilityScreen> {
+class _WeeklyAvailabilityScreenState
+    extends ConsumerState<WeeklyAvailabilityScreen> {
   List<int>? _minutes;
   var _preset = 120;
 
@@ -56,7 +58,10 @@ class _WeeklyAvailabilityScreenState extends ConsumerState<WeeklyAvailabilityScr
     if (planId == null) {
       return;
     }
-    final week = await ref.read(availabilityRepositoryProvider).watchWeek(planId).first;
+    final week = await ref
+        .read(availabilityRepositoryProvider)
+        .watchWeek(planId)
+        .first;
     if (week.isEmpty || !mounted) {
       return;
     }
@@ -129,12 +134,19 @@ class _WeeklyAvailabilityScreenState extends ConsumerState<WeeklyAvailabilityScr
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.weeklyStudyTime, style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                l10n.weeklyStudyTime,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               Text(
                 LocaleFormat.formatDuration(weekly, l10n),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              Text(l10n.averagePerStudyDay(LocaleFormat.formatDuration(average, l10n))),
+              Text(
+                l10n.averagePerStudyDay(
+                  LocaleFormat.formatDuration(average, l10n),
+                ),
+              ),
             ],
           ),
         ),
@@ -172,7 +184,9 @@ class _WeeklyAvailabilityScreenState extends ConsumerState<WeeklyAvailabilityScr
       if (pop) {
         await _saveActiveWeek(minutes);
       } else {
-        await ref.read(onboardingControllerProvider.notifier).saveAvailability(minutes);
+        await ref
+            .read(onboardingControllerProvider.notifier)
+            .saveAvailability(minutes);
       }
       if (!mounted) {
         return;
@@ -200,7 +214,10 @@ class _WeeklyAvailabilityScreenState extends ConsumerState<WeeklyAvailabilityScr
       throw const DatabaseException(message: 'Study plan was not found.');
     }
     final clock = ref.read(clockProvider);
-    final existing = await ref.read(availabilityRepositoryProvider).watchWeek(planId).first;
+    final existing = await ref
+        .read(availabilityRepositoryProvider)
+        .watchWeek(planId)
+        .first;
     final days = [
       for (var index = 0; index < minutes.length; index++)
         WeeklyAvailability(
@@ -209,19 +226,30 @@ class _WeeklyAvailabilityScreenState extends ConsumerState<WeeklyAvailabilityScr
           weekday: OnboardingDraft.weekdays[index],
           totalAvailableMinutes: minutes[index] < 0 ? 0 : minutes[index],
           isStudyDay: minutes[index] > 0,
-          preferredStartTime: _preferredStart(existing, OnboardingDraft.weekdays[index]),
-          preferredEndTime: _preferredEnd(existing, OnboardingDraft.weekdays[index]),
+          preferredStartTime: _preferredStart(
+            existing,
+            OnboardingDraft.weekdays[index],
+          ),
+          preferredEndTime: _preferredEnd(
+            existing,
+            OnboardingDraft.weekdays[index],
+          ),
           createdAt: clock.now(),
           updatedAt: clock.now(),
         ),
     ];
     await ref.read(availabilityRepositoryProvider).replaceWeek(planId, days);
-    final busiest = minutes.fold<int>(0, (best, value) => value > best ? value : best);
+    final busiest = minutes.fold<int>(
+      0,
+      (best, value) => value > best ? value : best,
+    );
     final plan = await ref.read(studyPlanRepositoryProvider).findById(planId);
     if (plan != null) {
-      await ref.read(studyPlanRepositoryProvider).save(
-        plan.copyWith(maxDailyMinutes: busiest, updatedAt: clock.now()),
-      );
+      await ref
+          .read(studyPlanRepositoryProvider)
+          .save(
+            plan.copyWith(maxDailyMinutes: busiest, updatedAt: clock.now()),
+          );
     }
   }
 
@@ -275,8 +303,12 @@ class _DayRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: Theme.of(context).textTheme.titleMedium)),
-          Text(enabled ? LocaleFormat.formatDuration(minutes, l10n) : l10n.offDay),
+          Expanded(
+            child: Text(label, style: Theme.of(context).textTheme.titleMedium),
+          ),
+          Text(
+            enabled ? LocaleFormat.formatDuration(minutes, l10n) : l10n.offDay,
+          ),
           const SizedBox(width: AppSpacing.xs),
           Switch(
             value: enabled,
@@ -335,17 +367,42 @@ class PreferredStudyTimeScreen extends ConsumerStatefulWidget {
       _PreferredStudyTimeScreenState();
 }
 
-class _PreferredStudyTimeScreenState extends ConsumerState<PreferredStudyTimeScreen> {
+class _PreferredStudyTimeScreenState
+    extends ConsumerState<PreferredStudyTimeScreen> {
   final _selected = <int>{};
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final periods = [
-      (l10n.periodMorning, l10n.periodMorningTime, 6 * 60, 10 * 60, Icons.wb_sunny_outlined),
-      (l10n.periodAfternoon, l10n.periodAfternoonTime, 12 * 60, 16 * 60, Icons.wb_twilight),
-      (l10n.periodEvening, l10n.periodEveningTime, 17 * 60, 21 * 60, Icons.nights_stay_outlined),
-      (l10n.periodNight, l10n.periodNightTime, 21 * 60, 23 * 60 + 59, Icons.bedtime_outlined),
+      (
+        l10n.periodMorning,
+        l10n.periodMorningTime,
+        6 * 60,
+        10 * 60,
+        Icons.wb_sunny_outlined,
+      ),
+      (
+        l10n.periodAfternoon,
+        l10n.periodAfternoonTime,
+        12 * 60,
+        16 * 60,
+        Icons.wb_twilight,
+      ),
+      (
+        l10n.periodEvening,
+        l10n.periodEveningTime,
+        17 * 60,
+        21 * 60,
+        Icons.nights_stay_outlined,
+      ),
+      (
+        l10n.periodNight,
+        l10n.periodNightTime,
+        21 * 60,
+        23 * 60 + 59,
+        Icons.bedtime_outlined,
+      ),
     ];
     return OnboardingScaffold(
       step: OnboardingStep.studyTime,
@@ -389,10 +446,9 @@ class _PreferredStudyTimeScreenState extends ConsumerState<PreferredStudyTimeScr
       end = chosen.map((item) => item.$4).reduce((a, b) => a > b ? a : b);
     }
     try {
-      await ref.read(onboardingControllerProvider.notifier).saveStudyTime(
-        startMinute: start,
-        endMinute: end,
-      );
+      await ref
+          .read(onboardingControllerProvider.notifier)
+          .saveStudyTime(startMinute: start, endMinute: end);
       if (mounted) {
         context.go(OnboardingStep.preferences.route);
       }
@@ -434,17 +490,40 @@ class _PlanningPreferencesScreenState
       _ready = true;
     }
     final modes = [
-      (PlanningMode.balanced, l10n.modeBalanced, l10n.modeBalancedBody, Icons.balance),
-      (PlanningMode.weakSubjectFocus, l10n.modeWeak, l10n.modeWeakBody, Icons.psychology_alt_outlined),
-      (PlanningMode.light, l10n.modeLight, l10n.modeLightBody, Icons.spa_outlined),
-      (PlanningMode.examCrunch, l10n.modeCrunch, l10n.modeCrunchBody, Icons.bolt),
+      (
+        PlanningMode.balanced,
+        l10n.modeBalanced,
+        l10n.modeBalancedBody,
+        Icons.balance,
+      ),
+      (
+        PlanningMode.weakSubjectFocus,
+        l10n.modeWeak,
+        l10n.modeWeakBody,
+        Icons.psychology_alt_outlined,
+      ),
+      (
+        PlanningMode.light,
+        l10n.modeLight,
+        l10n.modeLightBody,
+        Icons.spa_outlined,
+      ),
+      (
+        PlanningMode.examCrunch,
+        l10n.modeCrunch,
+        l10n.modeCrunchBody,
+        Icons.bolt,
+      ),
     ];
     return OnboardingScaffold(
       step: OnboardingStep.preferences,
       title: l10n.preferencesTitle,
       body: ListView(
         children: [
-          Text(l10n.planningMode, style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            l10n.planningMode,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
           const SizedBox(height: AppSpacing.sm),
           for (final mode in modes)
             Padding(
@@ -457,17 +536,28 @@ class _PlanningPreferencesScreenState
                 onTap: () => setState(() => _mode = mode.$1),
               ),
             ),
-          Text(l10n.studyIntensity, style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            l10n.studyIntensity,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
           const SizedBox(height: AppSpacing.xs),
           OptionChips(
-            labels: [l10n.intensityLight, l10n.intensityNormal, l10n.intensityFocused],
+            labels: [
+              l10n.intensityLight,
+              l10n.intensityNormal,
+              l10n.intensityFocused,
+            ],
             selectedIndex: switch (_intensity) {
               DailyIntensity.light => 0,
               DailyIntensity.focused || DailyIntensity.intensive => 2,
               _ => 1,
             },
             onSelected: (index) => setState(() {
-              _intensity = [DailyIntensity.light, DailyIntensity.normal, DailyIntensity.focused][index];
+              _intensity = [
+                DailyIntensity.light,
+                DailyIntensity.normal,
+                DailyIntensity.focused,
+              ][index];
             }),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -478,25 +568,44 @@ class _PlanningPreferencesScreenState
             selectedIndex: [30, 45, 60, 90].contains(_session)
                 ? [30, 45, 60, 90].indexOf(_session)
                 : 1,
-            onSelected: (index) => setState(() => _session = [30, 45, 60, 90][index]),
+            onSelected: (index) =>
+                setState(() => _session = [30, 45, 60, 90][index]),
           ),
           const SizedBox(height: AppSpacing.md),
-          Text(l10n.planningBuffer, style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            l10n.planningBuffer,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
           const SizedBox(height: AppSpacing.xs),
           OptionChips(
-            labels: [l10n.bufferPercent(10), l10n.bufferPercent(15), l10n.bufferPercent(20)],
+            labels: [
+              l10n.bufferPercent(10),
+              l10n.bufferPercent(15),
+              l10n.bufferPercent(20),
+            ],
             selectedIndex: [10, 15, 20].contains(_buffer)
                 ? [10, 15, 20].indexOf(_buffer)
                 : 1,
-            onSelected: (index) => setState(() => _buffer = [10, 15, 20][index]),
+            onSelected: (index) =>
+                setState(() => _buffer = [10, 15, 20][index]),
           ),
           const SizedBox(height: AppSpacing.md),
-          Text(l10n.revisionBuffer, style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            l10n.revisionBuffer,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
           const SizedBox(height: AppSpacing.xs),
           OptionChips(
-            labels: [l10n.revisionDays(7), l10n.revisionDays(14), l10n.revisionDays(21)],
-            selectedIndex: [7, 14, 21].contains(_revision) ? [7, 14, 21].indexOf(_revision) : 0,
-            onSelected: (index) => setState(() => _revision = [7, 14, 21][index]),
+            labels: [
+              l10n.revisionDays(7),
+              l10n.revisionDays(14),
+              l10n.revisionDays(21),
+            ],
+            selectedIndex: [7, 14, 21].contains(_revision)
+                ? [7, 14, 21].indexOf(_revision)
+                : 0,
+            onSelected: (index) =>
+                setState(() => _revision = [7, 14, 21][index]),
           ),
         ],
       ),
@@ -505,13 +614,15 @@ class _PlanningPreferencesScreenState
           ? null
           : () async {
               try {
-                await ref.read(onboardingControllerProvider.notifier).savePreferences(
-                  mode: _mode,
-                  intensity: _intensity,
-                  maxSessionMinutes: _session,
-                  planningBufferPercent: _buffer,
-                  revisionBufferDays: _revision,
-                );
+                await ref
+                    .read(onboardingControllerProvider.notifier)
+                    .savePreferences(
+                      mode: _mode,
+                      intensity: _intensity,
+                      maxSessionMinutes: _session,
+                      planningBufferPercent: _buffer,
+                      revisionBufferDays: _revision,
+                    );
                 if (context.mounted) {
                   context.go(OnboardingStep.summary.route);
                 }
@@ -593,18 +704,17 @@ class _PlanSummaryScreenState extends ConsumerState<PlanSummaryScreen> {
       step: OnboardingStep.summary,
       title: l10n.summaryTitle,
       body: ListView(
-        children: [
-          PlanPreviewContent(result: result, today: today),
-        ],
+        children: [PlanPreviewContent(result: result, today: today)],
       ),
       primaryLabel: l10n.actionUsePlan,
       onPrimary: () async {
         try {
-          await ref.read(studyTaskRepositoryProvider).replaceGeneratedPlan(
-            run: result.run,
-            tasks: result.tasks,
-          );
-          await ref.read(onboardingControllerProvider.notifier).goTo(OnboardingStep.notifications);
+          await ref
+              .read(studyTaskRepositoryProvider)
+              .replaceGeneratedPlan(run: result.run, tasks: result.tasks);
+          await ref
+              .read(onboardingControllerProvider.notifier)
+              .goTo(OnboardingStep.notifications);
           if (context.mounted) {
             context.go(OnboardingStep.notifications.route);
           }
@@ -620,37 +730,135 @@ class _PlanSummaryScreenState extends ConsumerState<PlanSummaryScreen> {
   }
 }
 
-class NotificationEducationScreen extends ConsumerWidget {
+class NotificationEducationScreen extends ConsumerStatefulWidget {
   const NotificationEducationScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NotificationEducationScreen> createState() =>
+      _NotificationEducationScreenState();
+}
+
+class _NotificationEducationScreenState
+    extends ConsumerState<NotificationEducationScreen>
+    with WidgetsBindingObserver {
+  var _denied = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _denied) {
+      _continueIfPermitted();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    if (_denied) {
+      return OnboardingScaffold(
+        step: OnboardingStep.notifications,
+        title: l10n.notificationsDeniedTitle,
+        subtitle: l10n.notificationsDeniedBody,
+        body: const SizedBox.shrink(),
+        primaryLabel: l10n.actionOpenSettings,
+        onPrimary: () async {
+          try {
+            await ref.read(notificationSchedulerProvider).openSystemSettings();
+          } on Object {
+            // The student can continue without reminders.
+          }
+        },
+        secondaryLabel: l10n.actionContinueWithoutNotifications,
+        onSecondary: () => _finish(enabled: false),
+      );
+    }
     return OnboardingScaffold(
       step: OnboardingStep.notifications,
       title: l10n.notificationsTitle,
       subtitle: l10n.notificationsBody,
-      body: const SizedBox.shrink(),
+      body: Column(
+        children: [
+          for (final label in [
+            l10n.notificationsBenefitPlan,
+            l10n.notificationsBenefitRevision,
+            l10n.notificationsBenefitExam,
+            l10n.notificationsBenefitEvening,
+          ])
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: AppPalette.secondary),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(child: Text(label)),
+                ],
+              ),
+            ),
+        ],
+      ),
       primaryLabel: l10n.actionEnableReminders,
-      onPrimary: () async {
-        try {
-          await LocalNotificationScheduler().requestPermission();
-        } on Object {
-          // Setup continues even if the system dialog is dismissed.
-        }
-        await ref.read(onboardingControllerProvider.notifier).goTo(OnboardingStep.complete);
-        if (context.mounted) {
-          context.go(OnboardingStep.complete.route);
-        }
-      },
+      onPrimary: _enable,
       secondaryLabel: l10n.actionNotNow,
-      onSecondary: () async {
-        await ref.read(onboardingControllerProvider.notifier).goTo(OnboardingStep.complete);
-        if (context.mounted) {
-          context.go(OnboardingStep.complete.route);
-        }
-      },
+      onSecondary: () => _finish(enabled: false),
     );
+  }
+
+  Future<void> _enable() async {
+    try {
+      final granted = await ref
+          .read(notificationSchedulerProvider)
+          .requestPermission();
+      if (!granted) {
+        if (mounted) {
+          setState(() => _denied = true);
+        }
+        return;
+      }
+    } on Object {
+      if (mounted) {
+        setState(() => _denied = true);
+      }
+      return;
+    }
+    await _finish(enabled: true);
+  }
+
+  Future<void> _continueIfPermitted() async {
+    try {
+      final granted = await ref
+          .read(notificationSchedulerProvider)
+          .isPermitted();
+      if (granted) {
+        await _finish(enabled: true);
+      }
+    } on Object {
+      // Stay on the denied explanation.
+    }
+  }
+
+  Future<void> _finish({required bool enabled}) async {
+    final current = await ref.read(notificationPreferencesProvider.future);
+    await ref
+        .read(notificationPreferencesProvider.notifier)
+        .save(current.copyWith(remindersEnabled: enabled));
+    await reconcileReminders(ref);
+    await ref
+        .read(onboardingControllerProvider.notifier)
+        .goTo(OnboardingStep.complete);
+    if (mounted) {
+      context.go(OnboardingStep.complete.route);
+    }
   }
 }
 
@@ -671,11 +879,18 @@ class SetupCompleteScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(draft?.planName ?? l10n.studyPlan, style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  draft?.planName ?? l10n.studyPlan,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(l10n.completeNoTasks),
                 const SizedBox(height: AppSpacing.sm),
-                const Icon(Icons.check_circle, color: AppPalette.secondary, size: 36),
+                const Icon(
+                  Icons.check_circle,
+                  color: AppPalette.secondary,
+                  size: 36,
+                ),
               ],
             ),
           ),
@@ -683,7 +898,9 @@ class SetupCompleteScreen extends ConsumerWidget {
       ),
       primaryLabel: l10n.actionSeeToday,
       onPrimary: () async {
-        await ref.read(settingsControllerProvider.notifier).completeOnboarding();
+        await ref
+            .read(settingsControllerProvider.notifier)
+            .completeOnboarding();
         if (context.mounted) {
           context.go(AppRoutes.today);
         }

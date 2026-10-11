@@ -24,6 +24,12 @@ class MoreScreen extends StatelessWidget {
             onTap: () => context.push(AppRoutes.settings),
           ),
           SettingsTile(
+            icon: Icons.notifications_outlined,
+            iconColor: const Color(0xFF2F6FED),
+            title: l10n.notificationSettingsTitle,
+            onTap: () => context.push(AppRoutes.notifications),
+          ),
+          SettingsTile(
             icon: Icons.palette_outlined,
             iconColor: const Color(0xFF2F6FED),
             title: l10n.appearanceTitle,

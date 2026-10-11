@@ -645,14 +645,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionAdjustAvailability => 'Adjust Availability';
 
   @override
-  String get notificationsTitle => 'Stay on track with gentle reminders';
+  String get notificationsTitle => 'Get gentle study reminders';
 
   @override
-  String get notificationsBody =>
-      'Porar Sathi can remind you about today\'s plan, revision, and upcoming exams.';
+  String get notificationsBody => 'Pocket Tutor can remind you about:';
 
   @override
-  String get actionEnableReminders => 'Enable Reminders';
+  String get notificationsBenefitPlan => 'Today\'s plan';
+
+  @override
+  String get notificationsBenefitRevision => 'Revision';
+
+  @override
+  String get notificationsBenefitExam => 'Upcoming exams';
+
+  @override
+  String get notificationsBenefitEvening => 'Evening review';
+
+  @override
+  String get actionEnableReminders => 'Enable Notifications';
 
   @override
   String get completeTitle => 'You\'re ready to study';
@@ -1359,4 +1370,109 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noStudyYet => 'No study recorded yet.';
+
+  @override
+  String get notificationsDeniedTitle => 'Notifications are turned off';
+
+  @override
+  String get notificationsDeniedBody =>
+      'Your study plan still works normally. You just won\'t receive reminders.';
+
+  @override
+  String get actionOpenSettings => 'Open Settings';
+
+  @override
+  String get actionContinueWithoutNotifications =>
+      'Continue Without Notifications';
+
+  @override
+  String get notificationSettingsTitle => 'Notifications';
+
+  @override
+  String get remindersEnabled => 'Reminders';
+
+  @override
+  String get dailyPlanReminder => 'Daily plan';
+
+  @override
+  String get revisionReminder => 'Revision';
+
+  @override
+  String get examCountdownReminder => 'Exam countdown';
+
+  @override
+  String get missedTaskReminder => 'Missed task';
+
+  @override
+  String get eveningReviewReminder => 'Evening review';
+
+  @override
+  String get studySessionReminder => 'Study session';
+
+  @override
+  String get reminderTime => 'Reminder time';
+
+  @override
+  String get examThresholdsLabel => 'Countdown';
+
+  @override
+  String get dailyReminderTitle => 'Today\'s study';
+
+  @override
+  String dailyReminderBody(String count, String duration) {
+    return 'You have $count study tasks today — $duration in total.';
+  }
+
+  @override
+  String get revisionReminderTitle => 'Revision is due';
+
+  @override
+  String get revisionReminderBody => 'A revision is due today.';
+
+  @override
+  String get examReminderTitle => 'Exam coming up';
+
+  @override
+  String examReminderBody(String name, String days) {
+    return '$name is in $days days.';
+  }
+
+  @override
+  String get missedReminderTitle => 'Still some study left';
+
+  @override
+  String missedReminderBody(String count) {
+    return '$count tasks are still open today.';
+  }
+
+  @override
+  String get eveningReminderTitle => 'Evening review';
+
+  @override
+  String eveningReminderBody(String done, String remaining) {
+    return '$done finished, $remaining still open.';
+  }
+
+  @override
+  String get sessionReminderTitle => 'Time to study';
+
+  @override
+  String sessionReminderBody(String title) {
+    return '$title';
+  }
+
+  @override
+  String reminderDurationMinutes(String count) {
+    return '$count minutes';
+  }
+
+  @override
+  String reminderDurationHours(String count) {
+    return '$count hours';
+  }
+
+  @override
+  String reminderDurationHoursMinutes(String hours, String minutes) {
+    return '$hours hours $minutes minutes';
+  }
 }
