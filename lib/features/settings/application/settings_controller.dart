@@ -53,9 +53,7 @@ class SettingsController extends _$SettingsController {
   }
 
   Future<void> setAutoReplanEnabled({required bool enabled}) {
-    return _update(
-      (settings) => settings.copyWith(autoReplanEnabled: enabled),
-    );
+    return _update((settings) => settings.copyWith(autoReplanEnabled: enabled));
   }
 
   Future<void> setOnboardingStep(String step) {
@@ -64,6 +62,16 @@ class SettingsController extends _$SettingsController {
 
   /// Set only after setup complete. Earlier steps keep this false so a
   /// half-finished setup resumes instead of opening an empty home.
+  Future<void> restartSetup() {
+    return _update(
+      (settings) => settings.copyWith(
+        onboardingComplete: false,
+        onboardingStep: 'language',
+        currentStudyPlanId: null,
+      ),
+    );
+  }
+
   Future<void> completeOnboarding() {
     return _update(
       (settings) => settings.copyWith(
@@ -78,7 +86,9 @@ class SettingsController extends _$SettingsController {
     await future;
   }
 
-  Future<void> _update(AppSettings Function(AppSettings current) transform) async {
+  Future<void> _update(
+    AppSettings Function(AppSettings current) transform,
+  ) async {
     final current = await future;
     final updated = transform(current);
     state = AsyncData(updated);

@@ -2771,6 +2771,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{hours} hours {minutes} minutes'**
   String reminderDurationHoursMinutes(String hours, String minutes);
+
+  /// No description provided for @dataBackupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Backup'**
+  String get dataBackupTitle;
+
+  /// No description provided for @exportBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Backup'**
+  String get exportBackup;
+
+  /// No description provided for @importBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Backup'**
+  String get importBackup;
+
+  /// No description provided for @backupStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard backup'**
+  String get backupStandard;
+
+  /// No description provided for @backupEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Password-protected backup'**
+  String get backupEncrypted;
+
+  /// No description provided for @backupIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Included data'**
+  String get backupIncluded;
+
+  /// No description provided for @backupIncludedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Study plans, subjects, chapters, exams, tasks, sessions, and revisions.'**
+  String get backupIncludedBody;
+
+  /// No description provided for @backupContainsStudyData.
+  ///
+  /// In en, this message translates to:
+  /// **'This file contains your study data.'**
+  String get backupContainsStudyData;
+
+  /// No description provided for @backupNotEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'A standard backup is not encrypted.'**
+  String get backupNotEncrypted;
+
+  /// No description provided for @backupPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get backupPassword;
+
+  /// No description provided for @backupPasswordAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get backupPasswordAgain;
+
+  /// No description provided for @backupPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get backupPasswordMismatch;
+
+  /// No description provided for @backupPasswordShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 8 characters.'**
+  String get backupPasswordShort;
+
+  /// No description provided for @actionExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get actionExport;
+
+  /// No description provided for @actionShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get actionShare;
+
+  /// No description provided for @backupEstimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated size: {size}'**
+  String backupEstimate(String size);
+
+  /// No description provided for @importBackupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current data will not be changed until the backup is validated.'**
+  String get importBackupBody;
+
+  /// No description provided for @actionChooseBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Backup File'**
+  String get actionChooseBackup;
+
+  /// No description provided for @backupReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading file'**
+  String get backupReading;
+
+  /// No description provided for @backupCheckingVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking version'**
+  String get backupCheckingVersion;
+
+  /// No description provided for @backupCheckingIntegrity.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking integrity'**
+  String get backupCheckingIntegrity;
+
+  /// No description provided for @backupValidatingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Validating study data'**
+  String get backupValidatingData;
+
+  /// No description provided for @backupSummaryPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} study plans'**
+  String backupSummaryPlans(int count);
+
+  /// No description provided for @backupSummarySubjects.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} subjects'**
+  String backupSummarySubjects(int count);
+
+  /// No description provided for @backupSummarySessions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} study sessions'**
+  String backupSummarySessions(int count);
+
+  /// No description provided for @backupDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup date'**
+  String get backupDate;
+
+  /// No description provided for @restoreConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore this backup?'**
+  String get restoreConfirmTitle;
+
+  /// No description provided for @restoreConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current Pocket Tutor data will be replaced.'**
+  String get restoreConfirmBody;
+
+  /// No description provided for @actionRestoreBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Backup'**
+  String get actionRestoreBackup;
+
+  /// No description provided for @restoreCompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored successfully'**
+  String get restoreCompleteTitle;
+
+  /// No description provided for @actionGoToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Today'**
+  String get actionGoToday;
+
+  /// No description provided for @backupFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup couldn\'t be created.'**
+  String get backupFailedTitle;
+
+  /// No description provided for @actionChooseAnotherLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Another Location'**
+  String get actionChooseAnotherLocation;
+
+  /// No description provided for @restoreFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore couldn\'t be completed.'**
+  String get restoreFailedTitle;
+
+  /// No description provided for @restoreFailedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current data has not been changed.'**
+  String get restoreFailedBody;
+
+  /// No description provided for @actionChooseAnotherBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Another Backup'**
+  String get actionChooseAnotherBackup;
+
+  /// No description provided for @corruptBackupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup can\'t be opened'**
+  String get corruptBackupTitle;
+
+  /// No description provided for @corruptDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'File is damaged.'**
+  String get corruptDamaged;
+
+  /// No description provided for @corruptPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password.'**
+  String get corruptPassword;
+
+  /// No description provided for @corruptVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported version.'**
+  String get corruptVersion;
+
+  /// No description provided for @actionTryPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Password Again'**
+  String get actionTryPassword;
+
+  /// No description provided for @storageDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Database size'**
+  String get storageDatabase;
+
+  /// No description provided for @storageBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup size'**
+  String get storageBackup;
+
+  /// No description provided for @storageNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No backup exported yet'**
+  String get storageNone;
+
+  /// No description provided for @resetProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Progress'**
+  String get resetProgress;
+
+  /// No description provided for @resetProgressBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This clears study sessions, revision history, and completion. Your subjects and chapters stay.'**
+  String get resetProgressBody;
+
+  /// No description provided for @deletePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Study Plan'**
+  String get deletePlan;
+
+  /// No description provided for @deletePlanBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes the current plan, its subjects, tasks, and study history.'**
+  String get deletePlanBody;
+
+  /// No description provided for @deleteAllData.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete All Data'**
+  String get deleteAllData;
+
+  /// No description provided for @deleteAllDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes every study plan and starts setup again. Language and appearance stay.'**
+  String get deleteAllDataBody;
+
+  /// No description provided for @deleteSubjectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'To delete one subject, open it in Syllabus and choose Delete. Its chapters and future tasks are removed.'**
+  String get deleteSubjectHint;
+
+  /// No description provided for @reportsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Report files are not part of this version.'**
+  String get reportsUnavailable;
+
+  /// No description provided for @backupReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get backupReports;
+
+  /// No description provided for @backupStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get backupStorage;
+
+  /// No description provided for @backupReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get backupReset;
 }
 
 class _AppLocalizationsDelegate

@@ -1475,4 +1475,184 @@ class AppLocalizationsEn extends AppLocalizations {
   String reminderDurationHoursMinutes(String hours, String minutes) {
     return '$hours hours $minutes minutes';
   }
+
+  @override
+  String get dataBackupTitle => 'Data & Backup';
+
+  @override
+  String get exportBackup => 'Export Backup';
+
+  @override
+  String get importBackup => 'Import Backup';
+
+  @override
+  String get backupStandard => 'Standard backup';
+
+  @override
+  String get backupEncrypted => 'Password-protected backup';
+
+  @override
+  String get backupIncluded => 'Included data';
+
+  @override
+  String get backupIncludedBody =>
+      'Study plans, subjects, chapters, exams, tasks, sessions, and revisions.';
+
+  @override
+  String get backupContainsStudyData => 'This file contains your study data.';
+
+  @override
+  String get backupNotEncrypted => 'A standard backup is not encrypted.';
+
+  @override
+  String get backupPassword => 'Password';
+
+  @override
+  String get backupPasswordAgain => 'Confirm password';
+
+  @override
+  String get backupPasswordMismatch => 'Passwords do not match.';
+
+  @override
+  String get backupPasswordShort => 'Use at least 8 characters.';
+
+  @override
+  String get actionExport => 'Export';
+
+  @override
+  String get actionShare => 'Share';
+
+  @override
+  String backupEstimate(String size) {
+    return 'Estimated size: $size';
+  }
+
+  @override
+  String get importBackupBody =>
+      'Your current data will not be changed until the backup is validated.';
+
+  @override
+  String get actionChooseBackup => 'Choose Backup File';
+
+  @override
+  String get backupReading => 'Reading file';
+
+  @override
+  String get backupCheckingVersion => 'Checking version';
+
+  @override
+  String get backupCheckingIntegrity => 'Checking integrity';
+
+  @override
+  String get backupValidatingData => 'Validating study data';
+
+  @override
+  String backupSummaryPlans(int count) {
+    return '$count study plans';
+  }
+
+  @override
+  String backupSummarySubjects(int count) {
+    return '$count subjects';
+  }
+
+  @override
+  String backupSummarySessions(int count) {
+    return '$count study sessions';
+  }
+
+  @override
+  String get backupDate => 'Backup date';
+
+  @override
+  String get restoreConfirmTitle => 'Restore this backup?';
+
+  @override
+  String get restoreConfirmBody =>
+      'Your current Pocket Tutor data will be replaced.';
+
+  @override
+  String get actionRestoreBackup => 'Restore Backup';
+
+  @override
+  String get restoreCompleteTitle => 'Backup restored successfully';
+
+  @override
+  String get actionGoToday => 'Go to Today';
+
+  @override
+  String get backupFailedTitle => 'Backup couldn\'t be created.';
+
+  @override
+  String get actionChooseAnotherLocation => 'Choose Another Location';
+
+  @override
+  String get restoreFailedTitle => 'Restore couldn\'t be completed.';
+
+  @override
+  String get restoreFailedBody => 'Your current data has not been changed.';
+
+  @override
+  String get actionChooseAnotherBackup => 'Choose Another Backup';
+
+  @override
+  String get corruptBackupTitle => 'This backup can\'t be opened';
+
+  @override
+  String get corruptDamaged => 'File is damaged.';
+
+  @override
+  String get corruptPassword => 'Wrong password.';
+
+  @override
+  String get corruptVersion => 'Unsupported version.';
+
+  @override
+  String get actionTryPassword => 'Try Password Again';
+
+  @override
+  String get storageDatabase => 'Database size';
+
+  @override
+  String get storageBackup => 'Backup size';
+
+  @override
+  String get storageNone => 'No backup exported yet';
+
+  @override
+  String get resetProgress => 'Reset Progress';
+
+  @override
+  String get resetProgressBody =>
+      'This clears study sessions, revision history, and completion. Your subjects and chapters stay.';
+
+  @override
+  String get deletePlan => 'Delete Study Plan';
+
+  @override
+  String get deletePlanBody =>
+      'This deletes the current plan, its subjects, tasks, and study history.';
+
+  @override
+  String get deleteAllData => 'Delete All Data';
+
+  @override
+  String get deleteAllDataBody =>
+      'This removes every study plan and starts setup again. Language and appearance stay.';
+
+  @override
+  String get deleteSubjectHint =>
+      'To delete one subject, open it in Syllabus and choose Delete. Its chapters and future tasks are removed.';
+
+  @override
+  String get reportsUnavailable => 'Report files are not part of this version.';
+
+  @override
+  String get backupReports => 'Reports';
+
+  @override
+  String get backupStorage => 'Storage';
+
+  @override
+  String get backupReset => 'Reset';
 }

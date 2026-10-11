@@ -1466,4 +1466,183 @@ class AppLocalizationsBn extends AppLocalizations {
   String reminderDurationHoursMinutes(String hours, String minutes) {
     return '$hours ঘণ্টা $minutes মিনিট';
   }
+
+  @override
+  String get dataBackupTitle => 'ডেটা ও ব্যাকআপ';
+
+  @override
+  String get exportBackup => 'ব্যাকআপ নিন';
+
+  @override
+  String get importBackup => 'ব্যাকআপ আনুন';
+
+  @override
+  String get backupStandard => 'সাধারণ ব্যাকআপ';
+
+  @override
+  String get backupEncrypted => 'পাসওয়ার্ড-সুরক্ষিত ব্যাকআপ';
+
+  @override
+  String get backupIncluded => 'যে ডেটা থাকবে';
+
+  @override
+  String get backupIncludedBody =>
+      'পড়ার পরিকল্পনা, বিষয়, অধ্যায়, পরীক্ষা, কাজ, সেশন ও পুনরাবৃত্তি।';
+
+  @override
+  String get backupContainsStudyData => 'এই ফাইলে আপনার পড়ার তথ্য থাকে।';
+
+  @override
+  String get backupNotEncrypted => 'সাধারণ ব্যাকআপ এনক্রিপ্ট করা থাকে না।';
+
+  @override
+  String get backupPassword => 'পাসওয়ার্ড';
+
+  @override
+  String get backupPasswordAgain => 'পাসওয়ার্ড আবার';
+
+  @override
+  String get backupPasswordMismatch => 'পাসওয়ার্ড মিলছে না।';
+
+  @override
+  String get backupPasswordShort => 'অন্তত ৮টি অক্ষর দিন।';
+
+  @override
+  String get actionExport => 'এক্সপোর্ট';
+
+  @override
+  String get actionShare => 'শেয়ার';
+
+  @override
+  String backupEstimate(String size) {
+    return 'আনুমানিক আকার: $size';
+  }
+
+  @override
+  String get importBackupBody =>
+      'ব্যাকআপ যাচাই না হওয়া পর্যন্ত বর্তমান ডেটা বদলাবে না।';
+
+  @override
+  String get actionChooseBackup => 'ব্যাকআপ ফাইল বেছে নিন';
+
+  @override
+  String get backupReading => 'ফাইল পড়া';
+
+  @override
+  String get backupCheckingVersion => 'ভার্সন দেখা';
+
+  @override
+  String get backupCheckingIntegrity => 'অখণ্ডতা যাচাই';
+
+  @override
+  String get backupValidatingData => 'পড়ার তথ্য যাচাই';
+
+  @override
+  String backupSummaryPlans(int count) {
+    return '$countটি পড়ার পরিকল্পনা';
+  }
+
+  @override
+  String backupSummarySubjects(int count) {
+    return '$countটি বিষয়';
+  }
+
+  @override
+  String backupSummarySessions(int count) {
+    return '$countটি পড়ার সেশন';
+  }
+
+  @override
+  String get backupDate => 'ব্যাকআপের তারিখ';
+
+  @override
+  String get restoreConfirmTitle => 'এই ব্যাকআপ ফিরিয়ে আনবেন?';
+
+  @override
+  String get restoreConfirmBody => 'বর্তমান পড়ার সাথী ডেটা বদলে যাবে।';
+
+  @override
+  String get actionRestoreBackup => 'ব্যাকআপ ফিরিয়ে আনুন';
+
+  @override
+  String get restoreCompleteTitle => 'ব্যাকআপ ফিরে এসেছে';
+
+  @override
+  String get actionGoToday => 'আজকে যান';
+
+  @override
+  String get backupFailedTitle => 'ব্যাকআপ তৈরি হয়নি।';
+
+  @override
+  String get actionChooseAnotherLocation => 'অন্য জায়গা বেছে নিন';
+
+  @override
+  String get restoreFailedTitle => 'রিস্টোর শেষ হয়নি।';
+
+  @override
+  String get restoreFailedBody => 'বর্তমান ডেটা বদলায়নি।';
+
+  @override
+  String get actionChooseAnotherBackup => 'অন্য ব্যাকআপ বেছে নিন';
+
+  @override
+  String get corruptBackupTitle => 'এই ব্যাকআপ খোলা যাচ্ছে না';
+
+  @override
+  String get corruptDamaged => 'ফাইল নষ্ট।';
+
+  @override
+  String get corruptPassword => 'পাসওয়ার্ড ভুল।';
+
+  @override
+  String get corruptVersion => 'এই ভার্সন সমর্থিত নয়।';
+
+  @override
+  String get actionTryPassword => 'পাসওয়ার্ড আবার দিন';
+
+  @override
+  String get storageDatabase => 'ডেটাবেসের আকার';
+
+  @override
+  String get storageBackup => 'ব্যাকআপের আকার';
+
+  @override
+  String get storageNone => 'এখনো কোনো ব্যাকআপ নেওয়া হয়নি';
+
+  @override
+  String get resetProgress => 'অগ্রগতি মুছুন';
+
+  @override
+  String get resetProgressBody =>
+      'পড়ার সেশন, পুনরাবৃত্তি ও সম্পন্ন হওয়ার হিসাব মুছে যাবে। বিষয় ও অধ্যায় থাকবে।';
+
+  @override
+  String get deletePlan => 'পড়ার পরিকল্পনা মুছুন';
+
+  @override
+  String get deletePlanBody =>
+      'বর্তমান পরিকল্পনা, তার বিষয়, কাজ ও পড়ার ইতিহাস মুছে যাবে।';
+
+  @override
+  String get deleteAllData => 'সব ডেটা মুছুন';
+
+  @override
+  String get deleteAllDataBody =>
+      'সব পরিকল্পনা মুছে সেটআপ আবার শুরু হবে। ভাষা ও চেহারা থাকবে।';
+
+  @override
+  String get deleteSubjectHint =>
+      'একটি বিষয় মুছতে সিলেবাসে সেটি খুলে মুছুন বেছে নিন। অধ্যায় ও আগামী কাজ সরে যাবে।';
+
+  @override
+  String get reportsUnavailable => 'রিপোর্ট ফাইল এই সংস্করণে নেই।';
+
+  @override
+  String get backupReports => 'রিপোর্ট';
+
+  @override
+  String get backupStorage => 'সংরক্ষণ';
+
+  @override
+  String get backupReset => 'মুছে ফেলা';
 }

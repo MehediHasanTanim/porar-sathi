@@ -9,6 +9,9 @@ abstract final class AppRoutes {
   static const more = '/more';
   static const settings = '/settings';
   static const notifications = '/notifications';
+  static const dataBackup = '/data';
+  static const exportBackup = '/data/export';
+  static const importBackup = '/data/import';
   static const appearance = '/appearance';
   static const language = '/language';
   static const newSubject = '/subjects/new';

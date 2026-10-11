@@ -41,6 +41,12 @@ class MoreScreen extends StatelessWidget {
             title: l10n.languageTitle,
             onTap: () => context.push(AppRoutes.language),
           ),
+          SettingsTile(
+            icon: Icons.backup_outlined,
+            iconColor: const Color(0xFF0F766E),
+            title: l10n.dataBackupTitle,
+            onTap: () => context.push(AppRoutes.dataBackup),
+          ),
         ],
       ),
     );

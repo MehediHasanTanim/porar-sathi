@@ -707,5 +707,81 @@
       "hours": {"type": "String"},
       "minutes": {"type": "String"}
     }
-  }
+  },
+
+  "dataBackupTitle": "Data & Backup",
+  "exportBackup": "Export Backup",
+  "importBackup": "Import Backup",
+  "backupStandard": "Standard backup",
+  "backupEncrypted": "Password-protected backup",
+  "backupIncluded": "Included data",
+  "backupIncludedBody": "Study plans, subjects, chapters, exams, tasks, sessions, and revisions.",
+  "backupContainsStudyData": "This file contains your study data.",
+  "backupNotEncrypted": "A standard backup is not encrypted.",
+  "backupPassword": "Password",
+  "backupPasswordAgain": "Confirm password",
+  "backupPasswordMismatch": "Passwords do not match.",
+  "backupPasswordShort": "Use at least 8 characters.",
+  "actionExport": "Export",
+  "actionShare": "Share",
+  "backupEstimate": "Estimated size: {size}",
+  "@backupEstimate": {
+    "placeholders": {
+      "size": {"type": "String"}
+    }
+  },
+  "importBackupBody": "Your current data will not be changed until the backup is validated.",
+  "actionChooseBackup": "Choose Backup File",
+  "backupReading": "Reading file",
+  "backupCheckingVersion": "Checking version",
+  "backupCheckingIntegrity": "Checking integrity",
+  "backupValidatingData": "Validating study data",
+  "backupSummaryPlans": "{count} study plans",
+  "@backupSummaryPlans": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "backupSummarySubjects": "{count} subjects",
+  "@backupSummarySubjects": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "backupSummarySessions": "{count} study sessions",
+  "@backupSummarySessions": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "backupDate": "Backup date",
+  "restoreConfirmTitle": "Restore this backup?",
+  "restoreConfirmBody": "Your current Pocket Tutor data will be replaced.",
+  "actionRestoreBackup": "Restore Backup",
+  "restoreCompleteTitle": "Backup restored successfully",
+  "actionGoToday": "Go to Today",
+  "backupFailedTitle": "Backup couldn't be created.",
+  "actionChooseAnotherLocation": "Choose Another Location",
+  "restoreFailedTitle": "Restore couldn't be completed.",
+  "restoreFailedBody": "Your current data has not been changed.",
+  "actionChooseAnotherBackup": "Choose Another Backup",
+  "corruptBackupTitle": "This backup can't be opened",
+  "corruptDamaged": "File is damaged.",
+  "corruptPassword": "Wrong password.",
+  "corruptVersion": "Unsupported version.",
+  "actionTryPassword": "Try Password Again",
+  "storageDatabase": "Database size",
+  "storageBackup": "Backup size",
+  "storageNone": "No backup exported yet",
+  "resetProgress": "Reset Progress",
+  "resetProgressBody": "This clears study sessions, revision history, and completion. Your subjects and chapters stay.",
+  "deletePlan": "Delete Study Plan",
+  "deletePlanBody": "This deletes the current plan, its subjects, tasks, and study history.",
+  "deleteAllData": "Delete All Data",
+  "deleteAllDataBody": "This removes every study plan and starts setup again. Language and appearance stay.",
+  "deleteSubjectHint": "To delete one subject, open it in Syllabus and choose Delete. Its chapters and future tasks are removed.",
+  "reportsUnavailable": "Report files are not part of this version.",
+  "backupReports": "Reports",
+  "backupStorage": "Storage",
+  "backupReset": "Reset"
 }

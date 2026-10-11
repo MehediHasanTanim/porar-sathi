@@ -22,6 +22,9 @@ import 'package:porar_sathi/features/progress/presentation/progress_screen.dart'
 import 'package:porar_sathi/features/sessions/presentation/study_flow_screens.dart';
 import 'package:porar_sathi/features/sessions/presentation/today_screen.dart';
 import 'package:porar_sathi/features/settings/application/settings_controller.dart';
+import 'package:porar_sathi/features/backup_restore/presentation/data_backup_screen.dart';
+import 'package:porar_sathi/features/backup_restore/presentation/export_backup_screen.dart';
+import 'package:porar_sathi/features/backup_restore/presentation/import_backup_screen.dart';
 import 'package:porar_sathi/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:porar_sathi/features/settings/presentation/appearance_screen.dart';
 import 'package:porar_sathi/features/settings/presentation/more_screen.dart';
@@ -232,6 +235,18 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.notifications,
         builder: (context, state) => const NotificationSettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.dataBackup,
+        builder: (context, state) => const DataBackupScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.exportBackup,
+        builder: (context, state) => const ExportBackupScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.importBackup,
+        builder: (context, state) => const ImportBackupScreen(),
       ),
       GoRoute(
         path: AppRoutes.appearance,
