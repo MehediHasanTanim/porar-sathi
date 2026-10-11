@@ -1,0 +1,127 @@
+{
+  "@@locale": "en",
+  "appName": "Porar Sathi",
+  "appNameBangla": "পড়ার সাথী",
+  "splashTagline": "Plan today. Finish on time.",
+  "loadingStudySpace": "Loading your study space...",
+  "offlineStudyPlanner": "Offline Study Planner",
+
+  "navToday": "Today",
+  "navPlan": "Plan",
+  "navSyllabus": "Syllabus",
+  "navProgress": "Progress",
+  "navMore": "More",
+
+  "actionContinue": "Continue",
+  "actionSkip": "Skip",
+  "actionSave": "Save",
+  "actionCancel": "Cancel",
+  "actionRetry": "Retry",
+  "actionDone": "Done",
+  "actionBack": "Back",
+  "actionGetStarted": "Get Started",
+  "actionNotNow": "Not Now",
+
+  "stateLoading": "Loading...",
+  "stateSaving": "Saving...",
+  "stateCreatingPlan": "Creating your study plan...",
+
+  "errorGeneric": "Something went wrong. Please try again.",
+  "errorSaveFailed": "We couldn't save these changes.",
+  "errorSessionDuration": "Session length must be between 1 and 240 minutes.",
+  "errorPlanningBuffer": "Planning buffer must be between 0 and 50 percent.",
+  "errorCompletionPercent": "Completion must be between 0 and 100 percent.",
+  "errorAvailability": "Available time must be between 0 and 24 hours.",
+  "errorExamDate": "Exam date cannot be in the past.",
+
+  "chooseLanguage": "Choose your language",
+  "chooseLanguageSubtitle": "You can change this anytime from Settings.",
+  "banglaTitle": "বাংলা",
+  "banglaSubtitle": "Use Porar Sathi in Bangla",
+  "englishTitle": "English",
+  "englishSubtitle": "Use Porar Sathi in English",
+  "welcomeTitle": "Plan less. Study better.",
+  "welcomeBody": "Add your subjects and syllabus, tell Porar Sathi when you can study, and get a realistic daily plan.",
+
+  "subjectsTitle": "Subjects",
+  "addSubject": "Add Subject",
+  "noSubjectsTitle": "No subjects yet",
+  "noSubjectsBody": "Add your first subject to start building your study plan.",
+  "subjectName": "Subject name",
+
+  "chaptersTitle": "Chapters",
+  "addChapter": "Add Chapter",
+  "noChaptersTitle": "No chapters yet",
+  "noChaptersBody": "Add chapters to estimate your syllabus and create a plan.",
+
+  "examsTitle": "Exams",
+  "addExam": "Add Exam",
+  "examDate": "Exam date",
+  "daysRemaining": "{count} days remaining",
+  "@daysRemaining": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "studyPlan": "Study Plan",
+  "generatePlan": "Generate My Plan",
+  "onTrack": "On Track",
+  "backlog": "Backlog",
+  "revision": "Revision",
+  "todayStudy": "Today's Study",
+  "whyThisTask": "Why this task?",
+  "todayEmptyTitle": "No study tasks for today",
+  "todayEmptyBody": "Your daily plan will show up here after you add a syllabus and an exam.",
+  "planEmptyBody": "Your week, day, and calendar will show the generated plan.",
+  "progressEmptyBody": "Syllabus progress, study time, and readiness will show here.",
+
+  "goodMorning": "Good morning",
+  "goodAfternoon": "Good afternoon",
+  "goodEvening": "Good evening",
+  "goodNight": "Good night",
+
+  "moreTitle": "More",
+  "appearanceTitle": "Appearance",
+  "languageTitle": "Language",
+  "studySettingsTitle": "Study Settings",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System",
+  "firstDayOfWeek": "First day of week",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "monday": "Monday",
+  "defaultSession": "Default session length",
+  "planningBuffer": "Planning buffer",
+  "planningBufferHelp": "Leave a little free time so the plan stays realistic.",
+  "autoReplan": "Auto replan",
+  "autoReplanHelp": "Small schedule updates can apply on their own. Big changes still ask you first.",
+  "settingsSaved": "Changes saved",
+
+  "durationMinutes": "{count} min",
+  "@durationMinutes": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "durationHours": "{count}h",
+  "@durationHours": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "durationHoursMinutes": "{hours}h {minutes}m",
+  "@durationHoursMinutes": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "bufferPercent": "{count}%",
+  "@bufferPercent": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

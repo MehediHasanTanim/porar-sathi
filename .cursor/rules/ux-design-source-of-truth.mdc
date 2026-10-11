@@ -1,0 +1,31 @@
+---
+description: App UI must match the Pocket Tutor / Porar Sathi mockups and icons in docs/UX
+alwaysApply: true
+---
+
+# UX source of truth
+
+When building or changing any screen, widget, icon, color, copy layout, or navigation, match `docs/UX` exactly. Read the matching mockup before writing UI. Do not invent a different layout, icon set, illustration, or visual style.
+
+## Files
+
+- Spec: `docs/UX/Pocket_Tutor_Detailed_UI_Specification.md`
+- Screens: `A. Launch & Onboarding.png` through `I. Common States & Components.png`, plus `Exams.png`
+- Splash: `Porar Sathi Study App Splash Screen.png`
+- Launcher icons: `Icons-1.png` (master), `Icons-2.png` (Android sizes), `Icons-3.png.png` (iOS sizes)
+
+Screen boards are numbered 1–137 and match the spec section titles.
+
+## How to apply
+
+- Layout, spacing, controls, empty states, and on-screen icons come from the PNG for that screen.
+- Behavior, states, and copy the PNG does not show come from the UI spec.
+- If a PNG and the written spec disagree on what is visible, follow the PNG.
+- Use the supplied launcher mark: blue rounded square, open book, calendar, green check. Do not redraw it.
+- Subject rows use the colored icons shown on the boards (Physics, Chemistry, Math, Biology, Bangla, English, and the rest).
+- Bottom navigation on the main shell is Today, Plan, Syllabus, Progress, More, unless the specific board shows a different slot for that flow (some exam, revision, and backlog boards show Exams).
+- Primary actions are full-width blue buttons. Status uses text plus color (On Track, Due, Overdue), never color alone.
+- Support English and বাংলা. Keep Bangla labels natural and consistent with the spec glossary.
+- Light, dark, and system themes must stay inside the same visual system.
+
+Product name on the splash asset and launcher sheets is **Porar Sathi / পড়ার সাথী**. In-app screen boards are labeled **Pocket Tutor**. Match the asset you are implementing; do not introduce a third name or icon.

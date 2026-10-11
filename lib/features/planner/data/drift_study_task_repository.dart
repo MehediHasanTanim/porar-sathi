@@ -1,0 +1,179 @@
+import 'package:drift/drift.dart';
+
+import 'package:porar_sathi/core/database/app_database.dart';
+import 'package:porar_sathi/core/database/database_guard.dart';
+import 'package:porar_sathi/core/database/reference_checks.dart';
+import 'package:porar_sathi/core/domain/academic_enums.dart';
+import 'package:porar_sathi/core/errors/app_exception.dart';
+import 'package:porar_sathi/core/time/calendar_date.dart';
+import 'package:porar_sathi/features/planner/domain/study_task.dart';
+import 'package:porar_sathi/features/planner/domain/study_task_repository.dart';
+
+final class DriftStudyTaskRepository implements StudyTaskRepository {
+  DriftStudyTaskRepository(this._database);
+
+  final AppDatabase _database;
+
+  @override
+  Future<StudyTask?> findById(String id) async {
+    final row = await (_database.select(_database.studyTasks)
+          ..where((task) => task.id.equals(id)))
+        .getSingleOrNull();
+    return row?.toDomain();
+  }
+
+  @override
+  Stream<List<StudyTask>> watchByPlanOnDate(
+    String studyPlanId,
+    DateTime date,
+  ) {
+    final day = calendarDate(date);
+    final query = _database.select(_database.studyTasks)
+      ..where(
+        (task) =>
+            task.studyPlanId.equals(studyPlanId) & task.plannedDate.equals(day),
+      )
+      ..orderBy([(task) => OrderingTerm.asc(task.plannedStartTime)]);
+    return query.watch().map((rows) => [for (final row in rows) row.toDomain()]);
+  }
+
+  @override
+  Stream<List<StudyTask>> watchByStatusOnDate(TaskStatus status, DateTime date) {
+    final day = calendarDate(date);
+    final query = _database.select(_database.studyTasks)
+      ..where(
+        (task) => task.status.equals(status.code) & task.plannedDate.equals(day),
+      )
+      ..orderBy([(task) => OrderingTerm.asc(task.plannedStartTime)]);
+    return query.watch().map((rows) => [for (final row in rows) row.toDomain()]);
+  }
+
+  @override
+  Stream<List<StudyTask>> watchBySubject(
+    String subjectId, {
+    TaskStatus? status,
+  }) {
+    final query = _database.select(_database.studyTasks)
+      ..where((task) {
+        final matchesSubject = task.subjectId.equals(subjectId);
+        if (status == null) {
+          return matchesSubject;
+        }
+        return matchesSubject & task.status.equals(status.code);
+      })
+      ..orderBy([(task) => OrderingTerm.asc(task.plannedDate)]);
+    return query.watch().map((rows) => [for (final row in rows) row.toDomain()]);
+  }
+
+  @override
+  Future<StudyTask> save(StudyTask task) {
+    return runDatabaseTransaction(_database, () async {
+      final normalized = normalizeStudyTask(task);
+      await _checkReferences(normalized);
+      await _database
+          .into(_database.studyTasks)
+          .insertOnConflictUpdate(normalized.toCompanion());
+      final stored = await findById(normalized.id);
+      if (stored == null) {
+        throw const DatabaseException(message: 'Study task was not saved.');
+      }
+      return stored;
+    });
+  }
+
+  @override
+  Future<List<StudyTask>> saveAll(List<StudyTask> tasks) {
+    return runDatabaseTransaction(_database, () async {
+      final saved = <StudyTask>[];
+      for (final task in tasks) {
+        saved.add(await save(task));
+      }
+      return saved;
+    });
+  }
+
+  @override
+  Future<void> delete(String id) {
+    return runDatabaseTransaction(_database, () async {
+      final removed = await (_database.delete(_database.studyTasks)
+            ..where((task) => task.id.equals(id)))
+          .go();
+      if (removed == 0) {
+        throw const DatabaseException(message: 'Study task was not found.');
+      }
+    });
+  }
+
+  Future<void> _checkReferences(StudyTask task) async {
+    final checks = ReferenceChecks(_database);
+    await checks.subjectInPlan(
+      subjectId: task.subjectId,
+      studyPlanId: task.studyPlanId,
+    );
+    if (task.chapterId != null) {
+      await checks.chapterInSubject(
+        chapterId: task.chapterId!,
+        subjectId: task.subjectId,
+      );
+    }
+    if (task.examId != null) {
+      await checks.examInPlan(examId: task.examId!, studyPlanId: task.studyPlanId);
+    }
+  }
+}
+
+extension on StudyTaskRow {
+  StudyTask toDomain() {
+    return StudyTask(
+      id: id,
+      studyPlanId: studyPlanId,
+      subjectId: subjectId,
+      chapterId: chapterId,
+      topicId: topicId,
+      examId: examId,
+      taskType: TaskType.fromCode(taskType),
+      title: title,
+      plannedDate: calendarDate(plannedDate),
+      plannedStartTime: plannedStartTime,
+      plannedMinutes: plannedMinutes,
+      actualMinutes: actualMinutes,
+      priorityScore: priorityScore,
+      isLocked: isLocked,
+      status: TaskStatus.fromCode(status),
+      completionPercent: completionPercent,
+      source: TaskSource.fromCode(source),
+      generationBatchId: generationBatchId,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      completedAt: completedAt,
+    );
+  }
+}
+
+extension on StudyTask {
+  StudyTasksCompanion toCompanion() {
+    return StudyTasksCompanion.insert(
+      id: id,
+      studyPlanId: studyPlanId,
+      subjectId: subjectId,
+      chapterId: Value(chapterId),
+      topicId: Value(topicId),
+      examId: Value(examId),
+      taskType: taskType.code,
+      title: title,
+      plannedDate: plannedDate,
+      plannedStartTime: Value(plannedStartTime),
+      plannedMinutes: plannedMinutes,
+      actualMinutes: Value(actualMinutes),
+      priorityScore: priorityScore,
+      isLocked: isLocked,
+      status: status.code,
+      completionPercent: completionPercent,
+      source: source.code,
+      generationBatchId: Value(generationBatchId),
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      completedAt: Value(completedAt),
+    );
+  }
+}
